@@ -17,4 +17,13 @@ class Carton extends Model
         return $this->hasOne(Client::class,'id','client_id');
     }
 
+    public function coatingType(){
+        return $this->hasOne(CoatingType::class,'id','coating_type_id');
+    }
+
+    public function otherCoatingType(){
+        return $this->hasOne(OtherCoatingType::class,'id','other_coating_type_id');
+    }
+
+
 }

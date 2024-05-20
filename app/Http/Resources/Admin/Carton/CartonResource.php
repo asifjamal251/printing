@@ -19,9 +19,9 @@ class CartonResource extends JsonResource
             'sn'=>++$request->start,
             'id'=>$this->id,
             'client'=>$this->client->company_name, 
-            'carton'=>$this->length, 
-            'size'=>$this->width, 
-            'art_wprk'=>$this->height, 
+            'carton'=>$this->carton_name, 
+            'size'=>$this->carton_size, 
+            'art_wprk'=>$this->art_work, 
             'created_at' => $this->created_at->format('d F, Y'),
         ];
     }

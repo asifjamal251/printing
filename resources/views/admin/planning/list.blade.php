@@ -277,7 +277,8 @@ $('body').on('change', '.select-checkbox', function(){
 $('body').on('change', '.ups-input', function(){
     var defaultUPS = $(this).attr('data-ups');
     var inputUPS = $(this).val();
-    if(inputUPS > defaultUPS){
+
+    if(defaultUPS.length > 0 && inputUPS > defaultUPS){
         alert('You Can Not Set Larger UPS');
         $(this).val(defaultUPS)
     }
