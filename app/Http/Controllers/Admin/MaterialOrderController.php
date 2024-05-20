@@ -82,6 +82,7 @@ class MaterialOrderController extends Controller
         ]);
 
         $material_order = new MaterialOrder;
+        $material_order->admin_id = $user->id;
         $material_order->vendor_id = $request->vendor;
         $material_order->mo_date = Carbon::parse($request->mo_date)->format('Y-m-d');
 
@@ -137,7 +138,9 @@ class MaterialOrderController extends Controller
 
 
     public function show($id){
-        $material =  MaterialOrder::where('id', $id)->with(['vendor', 'materialItems'])->first();
+        $material =  MaterialOrder::where('id', $id)->with(['madeBy', 'vendor', 'materialItems'=>function($query){
+            $query->with(['product']);
+        }])->first();
         return view('admin.material-order.view', compact('material'));
     }
 

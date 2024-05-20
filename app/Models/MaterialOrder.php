@@ -21,7 +21,7 @@ class MaterialOrder extends Model
         return $this->hasOne(Vendor::class,'id','vendor_id');
     }
     public function madeBy(){
-        return $this->hasOne(Admin::class,'id','made_by');
+        return $this->hasOne(Admin::class,'id','admin_id');
     }
 
     public function status(){

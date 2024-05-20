@@ -37,6 +37,10 @@ class MaterialOrderItem extends Model
         return $this->hasOne(JobCardItem::class,'purchase_order_item_id','id');
     }
 
+    public function product(){
+        return $this->hasOne(Product::class, 'id', 'product_id');
+    }
+
 
     public function getActivitylogOptions(): LogOptions
     {
