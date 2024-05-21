@@ -170,14 +170,14 @@ if (!function_exists('getCartonNames')) {
         foreach ($items as $key=>$item) {
             if($items->count() > 1){
                 if($key == 0){
-                    $cartonElements[] = '<div class="accordian-main"><div class="accordian-title"><p class="m-0 carton-list">' . @$item->POItem->carton_name . '-['. @$item->POItem->art_work . ']</p></div><div class="accordian-body">';
+                    $cartonElements[] = '<div class="accordian-main"><div class="accordian-title"><p class="m-0 carton-list">' . @$item->POItem->carton_name . '-['. @$item->POItem->art_work . ']<b>  |  Quantity: </b>'.@$item->POItem->quantity.'<b>  |  PO Date: </b>'. $item->PO->po_date->format('d F, Y') .' <b>| PO No.: </b>'.$item->PO->po_no.'</p></div><div class="accordian-body">';
                 }
                 else{
-                    $cartonElements[] = '<p class="m-0 carton-list">' . @$item->POItem->carton_name . '-['. @$item->POItem->art_work . ']</p>';
+                    $cartonElements[] = '<p class="m-0 carton-list">' . @$item->POItem->carton_name . '-['. @$item->POItem->art_work . ']<b>  |  Quantity: </b>'.@$item->POItem->quantity.'<b>  |  PO Date: </b>'. $item->PO->po_date->format('d F, Y') .' <b>| PO No.: </b>'.$item->PO->po_no.'</p>';
                 }
                 
             }else{
-                 $cartonElements[] = '<p class="m-0 carton-list">' . @$item->POItem->carton_name . '-['. @$item->POItem->art_work . ']</p> ';
+                 $cartonElements[] = '<p class="m-0 carton-list">' . @$item->POItem->carton_name . '-['. @$item->POItem->art_work . ']<b>  |  Quantity: </b>'.@$item->POItem->quantity.'<b>  |  PO Date: </b>'. $item->PO->po_date->format('d F, Y') .' <b>| PO No.: </b>'.$item->PO->po_no.'</p>';
             }
         }
 

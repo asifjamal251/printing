@@ -39,6 +39,7 @@
                 <div class="card">
                     
                     <div class="card-body">
+                        <div class="table-responsive">
                         <table id="datatable" class="datatable table table-bordered border-secondary table-sm nowrap align-middle" style="width:100%">
                             <thead class="gridjs-thead">
                             <tr>
@@ -62,6 +63,7 @@
                         </thead>
                        
                         </table>
+                    </div>
                     </div>
                 </div>
             </div><!--end col-->

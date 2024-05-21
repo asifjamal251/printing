@@ -53,31 +53,31 @@ th {
 
 
 <div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-8">
         <div class="card">
 
             <div class="card-body">
                 <table class="table">
-                        <tr>
-                            <td colspan="4">
-                                <b>{{get_app_setting('title')}}</b>
-                            </td>
-                            <td colspan="4">
-                                <b>{{$material->vendor->name}}</b>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="4">
-                                <p style="margin-bottom:0">{{get_app_setting('contact_no')}}</p>
-                                <p style="margin-bottom:0">{{get_app_setting('email')}}</p>
-                                <p style="margin-bottom:0">{{get_app_setting('address')}}</p>
-                            </td>
-                            <td colspan="4">
-                                <p style="margin-bottom:0">{{$material->vendor->phone_no}}</p>
-                                <p style="margin-bottom:0">{{$material->vendor->email}}</p>
-                                <p style="margin-bottom:0">{{$material->vendor->address}}</p>
-                            </td>
-                        </tr>
+                    <tr>
+                        <td colspan="4">
+                            <b>{{get_app_setting('title')}}</b>
+                        </td>
+                        <td colspan="4">
+                            <b>{{$material->vendor->name}}</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <p style="margin-bottom:0">{{get_app_setting('contact_no')}}</p>
+                            <p style="margin-bottom:0">{{get_app_setting('email')}}</p>
+                            <p style="margin-bottom:0">{{get_app_setting('address')}}</p>
+                        </td>
+                        <td colspan="4">
+                            <p style="margin-bottom:0">{{$material->vendor->phone_no}}</p>
+                            <p style="margin-bottom:0">{{$material->vendor->email}}</p>
+                            <p style="margin-bottom:0">{{$material->vendor->address}}</p>
+                        </td>
+                    </tr>
                         {{-- <tr>
                             <td colspan="6" style="background: #eee;"></td>
                         </tr> --}}
@@ -103,17 +103,17 @@ th {
                         @php
                         @endphp
                         @foreach($material->materialItems as $item)
-                            @php
-                            @endphp
-                            <tr>
-                                <td>{{$loop->index+1}}</td>
-                                <td colspan="2">{{$item->product->name}}</td>
-                                <td>{{$item->rate_on}}</td>
-                                <td>{{$item->gst}}</td>
-                                <td>{{$item->quantity}}</td>
-                                <td>{{$item->unit->name}}</td>
-                                <td>{{$item->rate}}</td>
-                            </tr>
+                        @php
+                        @endphp
+                        <tr>
+                            <td>{{$loop->index+1}}</td>
+                            <td colspan="2">{{$item->product->name}}</td>
+                            <td>{{$item->rate_on}}</td>
+                            <td>{{$item->gst}}</td>
+                            <td>{{$item->quantity}}</td>
+                            <td>{{$item->unit->name}}</td>
+                            <td>{{$item->rate}}</td>
+                        </tr>
                         @endforeach
                         <tr>
                             <th colspan="7" style="text-align:right;">Subtotal</th>
@@ -128,16 +128,12 @@ th {
                             <td>{{$material->total}}</td>
                         </tr>
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td colspan="5" rowspan="2" style="vertical-align: top;height: 80px;">Comment or Special Instructions</td>
+                            <td colspan="3" rowspan="2"></td>
                         </tr>
                         <tr>
+                        </tr>
+                        <tr style="visibility:collapse;">
                             <td></td>
                             <td></td>
                             <td></td>
@@ -147,33 +143,41 @@ th {
                             <td></td>
                             <td></td>
                         </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                </table>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-1 col-sm-12"></div>
+
+        <div class="col-md-3 col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    {!! Form::open(['route'=>['admin.'.request()->segment(2).'.statusChange',$material->id],'method'=>'put', 'files'=>true]) !!}
+                    <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
+                        {!! Form::label('status', 'Status') !!}
+                        {!! Form::select('status', App\Models\Status::whereIn('id', [2, 3, 6, 8])->pluck('name', 'id'), $material->status_id, ['id' => 'status_id', 'class' => 'form-control', 'placeholder' => 'Chosse Status']) !!}
+                        <small class="text-danger">{{ $errors->first('status') }}</small>
+                    </div>
+
+                    {!! Form::submit('Change Status', ['class' => 'btn btn-success pull-right']) !!}
+                    {!! Form::close() !!} 
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
 
-@endsection
-
-
-
+    @endsection
 
 
 
 
 
-@push('scripts')
 
-@endpush
+
+
+    @push('scripts')
+
+    @endpush

@@ -62,6 +62,7 @@
                                 <th>Total GST</th>
                                 <th>Total</th>
                                 <th>Created At</th>
+                                <th>Status</th>
                                 @can(['edit_material_order','delete_material_order', 'read_material_order'])
                                   <th>Action</th>
                                 @endcan
@@ -199,6 +200,7 @@ $(document).ready(function(){
         { "data": "total_gst" },
         { "data": "total" },
         { "data": "created_at" },
+        { "data": "status" },
         @can(['edit_material_order','delete_material_order', 'read_material_order'])
         {
             "data": "action",

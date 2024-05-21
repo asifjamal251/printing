@@ -271,6 +271,7 @@ Route::middleware('admin')->name('admin.')->group(function() {
         Route::post('material-order', 'store')->name('material-order.store')->middleware('can:add_material_order');
         Route::put('material-order/{material_orders}', 'update')->name('material-order.update')->middleware('can:edit_material_order');
         Route::delete('material-order/{material_orders}/delete', 'destroy')->name('material-order.destroy')->middleware('can:delete_material_order');
+        Route::put('material-order/change/status/{material_orders}', 'statusChange')->name('material-order.statusChange')->middleware('can:edit_material_order');
     });
 
     //Unit

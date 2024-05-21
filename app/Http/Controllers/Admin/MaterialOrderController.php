@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\MaterialOrder\MaterialOrderCollection;
 use App\Models\MaterialOrder;
+use App\Mail\MaterialOrderConfirmatiom;
 use App\Models\MaterialOrderItem;
 use App\Models\MaterialOrderPlate;
 use App\Models\Media;
@@ -19,6 +20,8 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Mail;
 
 class MaterialOrderController extends Controller
 {
@@ -262,6 +265,31 @@ class MaterialOrderController extends Controller
             return response()->json(['message'=>'Dye Details  deleted successfully ...', 'class'=>'success']);  
         }
         return response()->json(['message'=>'Whoops, looks like something went wrong ! Try again ...', 'class'=>'error']);
+    }
+
+
+     public function statusChange(Request $request, $id)
+    {
+        $materialData = MaterialOrder::where('id', $id)->with(['madeBy', 'vendor', 'materialItems' => function($query) {
+            $query->with(['product', 'unit']);
+        }])->first();
+
+        if (!$materialData) {
+            return response()->json(['error' => 'Material order not found'], 404);
+        }
+
+         $material = $materialData->toArray();
+         return $material->materialItems;
+        $pdf = PDF::loadView('emails.order-confirmation', compact('material'))->output();
+
+        // Define recipients and CC addresses
+        $toAddresses = ['asifjamal251@gmail.com', 'asif@artechnology.in', 'asif.sanix@gmail.com'];
+        $ccAddresses = ['rajeev@artechnology.in', 'rajeev.evorapkg@gmail.com', 'rajeevbhardwaj14311@gmail.com'];
+
+        // Send Email
+        Mail::send(new MaterialOrderConfirmatiom($pdf, $toAddresses, $ccAddresses, $material));
+
+        return response()->json(['success' => 'Email sent successfully'], 200);
     }
 
     

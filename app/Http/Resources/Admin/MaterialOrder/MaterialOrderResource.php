@@ -25,6 +25,8 @@ class MaterialOrderResource extends JsonResource
             'total_gst'=>@$this->total_gst, 
             'total'=>@$this->total, 
             'created_at' => @$this->created_at->format('d F, Y'),
+            'status'=> status($this->status_id),
+            'status_id'=>$this->status_id,
         ];
     }
 }
