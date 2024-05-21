@@ -100,11 +100,9 @@ th {
                             <th style="background:#ddd;">Unit</th>
                             <th style="background:#ddd;">Amount</th>
                         </tr>
-                        @php
-                        @endphp
+                       
                         @foreach($material->materialItems as $item)
-                        @php
-                        @endphp
+                       
                         <tr>
                             <td>{{$loop->index+1}}</td>
                             <td colspan="2">{{$item->product->name}}</td>
