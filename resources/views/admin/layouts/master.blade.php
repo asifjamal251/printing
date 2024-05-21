@@ -12,7 +12,7 @@
 
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{asset(get_app_setting('favicon')??'admin-assets/images/favicon.ico')}}">
-    @stack('links')
+    
     <!-- Layout config Js -->
     <script src="{{asset('admin-assets/js/layout.js')}}"></script>
     <!-- Bootstrap Css -->
@@ -35,6 +35,7 @@
     <link href="{{asset('admin-assets/css/custom.min.css')}}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{asset('admin-assets/libs/glightbox/css/glightbox.min.css')}}">
+    @stack('links')
 </head>
 
 <body>

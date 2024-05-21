@@ -139,7 +139,7 @@ class MaterialOrderController extends Controller
 
     public function show($id){
         $material =  MaterialOrder::where('id', $id)->with(['madeBy', 'vendor', 'materialItems'=>function($query){
-            $query->with(['product']);
+            $query->with(['product', 'unit']);
         }])->first();
         return view('admin.material-order.view', compact('material'));
     }

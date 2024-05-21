@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 @push('links')
-{{-- <style type="text/css">
-    table , td, th {
+<style>
+  table , td, th {
     border: 1px solid #595959;
     border-collapse: collapse;
 }
@@ -19,7 +19,7 @@ th {
 .odd {
     background: #fefcf9;
 }
-</style> --}}
+</style>
 @endpush
 
 
@@ -53,72 +53,115 @@ th {
 
 
 <div class="row">
-    <div class="col-lg-12">
+    <div class="col-sm-12">
         <div class="card">
-            <div class="card-header">
-                <h6 class="card-title mb-0 text-center">{{get_app_setting('title')}}</h6>
-            </div>
 
             <div class="card-body">
-
-                <table class="border-secondary table-hover table table-bordered nowrap align-middle text-dark ">
-                    <tbody>
-                        <tr class="text-center">
-                            <th colspan="8">Purchase Order</th>
-                        </tr>
-
-
-                        
+                <table class="table">
                         <tr>
-                            <th colspan="3">{{get_app_setting('title')}}</th>
-                            <td rowspan="2"></td>
-                            <th colspan="2">{{$material->vendor->name}}</th>
-                            <td colspan="2">{{$material->issue_no}}</td>
+                            <td colspan="4">
+                                <b>{{get_app_setting('title')}}</b>
+                            </td>
+                            <td colspan="4">
+                                <b>{{$material->vendor->name}}</b>
+                            </td>
                         </tr>
                         <tr>
-                            <td colspan="3">{!! get_app_setting('address') !!}</td>
-                            <th colspan="2">Issue Date</th>
-                            <td colspan="2">{{$material->created_at->format('d F, Y')}}</td>
+                            <td colspan="4">
+                                <p style="margin-bottom:0">{{get_app_setting('contact_no')}}</p>
+                                <p style="margin-bottom:0">{{get_app_setting('email')}}</p>
+                                <p style="margin-bottom:0">{{get_app_setting('address')}}</p>
+                            </td>
+                            <td colspan="4">
+                                <p style="margin-bottom:0">{{$material->vendor->phone_no}}</p>
+                                <p style="margin-bottom:0">{{$material->vendor->email}}</p>
+                                <p style="margin-bottom:0">{{$material->vendor->address}}</p>
+                            </td>
                         </tr>
-
+                        {{-- <tr>
+                            <td colspan="6" style="background: #eee;"></td>
+                        </tr> --}}
                         <tr>
-                            <th>Sr. No.</th>
-                            <th>Material Description</th>
-                            <th>HSN Code</th>
-                            <th>Quantity</th>
-                            <th>Unit</th>
-                            <th>Wt/Pc</th>
-                            <th>Total Quantity</th>
+                            <th>Order No.</th>
+                            <td>{{$material->order_no}}</td>
+                            <td colspan="4"></td>
+                            <th>Order Date</th>
+                            <td>{{$material->created_at->format('d F, Y')}}</td>
                         </tr>
-
+                        {{-- <tr>
+                            <td colspan="6" style="background: #eee;"></td>
+                        </tr> --}}
+                        <tr>
+                            <th style="background:#ddd;">Si. No.</th>
+                            <th style="background:#ddd;" colspan="2">Product Details</th>
+                            <th style="background:#ddd;">Rate</th>
+                            <th style="background:#ddd;">GST</th>
+                            <th style="background:#ddd;">Quantity</th>
+                            <th style="background:#ddd;">Unit</th>
+                            <th style="background:#ddd;">Amount</th>
+                        </tr>
+                        @php
+                        @endphp
                         @foreach($material->materialItems as $item)
-                        <tr>
-                            <td>{{$loop->index+1}}.</td>
-                            <td>{{$item->product->name}}</td>
-                            <td>{{$item->product->hsn}}</td>
-                            <td>{{$item->quantity}}</td>
-                            <td>{{$item->unit}}</td>
-                            <td>{{$item->product->weight_per_piece}}</td>
-                            <td>{{$item->quantity * $item->product->weight_per_piece}}</td>
-                        </tr>
+                            @php
+                            @endphp
+                            <tr>
+                                <td>{{$loop->index+1}}</td>
+                                <td colspan="2">{{$item->product->name}}</td>
+                                <td>{{$item->rate_on}}</td>
+                                <td>{{$item->gst}}</td>
+                                <td>{{$item->quantity}}</td>
+                                <td>{{$item->unit->name}}</td>
+                                <td>{{$item->rate}}</td>
+                            </tr>
                         @endforeach
-
-
-                        <tr style="border-top:2px solid #3577f1;">
-                            <th colspan="2">Issue By</th>
-                            <td colspan="6">{{$material->madeBy->name}}</td>
-
+                        <tr>
+                            <th colspan="7" style="text-align:right;">Subtotal</th>
+                            <td>{{$material->subtotal}}</td>
                         </tr>
-
-                    </tbody>
+                        <tr>
+                            <th colspan="7" style="text-align:right;">GST</th>
+                            <td>{{$material->total_gst}}</td>
+                        </tr>
+                        <tr>
+                            <th colspan="7" style="text-align:right;">Total</th>
+                            <td>{{$material->total}}</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
                 </table>
-
-
-                
             </div>
         </div>
-    </div><!--end col-->
-</div><!--end row-->
+    </div>
+</div>
 
 
 

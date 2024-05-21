@@ -41,6 +41,10 @@ class MaterialOrderItem extends Model
         return $this->hasOne(Product::class, 'id', 'product_id');
     }
 
+    public function unit(){
+        return $this->hasOne(Unit::class,'id','unit_id');
+    }
+
 
     public function getActivitylogOptions(): LogOptions
     {
