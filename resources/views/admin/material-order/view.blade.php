@@ -53,13 +53,13 @@ th {
 
 
 <div class="row">
-    <div class="col-sm-8">
+    <div class="col-sm-9">
         <div class="card">
 
             <div class="card-body">
                 <table class="table">
                     <tr>
-                        <td colspan="4">
+                        <td colspan="5">
                             <b>{{get_app_setting('title')}}</b>
                         </td>
                         <td colspan="4">
@@ -67,7 +67,7 @@ th {
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="4">
+                        <td colspan="5">
                             <p style="margin-bottom:0">{{get_app_setting('contact_no')}}</p>
                             <p style="margin-bottom:0">{{get_app_setting('email')}}</p>
                             <p style="margin-bottom:0">{{get_app_setting('address')}}</p>
@@ -78,22 +78,18 @@ th {
                             <p style="margin-bottom:0">{{$material->vendor->address}}</p>
                         </td>
                     </tr>
-                        {{-- <tr>
-                            <td colspan="6" style="background: #eee;"></td>
-                        </tr> --}}
+                      
                         <tr>
                             <th>Order No.</th>
                             <td>{{$material->order_no}}</td>
-                            <td colspan="4"></td>
+                            <td colspan="5"></td>
                             <th>Order Date</th>
                             <td>{{$material->created_at->format('d F, Y')}}</td>
                         </tr>
-                        {{-- <tr>
-                            <td colspan="6" style="background: #eee;"></td>
-                        </tr> --}}
                         <tr>
                             <th style="background:#ddd;">Si. No.</th>
                             <th style="background:#ddd;" colspan="2">Product Details</th>
+                            <th style="background:#ddd;">Product Type</th>
                             <th style="background:#ddd;">Rate</th>
                             <th style="background:#ddd;">GST</th>
                             <th style="background:#ddd;">Quantity</th>
@@ -108,6 +104,7 @@ th {
                         <tr>
                             <td>{{$loop->index+1}}</td>
                             <td colspan="2">{{$item->product->name}}</td>
+                            <td>{{$item->product->productType->type}}</td>
                             <td>{{$item->rate_on}}</td>
                             <td>{{$item->gst}}</td>
                             <td>{{$item->quantity}}</td>
@@ -116,24 +113,25 @@ th {
                         </tr>
                         @endforeach
                         <tr>
-                            <th colspan="7" style="text-align:right;">Subtotal</th>
+                            <th colspan="8" style="text-align:right;">Subtotal</th>
                             <td>{{$material->subtotal}}</td>
                         </tr>
                         <tr>
-                            <th colspan="7" style="text-align:right;">GST</th>
+                            <th colspan="8" style="text-align:right;">GST</th>
                             <td>{{$material->total_gst}}</td>
                         </tr>
                         <tr>
-                            <th colspan="7" style="text-align:right;">Total</th>
+                            <th colspan="8" style="text-align:right;">Total</th>
                             <td>{{$material->total}}</td>
                         </tr>
                         <tr>
-                            <td colspan="5" rowspan="2" style="vertical-align: top;height: 80px;">Comment or Special Instructions</td>
+                            <td colspan="6" rowspan="2" style="vertical-align: top;height: 80px;">Comment or Special Instructions</td>
                             <td colspan="3" rowspan="2"></td>
                         </tr>
                         <tr>
                         </tr>
                         <tr style="visibility:collapse;">
+                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -148,7 +146,6 @@ th {
             </div>
         </div>
 
-        <div class="col-md-1 col-sm-12"></div>
 
         <div class="col-md-3 col-sm-12">
             <div class="card">
@@ -158,6 +155,15 @@ th {
                         {!! Form::label('status', 'Status') !!}
                         {!! Form::select('status', App\Models\Status::whereIn('id', [2, 3, 6, 8])->pluck('name', 'id'), $material->status_id, ['id' => 'status_id', 'class' => 'form-control', 'placeholder' => 'Chosse Status']) !!}
                         <small class="text-danger">{{ $errors->first('status') }}</small>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="checkbox{{ $errors->has('send_email') ? ' has-error' : '' }}">
+                            <label for="send_email">
+                                {!! Form::checkbox('send_email', 1, null, ['id' => 'send_email']) !!} Send Email
+                            </label>
+                        </div>
+                        <small class="text-danger">{{ $errors->first('send_email') }}</small>
                     </div>
 
                     {!! Form::submit('Change Status', ['class' => 'btn btn-success pull-right']) !!}
