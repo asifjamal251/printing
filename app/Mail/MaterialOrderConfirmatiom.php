@@ -14,36 +14,29 @@ class MaterialOrderConfirmatiom extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $pdf;
-    public $toAddresses;
-    public $ccAddresses;
-    public $material;
+    protected $pdf;
+    protected $toAddresses;
+    protected $ccAddresses;
+    protected $material;
+    protected $items;
 
-    /**
-     * Create a new message instance.
-     *
-     * @param string $pdf
-     * @param array $toAddresses
-     * @param array $ccAddresses
-     * @param array $material
-     */
-    public function __construct($pdf, $toAddresses, $ccAddresses, $material)
+    public function __construct($pdf, $toAddresses, $ccAddresses, $material, $items)
     {
         $this->pdf = $pdf;
         $this->toAddresses = $toAddresses;
         $this->ccAddresses = $ccAddresses;
         $this->material = $material;
+        $this->items = $items;
     }
 
-    /**
-     * Build the message.
-     *
-     * @return $this
-     */
+
     public function build()
     {
         $email = $this->view('emails.order-confirmation')
-                      ->with('material', $this->material)
+                      ->with([
+                            'material' => $this->material,
+                            'items' => $this->items,
+                        ])
                       ->attachData($this->pdf, 'order-confirmation.pdf', [
                           'mime' => 'application/pdf',
                       ]);

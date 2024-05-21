@@ -278,16 +278,23 @@ class MaterialOrderController extends Controller
             return response()->json(['error' => 'Material order not found'], 404);
         }
 
-         $material = $materialData->toArray();
-         return $material->materialItems;
-        $pdf = PDF::loadView('emails.order-confirmation', compact('material'))->output();
+        $itemsData = $materialData->materialItems;
+
+        $items = $itemsData->toArray();
+        $material = $materialData->toArray();
+
+        //$pdf = PDF::loadView('emails.order-confirmation', compact('material', 'items'))->setPaper('a4', 'portrait')->output();
+        $pdf = PDF::loadView('emails.order-confirmation', compact('material', 'items'))
+            ->setPaper('A4', 'portrait') // Ensure A4 paper size in portrait mode
+            ->setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true]) // Enable HTML5 and remote options
+            ->output();
 
         // Define recipients and CC addresses
         $toAddresses = ['asifjamal251@gmail.com', 'asif@artechnology.in', 'asif.sanix@gmail.com'];
         $ccAddresses = ['rajeev@artechnology.in', 'rajeev.evorapkg@gmail.com', 'rajeevbhardwaj14311@gmail.com'];
 
         // Send Email
-        Mail::send(new MaterialOrderConfirmatiom($pdf, $toAddresses, $ccAddresses, $material));
+        Mail::send(new MaterialOrderConfirmatiom($pdf, $toAddresses, $ccAddresses, $material, $items));
 
         return response()->json(['success' => 'Email sent successfully'], 200);
     }
