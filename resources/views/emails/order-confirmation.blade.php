@@ -32,7 +32,7 @@
 
 <table style="width: 100%;">
     <tr>
-        <td colspan="4" style="width: 50%;">
+        <td colspan="5" style="width: 50%;">
             <b>{{ get_app_setting('title') }}</b>
         </td>
         <td colspan="4" style="width: 50%;">
@@ -40,7 +40,7 @@
         </td>
     </tr>
     <tr>
-        <td colspan="4" style="width: 50%;">
+        <td colspan="5" style="width: 50%;">
             <p style="margin-bottom: 0;">{{ get_app_setting('contact_no') }}</p>
             <p style="margin-bottom: 0;">{{ get_app_setting('email') }}</p>
             <p style="margin-bottom: 0;">{{ get_app_setting('address') }}</p>
@@ -53,13 +53,14 @@
     </tr>
     <tr>
         <th colspan="2" style="background-color: #fff;">Order No.</th>
-        <td colspan="2" style="background-color: #fff;">{{ $material['order_no'] }}</td>
+        <td colspan="3" style="background-color: #fff;">{{ $material['order_no'] }}</td>
         <th colspan="2" style="background-color: #fff;">Order Date</th>
         <td colspan="2" style="background-color: #fff;">{{ \Carbon\Carbon::parse($material['created_at'])->format('d F, Y') }}</td>
     </tr>
     <tr>
         <th style="background-color: #ddd;">Si. No.</th>
         <th style="background-color: #ddd;" colspan="2">Product Details</th>
+        <th style="background-color: #ddd;">Product Type</th>
         <th style="background-color: #ddd;">Rate</th>
         <th style="background-color: #ddd;">GST</th>
         <th style="background-color: #ddd;">Quantity</th>
@@ -71,6 +72,7 @@
             <tr>
                 <td>{{ $loop->index + 1 }}</td>
                 <td colspan="2">{{ $item['product']['name'] ?? 'N/A' }}</td>
+                <td>{{ $item['product']['product_type']['type'] ?? 'N/A' }}</td>
                 <td>{{ $item['rate_on'] ?? 'N/A' }}</td>
                 <td>{{ $item['gst'] ?? 'N/A' }}</td>
                 <td>{{ $item['quantity'] ?? 0 }}</td>
@@ -80,23 +82,23 @@
         @endforeach
     @else
         <tr>
-            <td colspan="8">No items found.</td>
+            <td colspan="9">No items found.</td>
         </tr>
     @endif
     <tr>
-        <th colspan="7" style="text-align: right; background-color: #fff;">Subtotal</th>
+        <th colspan="8" style="text-align: right; background-color: #fff;">Subtotal</th>
         <td>{{ $material['subtotal'] ?? 0 }}</td>
     </tr>
     <tr>
-        <th colspan="7" style="text-align: right; background-color: #fff;">GST</th>
+        <th colspan="8" style="text-align: right; background-color: #fff;">GST</th>
         <td>{{ $material['total_gst'] ?? 0 }}</td>
     </tr>
     <tr>
-        <th colspan="7" style="text-align: right; background-color: #fff;">Total</th>
+        <th colspan="8" style="text-align: right; background-color: #fff;">Total</th>
         <td>{{ $material['total'] ?? 0 }}</td>
     </tr>
     <tr>
-        <td colspan="4" style="vertical-align: top; height: 80px;">Comment or Special Instructions</td>
+        <td colspan="5" style="vertical-align: top; height: 80px;">Comment or Special Instructions</td>
         <td colspan="4" style="vertical-align: top; height: 80px;">hjhghj</td>
     </tr>
 </table>

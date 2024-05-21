@@ -268,35 +268,35 @@ class MaterialOrderController extends Controller
     }
 
 
-     public function statusChange(Request $request, $id)
-    {
+     public function statusChange(Request $request, $id){
+        //return $request->all();
         $materialData = MaterialOrder::where('id', $id)->with(['madeBy', 'vendor', 'materialItems' => function($query) {
-            $query->with(['product', 'unit']);
+            $query->with(['product'=>function($query){
+                $query->with(['productType']);
+            }, 'unit']);
         }])->first();
+        $materialData->status_id = $request->status;
+        $materialData->save();
+        
+        if($request->send_email){
+            $itemsData = $materialData->materialItems;
 
-        if (!$materialData) {
-            return response()->json(['error' => 'Material order not found'], 404);
+            $items = $itemsData->toArray();
+            $material = $materialData->toArray();
+
+            $pdf = PDF::loadView('emails.order-confirmation', compact('material', 'items'))
+                ->setPaper('A4', 'portrait') // Ensure A4 paper size in portrait mode
+                ->setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true]) // Enable HTML5 and remote options
+                ->output();
+
+            $toAddresses = ['asifjamal251@gmail.com', 'asif@artechnology.in', 'asif.sanix@gmail.com'];
+            $ccAddresses = ['rajeev@artechnology.in', 'rajeev.evorapkg@gmail.com', 'rajeevbhardwaj14311@gmail.com'];
+
+            // Send Email
+            Mail::send(new MaterialOrderConfirmatiom($pdf, $toAddresses, $ccAddresses, $material, $items));
+
+            return response()->json(['success' => 'Email sent successfully'], 200);
         }
-
-        $itemsData = $materialData->materialItems;
-
-        $items = $itemsData->toArray();
-        $material = $materialData->toArray();
-
-        //$pdf = PDF::loadView('emails.order-confirmation', compact('material', 'items'))->setPaper('a4', 'portrait')->output();
-        $pdf = PDF::loadView('emails.order-confirmation', compact('material', 'items'))
-            ->setPaper('A4', 'portrait') // Ensure A4 paper size in portrait mode
-            ->setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true]) // Enable HTML5 and remote options
-            ->output();
-
-        // Define recipients and CC addresses
-        $toAddresses = ['asifjamal251@gmail.com', 'asif@artechnology.in', 'asif.sanix@gmail.com'];
-        $ccAddresses = ['rajeev@artechnology.in', 'rajeev.evorapkg@gmail.com', 'rajeevbhardwaj14311@gmail.com'];
-
-        // Send Email
-        Mail::send(new MaterialOrderConfirmatiom($pdf, $toAddresses, $ccAddresses, $material, $items));
-
-        return response()->json(['success' => 'Email sent successfully'], 200);
     }
 
     
