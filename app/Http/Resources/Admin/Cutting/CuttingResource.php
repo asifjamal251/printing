@@ -11,21 +11,29 @@ use App\Models\JobCardTimer;
 use App\Models\ModuleUser;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CuttingResource extends JsonResource
+class CuttingResource extends JsonResource{
 
-{
-
-    private function timer($jobCardId){
+    private function timer($jobCardId, $type){
         $timer = JobCardTimer::where(['machine' => 'Cutting', 'job_card_id' => $jobCardId])->first();
-        if ($timer) {
-            if($timer->worked_time){
-                return formatTime($timer->worked_time);
-            }else{
+        if($type == 'Timer'){
+            if ($timer) {
+                if($timer->worked_time){
+                    return formatTime($timer->worked_time);
+                }else{
+                    return 'N/A';
+                }
+            } 
+            else {
                 return 'N/A';
             }
-        } 
-        else {
-            return 'N/A';
+        }
+
+        if($type == 'Status'){
+            if ($timer){
+                return $timer->status;
+            } else {
+                return 'N/A';
+            }
         }
 
     }
@@ -136,7 +144,8 @@ class CuttingResource extends JsonResource
             'cutting_sheets'=>$this->cutting_sheets??'',
             'file' => $this->jobCard->mediaFiles->count()>0?"<a class='glightbox' data-gallery='".$this->id."' href='".asset($this->jobCard->mediaFiles[0]['file'])."'> <img class='rounded avatar-sm' src='".asset($this->jobCard->mediaFiles[0]['file'])."'/></a>":"N/A",
             'carton_name'=>$this->job_card_id?getCartonNames(@$this->jobCard->jobCardItems):'',
-            'timer' => $this->timer($this->job_card_id),
+            'timer' => $this->timer($this->job_card_id, 'Timer'),
+            'timer_status' => $this->timer($this->job_card_id, 'Status'),
         ];
 
     }

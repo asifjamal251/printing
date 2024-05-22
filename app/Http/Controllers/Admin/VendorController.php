@@ -61,6 +61,13 @@ class VendorController extends Controller
         $vendor->email = $request->email;
         $vendor->phone_no = $request->phone_no;
         $vendor->address = $request->address;
+        $vendor->mail_cc = $request->email_cc;
+
+        if($request->has('logo')){
+            foreach($request->logo as $file){
+                $vendor->media_id = $file;
+            } 
+        } 
 
         if($vendor->save()){
              return redirect()->route('admin.vendor.index')->with(['message'=>ucfirst(Str::singular(request()->segment(2))).' Successfully Created','class'=>'success']);
@@ -99,6 +106,15 @@ class VendorController extends Controller
         $vendor->email = $request->email;
         $vendor->phone_no = $request->phone_no;
         $vendor->address = $request->address;
+        $vendor->mail_cc = $request->email_cc;
+
+        if($request->has('logo')){
+            foreach($request->logo as $file){
+                $vendor->media_id = $file;
+            } 
+        }else{
+             $vendor->media_id = Null;
+        }
 
         if($vendor->save()){
              return redirect()->route('admin.vendor.index')->with(['message'=>ucfirst(Str::singular(request()->segment(2))).' Successfully Updated','class'=>'success']);

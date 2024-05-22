@@ -54,6 +54,7 @@
                                 <th>Counter</th>
                                 <th>File</th>
                                 <th>Status</th>
+                                <th>Timer</th>
                                 @can(['edit_spot_uv','delete_spot_uv', 'read_spot_uv', 'change_status_spot_uv'])
                                   <th>Action</th>
                                 @endcan
@@ -85,7 +86,7 @@
     <div class="offcanvas-body bg-light">
 
 
-        {{-- <div class="card">
+        <div class="card">
             <div class="card-body">
 
                 <div id="reportrange" class="form-icon w-100" style="width: 280px;text-align:center;cursor:pointer;margin-right: 10px;">
@@ -96,7 +97,7 @@
                 </div>
             </div>
 
-        </div> --}}
+        </div>
 
         <div class="card">
             <div class="card-header pt-2 pb-2">
@@ -138,7 +139,7 @@
 </div>
 </form>
 @endsection
-
+@include('admin.snippets.module-timer')
 @push('scripts')
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
@@ -228,6 +229,7 @@ $(document).ready(function(){
         },
         { "data": "file" },
         { "data": "status" },
+        { "data": "timer" },
         {
             "data": "action",
             render: function(data, type, row) {
@@ -235,6 +237,7 @@ $(document).ready(function(){
                     var btn = '<div class="dropdown d-inline-block"><button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="ri-more-fill align-middle"></i></button><ul class="dropdown-menu dropdown-menu-end">';
 
                     @can(['edit_spot_uv','delete_spot_uv','read_spot_uv', 'change_status_spot_uv'])
+                    btn+='<li><a class="dropdown-item edit-item-btn" onclick="updateTimer(\'{{ route('admin.job-card.timer.content') }}\',{machine:7, id:'+row['id']+',job_card_id:'+row['job_card_id']+'})" href="javascript:void(0);"><i class="ri-alarm-line align-bottom me-2 text-muted"></i> Timer</a></li>';
 
                     @can('change_status_spot_uv')
                         if(row['status_id'] == 2){

@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\MaterialOrder\MaterialOrderCollection;
+use App\Mail\MaterialOrderConfirmation;
 use App\Models\MaterialOrder;
-use App\Mail\MaterialOrderConfirmatiom;
 use App\Models\MaterialOrderItem;
 use App\Models\MaterialOrderPlate;
 use App\Models\Media;
@@ -13,15 +13,16 @@ use App\Models\PaperQuality;
 use App\Models\PaperType;
 use App\Models\Product;
 use App\Models\Transaction;
+use App\Models\vendor;
 use Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
-use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Support\Facades\Mail;
 
 class MaterialOrderController extends Controller
 {
@@ -268,36 +269,56 @@ class MaterialOrderController extends Controller
     }
 
 
-     public function statusChange(Request $request, $id){
-        //return $request->all();
-        $materialData = MaterialOrder::where('id', $id)->with(['madeBy', 'vendor', 'materialItems' => function($query) {
-            $query->with(['product'=>function($query){
-                $query->with(['productType']);
-            }, 'unit']);
-        }])->first();
+    public function statusChange(Request $request, $id){
+        // Fetch the material order with related data
+        $materialData = MaterialOrder::where('id', $id)
+            ->with([
+                'madeBy', 
+                'vendor'=>function($query){
+                    $query->with(['media']);
+                }, 
+                'materialItems' => function($query) {
+                    $query->with(['product' => function($query){
+                        $query->with('productType');
+                    }, 'unit']);
+                }
+            ])->first();
+        
+        // Update the status
         $materialData->status_id = $request->status;
         $materialData->save();
         
         if($request->send_email){
             $itemsData = $materialData->materialItems;
-
             $items = $itemsData->toArray();
             $material = $materialData->toArray();
 
+            // Generate the PDF
             $pdf = PDF::loadView('emails.order-confirmation', compact('material', 'items'))
                 ->setPaper('A4', 'portrait') // Ensure A4 paper size in portrait mode
                 ->setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true]) // Enable HTML5 and remote options
                 ->output();
 
-            $toAddresses = ['asifjamal251@gmail.com', 'asif@artechnology.in', 'asif.sanix@gmail.com'];
-            $ccAddresses = ['rajeev@artechnology.in', 'rajeev.evorapkg@gmail.com', 'rajeevbhardwaj14311@gmail.com'];
+            $vendor = Vendor::find($materialData->vendor_id);
 
-            // Send Email
-            Mail::send(new MaterialOrderConfirmatiom($pdf, $toAddresses, $ccAddresses, $material, $items));
+            // Ensure email addresses are properly formatted
+            $toAddresses = filter_var($vendor->email, FILTER_VALIDATE_EMAIL) ? [$vendor->email] : [];
+            $ccAddresses = array_filter(array_map('trim', explode(',', $vendor->mail_cc)), function($email) {
+                return filter_var($email, FILTER_VALIDATE_EMAIL);
+            });
 
-            return response()->json(['success' => 'Email sent successfully'], 200);
+            // Check if there are valid email addresses to send to
+            if (!empty($toAddresses)) {
+                // Send the email
+                Mail::send(new MaterialOrderConfirmation($pdf, $toAddresses, $ccAddresses, $material, $items));
+
+                return redirect()->back()->with(['class'=>'success','message'=>'Save has changed and email sent']);
+            } else {
+               return redirect()->back()->with(['class'=>'success','message'=>'Save has changed']);
+            }
         }
     }
+}
 
     
-}
+

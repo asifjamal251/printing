@@ -10,7 +10,7 @@ use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use Barryvdh\DomPDF\Facade\Pdf;
 
-class MaterialOrderConfirmatiom extends Mailable
+class MaterialOrderConfirmation extends Mailable
 {
     use Queueable, SerializesModels;
 

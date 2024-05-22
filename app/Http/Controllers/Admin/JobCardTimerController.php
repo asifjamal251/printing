@@ -12,8 +12,8 @@ use Spatie\Activitylog\Models\Activity;
 class JobCardTimerController extends Controller{
 
     public function content(Request $request){
-        $job_timer = JobCardTimer::firstorNew(['job_card_id' => $request->job_card_id]);
-        $job_timer->machine = $this->machineName($request->machine);
+        $module = $this->machineName($request->machine);
+        $job_timer = JobCardTimer::firstorNew(['job_card_id' => $request->job_card_id, 'machine'=>$module]);
         $job_timer->save();
         return response()->json(['class'=>'success','message'=>'Record Founded','datas'=>$job_timer]);
     }
@@ -79,7 +79,7 @@ class JobCardTimerController extends Controller{
         }
 
         if($id == 2){
-            return 'printing';
+            return 'Printing';
         }
 
         if($id == 3){

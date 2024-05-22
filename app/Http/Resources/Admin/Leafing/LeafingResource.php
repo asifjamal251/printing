@@ -2,12 +2,36 @@
 
 namespace App\Http\Resources\Admin\Leafing;
 use App\Models\JobCardHistory;
+use App\Models\JobCardTimer;
 use App\Models\ModuleUser;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class LeafingResource extends JsonResource
+class LeafingResource extends JsonResource{
 
-{
+    private function timer($jobCardId, $type){
+        $timer = JobCardTimer::where(['machine' => 'Leafing', 'job_card_id' => $jobCardId])->first();
+        if($type == 'Timer'){
+            if ($timer) {
+                if($timer->worked_time){
+                    return formatTime($timer->worked_time);
+                }else{
+                    return 'N/A';
+                }
+            } 
+            else {
+                return 'N/A';
+            }
+        }
+
+        if($type == 'Status'){
+            if ($timer){
+                return $timer->status;
+            } else {
+                return 'N/A';
+            }
+        }
+
+    }
 
     private function moduleUser($user, $id){
         $options = '<option selected="" value="">Oprator</option>';
@@ -84,6 +108,8 @@ class LeafingResource extends JsonResource
             'job_card_id'=>$this->job_card_id,
             'file' => $this->jobCard->mediaFiles->count()>0?"<a class='glightbox' data-gallery='".$this->id."' href='".asset($this->jobCard->mediaFiles[0]['file'])."'> <img class='rounded avatar-sm' src='".asset($this->jobCard->mediaFiles[0]['file'])."'/></a>":"N/A",
             'carton_name'=>$this->job_card_id?getCartonNames(@$this->jobCard->jobCardItems):'',
+            'timer' => $this->timer($this->job_card_id, 'Timer'),
+            'timer_status' => $this->timer($this->job_card_id, 'Status'),
         ];
 
     }

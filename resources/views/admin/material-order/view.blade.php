@@ -59,20 +59,35 @@ th {
             <div class="card-body">
                 <table class="table">
                     <tr>
-                        <td colspan="5">
-                            <b>{{get_app_setting('title')}}</b>
+                        <td colspan="6">
+                            <b>From</b>
                         </td>
-                        <td colspan="4">
-                            <b>{{$material->vendor->name}}</b>
+                        <td colspan="5">
+                            <b>To</b>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="6">
+                            <img src="{{asset(get_app_setting('logo'))}}" alt="" style="max-width:160px;max-height: 80px;">
+                        </td>
+                        <td colspan="5">
+                            @if($material->vendor->media)
+                            <img class="d-block img-thumbnail" style="max-width:160px;max-height: 80px;" src="{{asset($material->vendor->media->file)}}" alt="{{$material->vendor->media->name}}">
+                            @else
+                                <b>{{$material->vendor->name}}</b>
+                            @endif
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="5">
+                        <td colspan="6">
+                            <p><b>{{get_app_setting('title')}}</b></p>
                             <p style="margin-bottom:0">{{get_app_setting('contact_no')}}</p>
                             <p style="margin-bottom:0">{{get_app_setting('email')}}</p>
                             <p style="margin-bottom:0">{{get_app_setting('address')}}</p>
                         </td>
-                        <td colspan="4">
+                        <td colspan="5">
+                            <p><b>{{$material->vendor->name}}</b></p>
                             <p style="margin-bottom:0">{{$material->vendor->phone_no}}</p>
                             <p style="margin-bottom:0">{{$material->vendor->email}}</p>
                             <p style="margin-bottom:0">{{$material->vendor->address}}</p>
@@ -80,57 +95,60 @@ th {
                     </tr>
                       
                         <tr>
-                            <th>Order No.</th>
-                            <td>{{$material->order_no}}</td>
-                            <td colspan="5"></td>
-                            <th>Order Date</th>
-                            <td>{{$material->created_at->format('d F, Y')}}</td>
+                            <th colspan="2">Order No.</th>
+                            <td colspan="2">{{$material->order_no}}</td>
+                            <td colspan="3"></td>
+                            <th colspan="2">Order Date</th>
+                            <td colspan="2">{{$material->created_at->format('d F, Y')}}</td>
                         </tr>
                         <tr>
                             <th style="background:#ddd;">Si. No.</th>
-                            <th style="background:#ddd;" colspan="2">Product Details</th>
+                            <th style="background:#ddd;width:120px;" colspan="2">Product Details</th>
                             <th style="background:#ddd;">Product Type</th>
+                            <th style="background:#ddd;">QTY/PKT/NOs</th>
+                            <th style="background:#ddd;">WT/PC</th>
+                            <th style="background:#ddd;">Total Quantity</th>
+                            <th style="background:#ddd;">Unit</th>
                             <th style="background:#ddd;">Rate</th>
                             <th style="background:#ddd;">GST</th>
-                            <th style="background:#ddd;">Quantity</th>
-                            <th style="background:#ddd;">Unit</th>
                             <th style="background:#ddd;">Amount</th>
                         </tr>
-                        @php
-                        @endphp
+                        
                         @foreach($material->materialItems as $item)
-                        @php
-                        @endphp
                         <tr>
                             <td>{{$loop->index+1}}</td>
                             <td colspan="2">{{$item->product->name}}</td>
                             <td>{{$item->product->productType->type}}</td>
+                            <td>{{$item->quantity}}</td>
+                            <td>{{$item->weight_per_piece}}</td>
+                            <td>{{$item->total_weight}}</td>
+                            <td>{{$item->unit->name}}</td>
                             <td>{{$item->rate_on}}</td>
                             <td>{{$item->gst}}</td>
-                            <td>{{$item->quantity}}</td>
-                            <td>{{$item->unit->name}}</td>
                             <td>{{$item->rate}}</td>
                         </tr>
                         @endforeach
                         <tr>
-                            <th colspan="8" style="text-align:right;">Subtotal</th>
+                            <th colspan="10" style="text-align:right;">Subtotal</th>
                             <td>{{$material->subtotal}}</td>
                         </tr>
                         <tr>
-                            <th colspan="8" style="text-align:right;">GST</th>
+                            <th colspan="10" style="text-align:right;">GST</th>
                             <td>{{$material->total_gst}}</td>
                         </tr>
                         <tr>
-                            <th colspan="8" style="text-align:right;">Total</th>
+                            <th colspan="10" style="text-align:right;">Total</th>
                             <td>{{$material->total}}</td>
                         </tr>
                         <tr>
                             <td colspan="6" rowspan="2" style="vertical-align: top;height: 80px;">Comment or Special Instructions</td>
-                            <td colspan="3" rowspan="2"></td>
+                            <td colspan="5" rowspan="2"></td>
                         </tr>
                         <tr>
                         </tr>
                         <tr style="visibility:collapse;">
+                            <td></td>
+                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>

@@ -9,4 +9,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Vendor extends Model
 {
     use HasFactory,SoftDeletes;
+
+    public function media(){
+        return $this->hasOne(Media::class,'id','media_id');
+    }
 }
