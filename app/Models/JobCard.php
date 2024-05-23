@@ -30,6 +30,10 @@ class JobCard extends Model
         return $this->hasMany(JobCardItem::class,'job_card_id','id');
     }
 
+    public function jobCardPapers(){
+        return $this->hasMany(JobCardPaper::class,'job_card_id','id');
+    }
+
     public function putPaperWarehouse(){
         return $this->hasOne(PaperWarehouse::class,'put_job_card_id','id');
     }

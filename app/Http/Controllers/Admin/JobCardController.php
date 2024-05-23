@@ -33,7 +33,7 @@ class JobCardController extends Controller
 
         if ($request->ajax()) {
 
-            $datas = JobCard::orderBy('created_at', 'desc')->whereNotIn('status_id', [99])->with(['planningBy', 'deyDetail', 'jobCardHistory', 'jobCardItems'=>function($query){
+            $datas = JobCard::orderBy('created_at', 'desc')->whereNotIn('status_id', [99])->with(['planningBy', 'deyDetail', 'jobCardHistory', 'jobCardPapers', 'jobCardItems'=>function($query){
                         $query->with(['PO', 'POItem']);
                     },
                     'jobCardUser' => function ($query2) {
@@ -84,7 +84,7 @@ class JobCardController extends Controller
 
 
     public function edit($id){
-        $job_card = JobCard::where('id', $id)->with(['mediaFiles', 'putPaperWarehouse', 'getPaperWarehouse', 'planningBy', 'deyDetail', 'jobCardItems'=>function($query){
+        $job_card = JobCard::where('id', $id)->with(['mediaFiles', 'putPaperWarehouse', 'getPaperWarehouse', 'planningBy', 'deyDetail', 'jobCardPapers', 'jobCardItems'=>function($query){
                         $query->with(['PO', 'POItem']);
                     }])->first();
         return view('admin.job-card.edit', compact('job_card'));

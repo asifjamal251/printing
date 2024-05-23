@@ -156,7 +156,7 @@ class CommonController extends Controller{
         $term = $request->term;
 
         if ($paper_type != '') {
-            $query = Product::where('products.code', 'LIKE', '%' . $term . '%')
+            $query = Product::where('products.name', 'LIKE', '%' . $term . '%')
                         ->where('product_type_id', $paper_type)
                         ->join('categories', 'products.category_id', '=', 'categories.id')
                         ->orderBy('products.created_at', 'asc');
@@ -168,7 +168,7 @@ class CommonController extends Controller{
 
             $count = $query->count();
         } else {
-            $query = Product::where('products.code', 'LIKE', '%' . $term . '%')
+            $query = Product::where('products.name', 'LIKE', '%' . $term . '%')
                         ->join('categories', 'products.category_id', '=', 'categories.id')
                         ->orderBy('products.created_at', 'asc');
 
