@@ -136,7 +136,6 @@ class CuttingResource extends JsonResource{
             'divide' => $this->paperDivide($this->jobCard->paper_divide, $this->jobCard->warehouse_type),
             'required_sheet' => $this->requiredSheet($this->jobCard->required_sheet + $this->jobCard->wastage_sheet, $this->jobCard->warehouse_sheet, $this->jobCard->id, $this->metalic_status),
             'required_sheet_need' => ($this->jobCard->required_sheet + $this->jobCard->wastage_sheet),
-            //'required_sheet_total' =>  $this->requiredSheetTotal($this->jobCard->required_sheet + $this->jobCard->wastage_sheet, $this->jobCard->warehouse_sheet, $this->jobCard->id, $this->metalic_status),
             'required_sheet_total' =>  $this->cutting_sheets??'',
             'status'=> status($this->status_id),
             'status_id'=>$this->status_id,

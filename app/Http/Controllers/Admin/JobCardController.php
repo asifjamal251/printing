@@ -159,9 +159,8 @@ class JobCardController extends Controller
 
             $inputs = $request->input('kt_docs_repeater_advanced');
             foreach ($inputs as $input) {
-                $product = Product::find($input['paper']);
-                $job_card_paper = JobCardPaper::firstorNew(['job_card_id' => $job_card->id, 'product_id' => $input['paper']]);
-                //$job_card_paper->product_id = $input['paper'];
+                $product = Product::find($input['product']);
+                $job_card_paper = JobCardPaper::firstorNew(['job_card_id' => $job_card->id, 'product_id' => $input['product']]);
                 $job_card_paper->required_sheet = $input['required_sheet'];
                 $job_card_paper->wastage_sheet = $input['wastage_sheet'];
                 $job_card_paper->sheet_size = $input['sheet_size'];

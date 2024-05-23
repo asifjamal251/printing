@@ -348,10 +348,10 @@
 
 <hr>
 
+
 <div id="kt_docs_repeater_advanced">
         <div data-repeater-list="kt_docs_repeater_advanced">
             @if($errors->count() == 0)
-                @if($job_card->jobCardPapers->count() > 0)
                     @foreach($job_card->jobCardPapers as $jobCardPaper)
                         <div data-repeater-item class="row-{{$jobCardPaper->id}}">
                             <div class="card" style="position:relative;">
@@ -360,14 +360,14 @@
                                     <div class="custom-row d-flex gap-3">
 
                                         <div class="w-100 paper-check">
-                                            <div class="m-0 form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.paper') ? ' has-error' : '' }}">
+                                            <div class="m-0 form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.product') ? ' has-error' : '' }}">
                                                 <label class="form-label">Choose Product</label>
-                                                <select name="paper" class="form-select form-select-sm getProduct" data-kt-repeater="select2" data-placeholder="Select an option">
+                                                <select name="product" class="form-select form-select-sm getProduct" data-kt-repeater="select2" data-placeholder="Select an option">
 
                                                     <option selected="selected" value="{{$jobCardPaper->product_id}}">{{App\Models\Product::where('id', $jobCardPaper->product_id)->value('name')}}</option>
                                                    
                                                 </select>
-                                                <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.paper') }}</small>
+                                                <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.product') }}</small>
                                             </div>
                                         </div>
 
@@ -383,7 +383,7 @@
                                         <div class="w-100">
                                             <div class="m-0 form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.required_sheet') ? ' has-error' : '' }}">
                                                 {!! Form::label('required_sheet', 'Required Sheet') !!}
-                                                {!! Form::text('required_sheet', $jobCardPaper->required_sheet, ['class' => 'requiredSheet form-control form-control-sm', 'placeholder' => 'Paper Required', 'readonly']) !!}
+                                                {!! Form::text('required_sheet', $jobCardPaper->required_sheet, ['class' => 'requiredSheet form-control form-control-sm', 'placeholder' => 'Paper Required']) !!}
                                                 <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.required_sheet') }}</small>
                                             </div>
                                         </div>
@@ -420,7 +420,13 @@
                             </div>
                         </div>
                     @endforeach
-                @else
+
+                @endif
+                
+
+                @if($errors->count() > 0)
+
+
 
 
                     <!--begin::Repeater-->
@@ -503,7 +509,7 @@
                     </div>
 
                 @endif
-            @endif
+         
 
 
         </div>
