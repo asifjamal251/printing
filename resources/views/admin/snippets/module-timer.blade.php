@@ -326,6 +326,13 @@ function formatTime(seconds) {
 }
 
 
+
+$(document).ready(function() {
+    
+});
+
+
+
 </script>
 
 @endpush

@@ -17,11 +17,11 @@ class PrintingResource extends JsonResource{
                 if($timer->worked_time){
                     return formatTime($timer->worked_time);
                 }else{
-                    return 'N/A';
+                    return '0:0:0';
                 }
             } 
             else {
-                return 'N/A';
+                return '0:0:0';
             }
         }
 

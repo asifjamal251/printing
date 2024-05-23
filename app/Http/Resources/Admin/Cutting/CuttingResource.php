@@ -20,11 +20,11 @@ class CuttingResource extends JsonResource{
                 if($timer->worked_time){
                     return formatTime($timer->worked_time);
                 }else{
-                    return 'N/A';
+                    return '0:0:0';
                 }
             } 
             else {
-                return 'N/A';
+                return '0:0:0';
             }
         }
 
@@ -32,7 +32,7 @@ class CuttingResource extends JsonResource{
             if ($timer){
                 return $timer->status;
             } else {
-                return 'N/A';
+                return '0:0:0';
             }
         }
 
@@ -47,7 +47,7 @@ class CuttingResource extends JsonResource{
         }
 
         return collect([
-            'html' => '<div class="form-group">' .
+            'html' => '<div class="form-group" style="width:150px;">' .
                         '<select data-id="'. $id.'" class="form-select form-select-sm selectOprator" aria-label=".form-select-sm example">' .
                             $options .
                         '</select>' .

@@ -418,6 +418,21 @@
 
 
 
+<div id="kt_docs_repeater_advanced">
+    <div class="form-group">
+        <div data-repeater-list="kt_docs_repeater_advanced">
+            <div data-repeater-item class="row-{{$item->id}}">
+                <div class="card" style="position:relative;">
+                    <div class="card-body">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <div class="col-md-">
     
 

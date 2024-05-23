@@ -85,7 +85,7 @@
 <div class="offcanvas offcanvas-end border-0" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
     
     <div class="d-flex align-items-center bg-success bg-gradient p-3 offcanvas-header">
-        <h5 class="m-0 me-2 text-white">Product Filters</h5>
+        <h5 class="m-0 me-2 text-white">{{Str::title(str_replace('-', ' ', request()->segment(2)))}} Filters</h5>
 
         <button type="button" class="btn-close btn-close-white ms-auto" id="customizerclose-btn" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
@@ -140,6 +140,10 @@
                 <div class="d-inline-block" style="width:50%;">
                     <button type="button" class="btn btn-soft-success w-100 filters border-success">Apply Filter</button>
                 </div>
+
+                <div class="d-inline-block" style="width:50%;">
+                    <button onclick="downloadCarton(this)" type="submit" class="btn btn-soft-success w-100 border-success"> Dowload</button>
+                </div>
             </div>
         </div>
 
@@ -186,104 +190,161 @@
 </script>
 
 <script type="text/javascript">
-$(document).ready(function(){
+$(document).ready(function() {
     var table2 = $('#datatable').DataTable({
-        "drawCallback": function( settings ) {
-        lightbox.reload();
-    },
-    language: {
-        search: '',
-        searchPlaceholder: "🔍 Search...",
-    },
-    ordering: false,
-    processing: true,
-    serverSide: true,
-    "lengthMenu": [30, 50, 100,200],
-    'ajax': {
-    'url': '{{ route('admin.'.request()->segment(2).'.index') }}',
-    'data': function(d) {
-        d._token = '{{ csrf_token() }}';
-        d._method = 'PATCH';
-        d.user_id = $('#oprator').val();
-    }
-
-    },
-    "createdRow": function (row, data, dataIndex) {
-        if (data.status_id == 5) {
-            $(row).addClass('table-success border-secondary');
-        }
-    },
-    "columns": [
-        { "data": "sn" },
-        { "data": "oprator",
-            render: function(data, type, row) {
-                if(row['user'] == null){
-                    return row['oprator'];
-                }
-                else{
-                    return row['user'];
-                }
-            } 
+        "drawCallback": function(settings) {
+            lightbox.reload();
+            $('#datatable tbody tr').each(function() {
+                startTimer(this);
+            });
         },
-        { "data": "job_card_no" },
-        { "data": "carton_name" },
-        { "data": "set_no" },
-        { "data": "paper" },
-        { "data": "total_sheet" },
-        { "data": "divide" },
-        { "data": "sheet_size" },
-        { "data": "required_sheet" },
-        { "data": "cutting_sheet",
-            render: function(data, type, row) {
-                if(row['status_id'] == 5){
-                    return row['required_sheet_total'];
-                }else{
-                    return '<input data-total="'+row['required_sheet_need']+'"  data-id="'+row['id']+'" type="text" class="form-control form-control-sm cutting-sheet-input" name="cutting_sheets[]" value="'+row['required_sheet_total']+'" placeholder="Cutting Sheets" style="max-width:100px;">';
-                }
-                
+        language: {
+            search: '',
+            searchPlaceholder: "🔍 Search...",
+        },
+        ordering: false,
+        processing: true,
+        serverSide: true,
+        "lengthMenu": [30, 50, 100, 200],
+        'ajax': {
+            'url': '{{ route('admin.'.request()->segment(2).'.index') }}',
+            'data': function(d) {
+                d._token = '{{ csrf_token() }}';
+                d._method = 'PATCH';
+                d.user_id = $('#oprator').val();
             }
         },
-        { "data": "file" },
-        { "data": "status" },
-        { "data": "timer" },
-        {
-            "data": "action",
-            render: function(data, type, row) {
+        "createdRow": function(row, data, dataIndex) {
+            if (data.status_id == 5) {
+                $(row).addClass('table-success border-secondary');
+            }
+        },
+        "columns": [
+            { "data": "sn" },
+            { "data": "oprator", 
+                render: function(data, type, row) {
+                    if(row['status_id'] == 5) {
+                        return row['user']
+                    }
+                    else{
+                        return row['oprator'];
+                    }
+                    
+                }
+            },
+            { "data": "job_card_no" },
+            { "data": "carton_name" },
+            { "data": "set_no" },
+            { "data": "paper" },
+            { "data": "total_sheet" },
+            { "data": "divide" },
+            { "data": "sheet_size" },
+            { "data": "required_sheet" },
+            { "data": "cutting_sheet", render: function(data, type, row) {
+                if (row['status_id'] == 5) {
+                    return row['required_sheet_total'];
+                } else {
+                    return '<input data-total="'+row['required_sheet_need']+'" data-id="'+row['id']+'" type="text" class="form-control form-control-sm cutting-sheet-input" name="cutting_sheets[]" value="'+row['required_sheet_total']+'" placeholder="Cutting Sheets" style="max-width:100px;">';
+                }
+            }},
+            { "data": "file" },
+            { "data": "status" },
+            { "data": "timer", 
+                render: function(data, type, row) {
+                    if(row['timer_status'] == 1){
+                        return '<span class="timer" data-start-time="'+row['timer']+'">'+formatTime(parseTime(row['timer']))+'</span>';
+                    }
+                    else{
+                        return '<span class="timers" data-start-time="'+row['timer']+'">'+formatTime(parseTime(row['timer']))+'</span>';
+                        //return row['timer'];
+                    }
+                    
+                }
+            },
+            { "data": "action", render: function(data, type, row) {
                 if (type === 'display') {
                     var btn = '<div class="dropdown d-inline-block"><button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="ri-more-fill align-middle"></i></button><ul class="dropdown-menu dropdown-menu-end">';
 
                     @can(['edit_cutting','delete_cutting','read_cutting'])
-
-                        btn+='<li><a class="dropdown-item edit-item-btn" onclick="updateTimer(\'{{ route('admin.job-card.timer.content') }}\',{machine:1, id:'+row['id']+',job_card_id:'+row['job_card_id']+'})" href="javascript:void(0);"><i class="ri-alarm-line align-bottom me-2 text-muted"></i> Timer</a></li>';
-
+                    btn += '<li><a class="dropdown-item edit-item-btn" onclick="updateTimer(\'{{ route('admin.job-card.timer.content') }}\',{machine:1, id:'+row['id']+',job_card_id:'+row['job_card_id']+'})" href="javascript:void(0);"><i class="ri-alarm-line align-bottom me-2 text-muted"></i> Timer</a></li>';
                     @can('change_status_cutting')
-                        if(row['timer_status'] == 2){
-                            if(row['status_id'] == 2){
-                                btn+='<li><a onclick="updateData(\'{{ route('admin.cutting.changeStatus') }}\',{status:1, id:'+row['id']+',job_card_id:'+row['job_card_id']+'})" class="dropdown-item edit-item-btn" href="javascript:void(0);"><i class="ri-check-double-line align-bottom me-2 text-muted"></i> Completed</a></li>';
-                            }else{
-                                btn+='<li><a onclick="updateData(\'{{ route('admin.cutting.changeStatus') }}\',{status:2, id:'+row['id']+',job_card_id:'+row['job_card_id']+'})" class="dropdown-item edit-item-btn" href="javascript:void(0);"><i class="bx bx-x align-bottom me-2 fs-24 text-muted"></i> Cancel</a></li>';
-                            }
+                    if (row['timer_status'] == 2) {
+                        if (row['status_id'] == 2) {
+                            btn += '<li><a onclick="updateData(\'{{ route('admin.cutting.changeStatus') }}\',{status:1, id:'+row['id']+',job_card_id:'+row['job_card_id']+'})" class="dropdown-item edit-item-btn" href="javascript:void(0);"><i class="ri-check-double-line align-bottom me-2 text-muted"></i> Completed</a></li>';
+                        } else {
+                            btn += '<li><a onclick="updateData(\'{{ route('admin.cutting.changeStatus') }}\',{status:2, id:'+row['id']+',job_card_id:'+row['job_card_id']+'})" class="dropdown-item edit-item-btn" href="javascript:void(0);"><i class="bx bx-x align-bottom me-2 fs-24 text-muted"></i> Cancel</a></li>';
                         }
+                    }
                     @endcan
-
-
-                    // @can('edit_cutting')
-                    //     btn+='<li><a class="dropdown-item edit-item-btn" href="'+window.location.href+'/'+row['id']+'/edit"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>';
-                    // @endcan
-
-                    // @can('delete_cutting')
-                    //     btn += '<li><button type="button" onclick="deleteAjax(\''+window.location.href+'/'+row['id']+'/delete\')" class="dropdown-item remove-item-btn"><i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete</button></li>';
-                    // @endcan
-
                     @endcan
-                     btn += '</ul></div>';
+                    btn += '</ul></div>';
                     return btn;
                 }
                 return ' ';
-            },
-    }]
+            }}
+        ]
+    });
+
+    var table = table2;
+
+    // Object to hold interval IDs for each row
+    var intervalIds = {};
+
+    // Function to format time in hh:mm:ss
+    function formatTime(seconds) {
+        var hours = Math.floor(seconds / 3600);
+        var minutes = Math.floor((seconds % 3600) / 60);
+        var remainingSeconds = seconds % 60;
+        return (hours < 10 ? "0" : "") + hours + ":" + 
+               (minutes < 10 ? "0" : "") + minutes + ":" + 
+               (remainingSeconds < 10 ? "0" : "") + remainingSeconds;
+    }
+
+    // Function to parse time in hh:mm:ss to seconds
+    function parseTime(time) {
+        console.log('Time', time);
+        var parts = time.split(':');
+        var hours = parseInt(parts[0], 10);
+        var minutes = parseInt(parts[1], 10);
+        var seconds = parseInt(parts[2], 10);
+        return (hours * 3600) + (minutes * 60) + seconds;
+    }
+
+    // Function to start timer for each row
+    function startTimer(row) {
+        var timerCell = $(row).find('.timer');
+        
+        if(timerCell.length > 0){
+            var startTime = parseTime(timerCell.attr('data-start-time'));
+
+            // If timer is already running, do not start another one
+            if (timerCell.data('intervalId')) return;
+
+            // Update the display to show the starting time
+            timerCell.text(formatTime(startTime));
+
+            // Set interval and store the ID
+            var intervalId = setInterval(function() {
+                startTime++;
+                timerCell.text(formatTime(startTime));
+                timerCell.attr('data-start-time', formatTime(startTime)); // Update data-start-time attribute
+            }, 1000);
+
+            // Store interval ID in the cell's data attribute
+            timerCell.data('intervalId', intervalId);
+        }
+    }
+
+    // Start timer for each row on page load
+    $('#datatable tbody tr').each(function() {
+        startTimer(this);
+    });
+
 
 });
+
+
+
 
 $('body').on('click', '.filters', function(){
         table2.draw('page');
@@ -326,7 +387,7 @@ $('body').on('click', '.filters', function(){
                 }
             });
     });
-});
+
 
 
 $('body').on('change', '.selectOprator', function(){
@@ -365,6 +426,50 @@ $('body').on('change', '.selectOprator', function(){
 });
 
 
+function downloadCarton(element){
+    client = $('#filter_client').val();
+    if(client.length > 0){
+        var button = new Button(element);
+        button.process();
+        clearErrors();
+        var requestData,otpdata,data;
+
+        $.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url:'{{ route('admin.excell-download.carton-position') }}',
+            data: {'client':client, '_method': 'POST', '_token': '{{ csrf_token() }}' },
+            success:function(response){
+               // $('#offcanvasTop').offcanvas('hide')
+                Toastify({
+                    text: response.message,
+                    duration: 3000,
+                    close: true,
+                    gravity: "top",
+                    position: "right",
+                    stopOnFocus: true,
+                    className: response.class,
+
+                }).showToast();
+                button.normal();
+                window.location.href = response.filename;
+            },
+            error:function(error){
+                Toastify({
+                    text: error.responseJSON.message,
+                    duration: 3000,
+                    close: true,
+                    gravity: "top",
+                    position: "right",
+                    stopOnFocus: true,
+                    className: "error",
+
+                }).showToast();
+                button.normal();
+            }
+        });
+    }
+} 
 
 
     </script>
