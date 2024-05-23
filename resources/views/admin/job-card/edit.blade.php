@@ -270,76 +270,6 @@
 
 
 
-    <div class="card">
-        <div class="card-content">
-            <div class="card-body">
-                <div class="custom-row d-flex gap-3">
-
-                    <div class="w-100 paper-check">
-                        <div class="form-group{{ $errors->has('paper') ? ' has-error' : '' }}">
-                            {!! Form::label('paper', 'Paper') !!}
-                            {!! Form::select('paper', App\Models\Product::where('id', $job_card->product_id)->pluck('name', 'id'), $job_card->product_id, ['id' => 'paper', 'class' => 'form-control getProduct', 'placeholder'=>'Choose Paper']) !!}
-                            <span class="stock badge bg-success"></span>
-                            <small class="text-danger">{{ $errors->first('paper') }}</small>
-                        </div>
-                    </div>
-
-
-                    <div class="w-100">
-                        <div class="form-group{{ $errors->has('sheet_size') ? ' has-error' : '' }}">
-                            {!! Form::label('sheet_size', 'Sheet Size') !!}
-                            {!! Form::text('sheet_size', $job_card->sheet_size, ['class' => 'form-control', 'Placeholder' => 'Sheet Size', 'readonly']) !!}
-                            <small class="text-danger">{{ $errors->first('sheet_size') }}</small>
-                        </div>
-                    </div>
-
-                    <div class="w-100">
-                        <div class="form-group{{ $errors->has('required_sheet') ? ' has-error' : '' }}">
-                            {!! Form::label('required_sheet', 'Required Sheet') !!}
-                            {!! Form::text('required_sheet', $job_card->required_sheet, ['class' => 'total-sheet-clc form-control', 'placeholder' => 'Paper Required', 'readonly']) !!}
-                            <small class="text-danger">{{ $errors->first('required_sheet') }}</small>
-                        </div>
-                    </div>
-
-                    <div class="w-100">
-                        <div class="form-group{{ $errors->has('wastage_sheet') ? ' has-error' : '' }}">
-                            {!! Form::label('wastage_sheet', 'Wastage Sheet') !!}
-                            {!! Form::text('wastage_sheet', $job_card->wastage_sheet, ['class' => 'total-sheet-clc form-control', 'placeholder' => 'Wastage Sheet']) !!}
-                            <small class="text-danger">{{ $errors->first('wastage_sheet') }}</small>
-                        </div>
-                    </div>
-
-                    <div class="w-100">
-                        <div class="form-group{{ $errors->has('paper_divide') ? ' has-error' : '' }}">
-                            {!! Form::label('paper_divide', 'Paper Divide') !!}
-                            {!! Form::select('paper_divide',[1=>1, 2=>2, 3=>3, 4=>4, 5=>5, 6=>6] ,$job_card->paper_divide, ['class' => 'total-sheet-clc form-control', 'placeholder' => 'Paper Divide']) !!}
-                            <small class="text-danger">{{ $errors->first('paper_divide') }}</small>
-                        </div>
-                    </div>
-
-                    <div class="w-100">
-                        <div class="form-group{{ $errors->has('total_sheets') ? ' has-error' : '' }}">
-                            {!! Form::label('total_sheets', 'Total Sheets') !!}
-                            {!! Form::text('total_sheets', $job_card->total_sheet, ['class' => 'form-control', 'placeholder' => 'Total Sheets', 'readonly']) !!}
-                            {!! Form::hidden('old_total_sheets', $job_card->total_sheet??0) !!}
-                            <small class="text-danger">{{ $errors->first('total_sheets') }}</small>
-                        </div>
-                    </div>
-
-                </div>
-
-
-              
-
-
-            </div>
-        </div>
-    </div>
-
-
-
-
-
 
 
      <div class="card card border card-border-danger">
@@ -445,7 +375,7 @@
                                         <div class="w-100">
                                             <div class="m-0 form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.sheet_size') ? ' has-error' : '' }}">
                                                 {!! Form::label('sheet_size', 'Sheet Size') !!}
-                                                {!! Form::text('sheet_size', $jobCardPaper->sheet_size, ['class' => 'form-control form-control-sm', 'Placeholder' => 'Sheet Size', 'readonly']) !!}
+                                                {!! Form::text('sheet_size', $jobCardPaper->sheet_size, ['class' => 'sheetSize form-control form-control-sm', 'Placeholder' => 'Sheet Size', 'readonly']) !!}
                                                 <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.sheet_size') }}</small>
                                             </div>
                                         </div>
@@ -453,7 +383,7 @@
                                         <div class="w-100">
                                             <div class="m-0 form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.required_sheet') ? ' has-error' : '' }}">
                                                 {!! Form::label('required_sheet', 'Required Sheet') !!}
-                                                {!! Form::text('required_sheet', $jobCardPaper->required_sheet, ['class' => 'total-sheet-clc form-control form-control-sm', 'placeholder' => 'Paper Required', 'readonly']) !!}
+                                                {!! Form::text('required_sheet', $jobCardPaper->required_sheet, ['class' => 'requiredSheet form-control form-control-sm', 'placeholder' => 'Paper Required', 'readonly']) !!}
                                                 <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.required_sheet') }}</small>
                                             </div>
                                         </div>
@@ -461,7 +391,7 @@
                                         <div class="w-100">
                                             <div class="m-0 form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.wastage_sheet') ? ' has-error' : '' }}">
                                                 {!! Form::label('wastage_sheet', 'Wastage Sheet') !!}
-                                                {!! Form::text('wastage_sheet', $jobCardPaper->wastage_sheet, ['class' => 'total-sheet-clc form-control form-control-sm', 'placeholder' => 'Wastage Sheet']) !!}
+                                                {!! Form::text('wastage_sheet', $jobCardPaper->wastage_sheet, ['class' => 'wastageSheet form-control form-control-sm', 'placeholder' => 'Wastage Sheet']) !!}
                                                 <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.wastage_sheet') }}</small>
                                             </div>
                                         </div>
@@ -469,7 +399,7 @@
                                         <div class="w-100">
                                             <div class="m-0 form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.paper_divide') ? ' has-error' : '' }}">
                                                 {!! Form::label('paper_divide', 'Paper Divide') !!}
-                                                {!! Form::select('paper_divide',[1=>1, 2=>2, 3=>3, 4=>4, 5=>5, 6=>6] ,$jobCardPaper->paper_divide, ['class' => 'total-sheet-clc form-control form-control-sm', 'placeholder' => 'Paper Divide']) !!}
+                                                {!! Form::select('paper_divide',[1=>1, 2=>2, 3=>3, 4=>4, 5=>5, 6=>6] ,$jobCardPaper->paper_divide, ['class' => 'paperDivide form-control form-control-sm', 'placeholder' => 'Paper Divide']) !!}
                                                 <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.paper_divide') }}</small>
                                             </div>
                                         </div>
@@ -477,7 +407,7 @@
                                         <div class="w-100">
                                             <div class="m-0 form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.total_sheets') ? ' has-error' : '' }}">
                                                 {!! Form::label('total_sheets', 'Total Sheets') !!}
-                                                {!! Form::text('total_sheets', $jobCardPaper->total_sheet, ['class' => 'form-control form-control-sm', 'placeholder' => 'Total Sheets', 'readonly']) !!}
+                                                {!! Form::text('total_sheets', $jobCardPaper->total_sheet, ['class' => 'totalSheets form-control form-control-sm', 'placeholder' => 'Total Sheets', 'readonly']) !!}
                                                 {!! Form::hidden('old_total_sheets', $jobCardPaper->total_sheet??0) !!}
                                                 <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.total_sheets') }}</small>
                                             </div>
@@ -525,7 +455,7 @@
                                                 <div class="w-100">
                                                     <div class="m-0 form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.sheet_size') ? ' has-error' : '' }}">
                                                         {!! Form::label('sheet_size', 'Sheet Size') !!}
-                                                        {!! Form::text('sheet_size', old('kt_docs_repeater_advanced.'.$loop->index.'.sheet_size', $item['sheet_size'] ?? ''), ['class' => 'form-control form-control-sm', 'Placeholder' => 'Sheet Size', 'readonly']) !!}
+                                                        {!! Form::text('sheet_size', old('kt_docs_repeater_advanced.'.$loop->index.'.sheet_size', $item['sheet_size'] ?? ''), ['class' => 'sheetSize form-control form-control-sm', 'Placeholder' => 'Sheet Size', 'readonly']) !!}
                                                         <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.sheet_size') }}</small>
                                                     </div>
                                                 </div>
@@ -533,7 +463,7 @@
                                                 <div class="w-100">
                                                     <div class="m-0 form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.required_sheet') ? ' has-error' : '' }}">
                                                         {!! Form::label('required_sheet', 'Required Sheet') !!}
-                                                        {!! Form::text('required_sheet', old('kt_docs_repeater_advanced.'.$loop->index.'.required_sheet', $item['required_sheet'] ?? ''), ['class' => 'total-sheet-clc form-control form-control-sm', 'placeholder' => 'Paper Required', 'readonly']) !!}
+                                                        {!! Form::text('required_sheet', old('kt_docs_repeater_advanced.'.$loop->index.'.required_sheet', $item['required_sheet'] ?? ''), ['class' => 'requiredSheet form-control form-control-sm', 'placeholder' => 'Paper Required']) !!}
                                                         <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.required_sheet') }}</small>
                                                     </div>
                                                 </div>
@@ -541,7 +471,7 @@
                                                 <div class="w-100">
                                                     <div class="m-0 form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.wastage_sheet') ? ' has-error' : '' }}">
                                                         {!! Form::label('wastage_sheet', 'Wastage Sheet') !!}
-                                                        {!! Form::text('wastage_sheet', old('kt_docs_repeater_advanced.'.$loop->index.'.wastage_sheet', $item['wastage_sheet'] ?? ''), ['class' => 'total-sheet-clc form-control form-control-sm', 'placeholder' => 'Wastage Sheet']) !!}
+                                                        {!! Form::text('wastage_sheet', old('kt_docs_repeater_advanced.'.$loop->index.'.wastage_sheet', $item['wastage_sheet'] ?? ''), ['class' => 'wastageSheet form-control form-control-sm', 'placeholder' => 'Wastage Sheet']) !!}
                                                         <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.wastage_sheet') }}</small>
                                                     </div>
                                                 </div>
@@ -549,7 +479,7 @@
                                                 <div class="w-100">
                                                     <div class="m-0 form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.paper_divide') ? ' has-error' : '' }}">
                                                         {!! Form::label('paper_divide', 'Paper Divide') !!}
-                                                        {!! Form::select('paper_divide',[1=>1, 2=>2, 3=>3, 4=>4, 5=>5, 6=>6] , old('kt_docs_repeater_advanced.'.$loop->index.'.paper_divide', $item['paper_divide'] ?? ''), ['class' => 'total-sheet-clc form-control form-control-sm', 'placeholder' => 'Paper Divide']) !!}
+                                                        {!! Form::select('paper_divide',[1=>1, 2=>2, 3=>3, 4=>4, 5=>5, 6=>6] , old('kt_docs_repeater_advanced.'.$loop->index.'.paper_divide', $item['paper_divide'] ?? ''), ['class' => 'paperDivide form-control form-control-sm', 'placeholder' => 'Paper Divide']) !!}
                                                         <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.paper_divide') }}</small>
                                                     </div>
                                                 </div>
@@ -557,8 +487,8 @@
                                                 <div class="w-100">
                                                     <div class="m-0 form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.total_sheets') ? ' has-error' : '' }}">
                                                         {!! Form::label('total_sheets', 'Total Sheets') !!}
-                                                        {!! Form::text('total_sheets', old('kt_docs_repeater_advanced.'.$loop->index.'.total_sheets', $item['total_sheets'] ?? ''), ['class' => 'form-control form-control-sm', 'placeholder' => 'Total Sheets', 'readonly']) !!}
-                                                        {!! Form::hidden('old_total_sheets', $jobCardPaper->total_sheet??0) !!}
+                                                        {!! Form::text('total_sheets', old('kt_docs_repeater_advanced.'.$loop->index.'.total_sheets', $item['total_sheets'] ?? ''), ['class' => 'totalSheets form-control form-control-sm', 'placeholder' => 'Total Sheets', 'readonly']) !!}
+                                                        {!! Form::hidden('old_total_sheets', old('kt_docs_repeater_advanced.'.$loop->index.'.old_total_sheets', $item['old_total_sheets'] ?? ''), ['class' => 'oldTotalSheet']) !!}
                                                         <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.total_sheets') }}</small>
                                                     </div>
                                                 </div>
@@ -664,20 +594,36 @@
     // });
 
 $(document).ready(function() {
-    function ClcSheet() {
-        var wastage = parseInt($('.form-control[name="wastage_sheet"]').val());
-        var paper_divide = parseInt($('.form-control[name="paper_divide"]').val());
-        var paper_required = parseInt($('.form-control[name="required_sheet"]').val());
+    function ClcSheet(position) {
+        var wastage = parseInt($('input[name="kt_docs_repeater_advanced[' + position + '][wastage_sheet]"]').val());
+        var paper_divide = parseInt($('select[name="kt_docs_repeater_advanced[' + position + '][paper_divide]"]').val());
+        var paper_required = parseInt($('input[name="kt_docs_repeater_advanced[' + position + '][required_sheet]"]').val());
         
+        console.log('wastage', wastage);
+        console.log('paper_divide', paper_divide);
+        console.log('paper_required', paper_required);
+
         if (!isNaN(wastage) && !isNaN(paper_divide) && !isNaN(paper_required)) {
             var total_sheet = (paper_required + wastage) / paper_divide;
-            $('.form-control[name="total_sheets"]').val(parseInt(total_sheet));
+            $('input[name="kt_docs_repeater_advanced[' + position + '][total_sheets]"]').val(parseInt(total_sheet));
         }
     }
 
-    $('body').on('change', '.total-sheet-clc', function() {
-        ClcSheet();
+    $('body').on('change', '.wastageSheet', function() {
+        var current_name = $(this).attr('name');
+        var parts = current_name.split(/\[|\]/);
+        var position = parts[1];
+        ClcSheet(position);
     });
+
+
+    $('body').on('change', '.paperDivide', function() {
+        var current_name = $(this).attr('name');
+        var parts = current_name.split(/\[|\]/);
+        var position = parts[1];
+        ClcSheet(position);
+    });
+
 });
   
 $(".warehouse").select2({
@@ -710,6 +656,7 @@ $('#kt_docs_repeater_advanced').repeater({
     },
 
     show: function () {
+
         $(this).addClass('row-' + rowCounter);
         rowCounter++; 
 
@@ -738,6 +685,14 @@ $('#kt_docs_repeater_advanced').repeater({
         if ($containers.length >= 2) {
             $containers.slice(1).remove();
         }
+
+        var default_sheet_size = $('input[name="kt_docs_repeater_advanced[' + 0 + '][sheet_size]"]').val();
+        var default_required_sheet= $('input[name="kt_docs_repeater_advanced[' + 0 + '][required_sheet]"]').val();
+
+        $(this).find('.sheetSize').val(default_sheet_size);
+        $(this).find('.requiredSheet').val(default_required_sheet);
+        $(this).find('.oldTotalSheet').val(0);
+
 
     },
 

@@ -4,20 +4,21 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\Planning\PlanningCollection;
+use App\Models\Designing;
+use App\Models\DyeDetails;
+use App\Models\JobCard;
+use App\Models\JobCardItem;
+use App\Models\JobCardPaper;
+use App\Models\Media;
 use App\Models\Planning;
 use App\Models\PlanningPlate;
-use App\Models\Designing;
 use App\Models\PurchaseOrderItem;
-use App\Models\JobCard;
-use App\Models\Media;
-use App\Models\JobCardItem;
-use App\Models\DyeDetails;
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
-use Auth;
 
 class PlanningController extends Controller
 {
@@ -241,6 +242,10 @@ class PlanningController extends Controller
                 $job_card->sheet_size = $dye_details?$dye_details->sheet_size:null;
                 $job_card->dye_details_id = $dye_details?$dye_details->id:null;
                 $job_card->dye_details = $dye_details?$dye_details->dye_no.'/'.$dye_details->ups.'-'.$dye_details->dye_lock:'New';
+
+                $job_card_paper = JobCardPaper::firstOrNew(['job_card_id'=>$job_card->id]);
+                $job_card_paper->sheet_size = $dye_details?$dye_details->sheet_size:null;
+                $job_card_paper->save();
             }
             $job_card_item->save();
             $job_card->save();

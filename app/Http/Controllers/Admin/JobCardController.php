@@ -11,6 +11,7 @@ use App\Models\IssueItem;
 use App\Models\JobCard;
 use App\Models\JobCardHistory;
 use App\Models\JobCardItem;
+use App\Models\JobCardPaper;
 use App\Models\JobCardUser;
 use App\Models\Media;
 use App\Models\PaperWarehouse;
@@ -93,22 +94,24 @@ class JobCardController extends Controller
 
     public function update(Request $request, $id) {
         //return $request->all();
+
         $this->validate($request,[ 
             'coating_machine'=>'required',  
             'other_coating_machine'=>'required',  
             'coating_window_cutting'=>'required',  
             'dye_machine'=>'required', 
             'embossing_leafing'=>'required', 
+            'kt_docs_repeater_advanced' => 'required|array',
         ]);
 
         
         $user = Auth::guard('admin')->user();
         $job_card = JobCard::find($id);
-        $job_card->product_id = $request->paper;
-        $job_card->wastage_sheet = $request->wastage_sheet;
-        $job_card->total_sheet = $request->total_sheets;
+        //$job_card->product_id = $request->paper;
+        // $job_card->wastage_sheet = $request->wastage_sheet;
+        // $job_card->total_sheet = $request->total_sheets;
         $job_card->dye_machine = $request->dye_machine;
-        $job_card->paper_divide = $request->paper_divide;
+        // $job_card->paper_divide = $request->paper_divide;
         $job_card->coating_machine = $request->coating_machine;
         $job_card->coating_window_cutting = $request->coating_window_cutting;
         $job_card->embossing_leafing = $request->embossing_leafing;
@@ -152,43 +155,59 @@ class JobCardController extends Controller
         }
         if($job_card->save()){
             $job_card->mediaFiles()->sync($request->file); 
-            $product = Product::find($job_card->product_id);
-            $changeQuantity = $request->total_sheets - $request->old_total_sheets;
+            
 
-        if($changeQuantity != 0){
-            if($request->warehouse_type != ''){
+            $inputs = $request->input('kt_docs_repeater_advanced');
+            foreach ($inputs as $input) {
+                $product = Product::find($input['paper']);
+                $job_card_paper = JobCardPaper::firstorNew(['job_card_id' => $job_card->id, 'product_id' => $input['paper']]);
+                //$job_card_paper->product_id = $input['paper'];
+                $job_card_paper->required_sheet = $input['required_sheet'];
+                $job_card_paper->wastage_sheet = $input['wastage_sheet'];
+                $job_card_paper->sheet_size = $input['sheet_size'];
+                $job_card_paper->total_sheet = $input['total_sheets'];
+                $job_card_paper->paper_divide = $input['paper_divide'];
+                $job_card_paper->subtotal_sheet = $input['wastage_sheet'] + $input['required_sheet'];
+                $job_card_paper->save();
 
-            } else{
-                $today = Carbon::now()->format('d-m');
-                $issue = Issue::firstorNew(['issue_at' => $today]);
-                $issue->save();
+                if($input['old_total_sheets']){
+                    $changeQuantity = $input['total_sheets'] - $input['old_total_sheets'];
+                }else{
+                    $changeQuantity = $input['total_sheets'];
+                }
 
-                $issue_item = IssueItem::firstorNew(['product_id' => $product->id]);
-                $issue_item->issue_id = $issue->id;
-                $issue_item->job_card_id = $job_card->id;
-                $issue_item->job_card_id = $job_card->id;
-                $issue_item->quantity = $changeQuantity;
-                $issue_item->unit = $product->unit->name;
-                $issue_item->issue_by = $user->id;
-                $issue_item->issue_for = 1;
-                $issue_item->issue_type = 0;
-                $issue_item->save();
+                if($changeQuantity != 0){
+                    $today = Carbon::now()->format('d-m');
+                    $issue = Issue::firstorNew(['issue_at' => $today]);
+                    $issue->save();
 
-                $transaction = new Transaction;
-                $transaction->product_id = $product->id;
-                $transaction->type = 'Debit';
-                $transaction->current_quantity = $product->quantity;
-                $transaction->new_quantity = $changeQuantity;
-                $transaction->total_quantity = $product->quantity - $changeQuantity;
-                $transaction->remarks = 'used in job card';
-                $transaction->trancation_by = $user->id;
-                $transaction->job_card_id = $job_card->id;
-                $transaction->issue_item_id = $issue_item->id;
-                $transaction->save();
-                $product->quantity = $product->quantity - $changeQuantity;
-                $product->save();
+                    $issue_item = IssueItem::firstorNew(['product_id' => $product->id]);
+                    $issue_item->issue_id = $issue->id;
+                    $issue_item->job_card_id = $job_card->id;
+                    $issue_item->job_card_id = $job_card->id;
+                    $issue_item->quantity = $changeQuantity;
+                    $issue_item->unit = $product->unit->name;
+                    $issue_item->issue_by = $user->id;
+                    $issue_item->issue_for = 1;
+                    $issue_item->issue_type = 0;
+                    $issue_item->save();
+
+                    $transaction = new Transaction;
+                    $transaction->product_id = $product->id;
+                    $transaction->type = 'Debit';
+                    $transaction->current_quantity = $product->quantity;
+                    $transaction->new_quantity = $changeQuantity;
+                    $transaction->total_quantity = $product->quantity - $changeQuantity;
+                    $transaction->remarks = 'used in job card';
+                    $transaction->trancation_by = $user->id;
+                    $transaction->job_card_id = $job_card->id;
+                    $transaction->issue_item_id = $issue_item->id;
+                    $transaction->save();
+                    $product->quantity = $product->quantity - $changeQuantity;
+                    $product->save();
+
+                }
             }
-        }
 
 
             return redirect()->route('admin.job-card.index')->with(['class'=>'success','message'=>'Job Card saved successfully.']);
