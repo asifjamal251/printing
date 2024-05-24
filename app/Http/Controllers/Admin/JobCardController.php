@@ -208,6 +208,10 @@ class JobCardController extends Controller
                 }
             }
 
+            $total_sheets = JobCardPaper::where('job_card_id', $job_card->id)->sum('subtotal_sheet');
+            $job_card->total_sheet = $total_sheets;
+            $job_card->save();
+
 
             return redirect()->route('admin.job-card.index')->with(['class'=>'success','message'=>'Job Card saved successfully.']);
         }

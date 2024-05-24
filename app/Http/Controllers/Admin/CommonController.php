@@ -157,13 +157,13 @@ class CommonController extends Controller{
 
         if ($paper_type != '') {
             $query = Product::where('products.name', 'LIKE', '%' . $term . '%')
-                        ->where('product_type_id', $paper_type)
                         ->join('categories', 'products.category_id', '=', 'categories.id')
+                        ->join('product_types', 'products.product_type_id', '=', 'product_types.id')
                         ->orderBy('products.created_at', 'asc');
 
             $name = $query->skip($offset)
                         ->take($resultCount)
-                        ->selectRaw('products.id, CONCAT(products.code, " (", products.name, ", ", categories.name, ")") as text, products.id as product_id')
+                        ->selectRaw('products.id, CONCAT(products.name, " (", categories.name, ", ", product_types.type, ")") as text, products.id as product_id')
                         ->get();
 
             $count = $query->count();

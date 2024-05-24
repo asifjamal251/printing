@@ -12,5 +12,8 @@ class JobCardPaper extends Model{
     protected $fillable = [
         'id', 'job_card_id', 'product_id'
     ];
-   
+    
+    public function product(){
+        return $this->hasOne(Product::class,'id','product_id');
+    }
 }

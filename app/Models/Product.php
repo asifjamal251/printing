@@ -38,7 +38,7 @@ class Product extends Model
 
     public function productType()
     {
-        return $this->belongsTo(ProductType::class);
+        return $this->hasOne(ProductType::class,'id','product_type_id');
     }
 
     public static function boot()

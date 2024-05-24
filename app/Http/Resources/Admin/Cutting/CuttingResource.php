@@ -116,6 +116,57 @@ class CuttingResource extends JsonResource{
         return $required;
     }
 
+    function paperDetails($paperDetails){
+        $jobCardPaper = [];
+        
+        foreach ($paperDetails as $key=>$item) {
+            if($paperDetails->count() > 1){
+                $jobCardPaper[] = '<p class="m-0 carton-list">' . @$item->product->name.'-'.@$item->product->productType->type.'</p>';
+            }
+        }
+
+        if($paperDetails->count() > 1){
+            $jobCardPaper[] = '';
+        }
+        $uniqueJobCardPaper = array_unique($jobCardPaper);
+        return implode('', $jobCardPaper);
+    }
+
+
+
+    function paperDevide($paperDetails){
+        $jobCardPaper = [];
+        
+        foreach ($paperDetails as $key=>$item) {
+            if($paperDetails->count() > 1){
+                $jobCardPaper[] = '<p class="m-0 carton-list">' . @$item->paper_divide.'</p>';
+            }
+        }
+
+        if($paperDetails->count() > 1){
+            $jobCardPaper[] = '';
+        }
+        //$uniqueJobCardPaper = array_unique($jobCardPaper);
+        return implode('', $jobCardPaper);
+    }
+
+
+    function paperRequiredSheet($paperDetails){
+        $jobCardPaper = [];
+        
+        foreach ($paperDetails as $key=>$item) {
+            if($paperDetails->count() > 1){
+                $jobCardPaper[] = '<p class="m-0 carton-list">' . @$item->total_sheet.'</p>';
+            }
+        }
+
+        if($paperDetails->count() > 1){
+            $jobCardPaper[] = '';
+        }
+        //$uniqueJobCardPaper = array_unique($jobCardPaper);
+        return implode('', $jobCardPaper);
+    }
+
 
 
 
@@ -129,12 +180,13 @@ class CuttingResource extends JsonResource{
             'user' => $this->user_id?$this->user->name:null,           
             'job_card_no'=>'<a class="text-danger" target="_blank" href="/admin/job-card/'.$this->jobCard->id.'">'.$this->jobCard->job_card_no."</a>",
             'set_no' => $this->jobCard->set_no,
+            'paper_details' => $this->paperDetails($this->jobCard->jobCardPapers),
+            'paper_devide' => $this->paperDevide($this->jobCard->jobCardPapers),
+            'required_sheet' => $this->paperRequiredSheet($this->jobCard->jobCardPapers),
             'paper' => @$this->jobCard->paper->name . ' &nbsp;&nbsp;&nbsp;' .  @$this->jobCard->paper->category->name .$this->coating(otherCoatingTypeList(@$this->jobCard->jobCardItems)),
             'sheet_size' => $this->sheetSize($this->jobCard->sheet_size, $this->jobCard->warehouse_paper),
-            //'total_sheet' => $this->jobCard->total_sheet,
-            'total_sheet' => $this->counter($this->jobCard->id, $this->jobCard->total_sheet, $this->metalic_status),
+            'total_sheet' => $this->jobCard->total_sheet,
             'divide' => $this->paperDivide($this->jobCard->paper_divide, $this->jobCard->warehouse_type),
-            'required_sheet' => $this->requiredSheet($this->jobCard->required_sheet + $this->jobCard->wastage_sheet, $this->jobCard->warehouse_sheet, $this->jobCard->id, $this->metalic_status),
             'required_sheet_need' => ($this->jobCard->required_sheet + $this->jobCard->wastage_sheet),
             'required_sheet_total' =>  $this->cutting_sheets??'',
             'status'=> status($this->status_id),

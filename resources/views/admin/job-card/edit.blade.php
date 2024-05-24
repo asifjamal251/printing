@@ -352,6 +352,7 @@
 <div id="kt_docs_repeater_advanced">
         <div data-repeater-list="kt_docs_repeater_advanced">
             @if($errors->count() == 0)
+            @if($job_card->jobCardPapers->count() > 0)
                     @foreach($job_card->jobCardPapers as $jobCardPaper)
                         <div data-repeater-item class="row-{{$jobCardPaper->id}}">
                             <div class="card" style="position:relative;">
@@ -420,6 +421,79 @@
                             </div>
                         </div>
                     @endforeach
+
+                    @else
+                        @foreach(old('kt_docs_repeater_advanced', [[]]) as $item)
+                           <div data-repeater-item class="row-{{$loop->index}}">
+                                <div class="card" style="position:relative;">
+                                    <div class="card-body">
+
+                                        
+                                        <div class="custom-row d-flex gap-3">
+
+                                            <div class="w-100 paper-check">
+                                                <div class="m-0 form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.product') ? ' has-error' : '' }}">
+                                                        <label class="form-label">Choose Product</label>
+                                                        <select name="product" class="form-select form-select-sm getProduct" data-kt-repeater="select2" data-placeholder="Select an option">
+
+                                                            @if(old('kt_docs_repeater_advanced.'.$loop->index.'.product'))
+                                                            <option selected="selected" value="{{$item['product']}}">{{App\Models\Product::where('id', $item['product'])->value('name')}}</option>
+                                                            @else
+                                                            <option></option>
+                                                            @endif
+                                                        </select>
+                                                        <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.product') }}</small>
+                                                    </div>
+                                            </div>
+
+
+                                            <div class="w-100">
+                                                <div class="m-0 form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.sheet_size') ? ' has-error' : '' }}">
+                                                    {!! Form::label('sheet_size', 'Sheet Size') !!}
+                                                    {!! Form::text('sheet_size', old('kt_docs_repeater_advanced.'.$loop->index.'.sheet_size', $item['sheet_size'] ?? $job_card->sheet_size), ['class' => 'sheetSize form-control form-control-sm', 'Placeholder' => 'Sheet Size', 'readonly']) !!}
+                                                    <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.sheet_size') }}</small>
+                                                </div>
+                                            </div>
+
+                                            <div class="w-100">
+                                                <div class="m-0 form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.required_sheet') ? ' has-error' : '' }}">
+                                                    {!! Form::label('required_sheet', 'Required Sheet') !!}
+                                                    {!! Form::text('required_sheet', old('kt_docs_repeater_advanced.'.$loop->index.'.required_sheet', $item['required_sheet'] ?? $job_card->required_sheet), ['class' => 'requiredSheet form-control form-control-sm', 'placeholder' => 'Paper Required']) !!}
+                                                    <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.required_sheet') }}</small>
+                                                </div>
+                                            </div>
+
+                                            <div class="w-100">
+                                                <div class="m-0 form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.wastage_sheet') ? ' has-error' : '' }}">
+                                                    {!! Form::label('wastage_sheet', 'Wastage Sheet') !!}
+                                                    {!! Form::text('wastage_sheet', old('kt_docs_repeater_advanced.'.$loop->index.'.wastage_sheet', $item['wastage_sheet'] ?? ''), ['class' => 'wastageSheet form-control form-control-sm', 'placeholder' => 'Wastage Sheet']) !!}
+                                                    <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.wastage_sheet') }}</small>
+                                                </div>
+                                            </div>
+
+                                            <div class="w-100">
+                                                <div class="m-0 form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.paper_divide') ? ' has-error' : '' }}">
+                                                    {!! Form::label('paper_divide', 'Paper Divide') !!}
+                                                    {!! Form::select('paper_divide',[1=>1, 2=>2, 3=>3, 4=>4, 5=>5, 6=>6] , old('kt_docs_repeater_advanced.'.$loop->index.'.paper_divide', $item['paper_divide'] ?? ''), ['class' => 'paperDivide form-control form-control-sm', 'placeholder' => 'Paper Divide']) !!}
+                                                    <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.paper_divide') }}</small>
+                                                </div>
+                                            </div>
+
+                                            <div class="w-100">
+                                                <div class="m-0 form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.total_sheets') ? ' has-error' : '' }}">
+                                                    {!! Form::label('total_sheets', 'Total Sheets') !!}
+                                                    {!! Form::text('total_sheets', old('kt_docs_repeater_advanced.'.$loop->index.'.total_sheets', $item['total_sheets'] ?? ''), ['class' => 'totalSheets form-control form-control-sm', 'placeholder' => 'Total Sheets', 'readonly']) !!}
+                                                    {!! Form::hidden('old_total_sheets', old('kt_docs_repeater_advanced.'.$loop->index.'.old_total_sheets', $item['old_total_sheets'] ?? ''), ['class' => 'oldTotalSheet']) !!}
+                                                    <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.total_sheets') }}</small>
+                                                </div>
+                                            </div>
+
+                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach
+                    @endif
 
                 @endif
                 
@@ -691,7 +765,7 @@ $('#kt_docs_repeater_advanced').repeater({
         if ($containers.length >= 2) {
             $containers.slice(1).remove();
         }
-
+        
         var default_sheet_size = $('input[name="kt_docs_repeater_advanced[' + 0 + '][sheet_size]"]').val();
         var default_required_sheet= $('input[name="kt_docs_repeater_advanced[' + 0 + '][required_sheet]"]').val();
 

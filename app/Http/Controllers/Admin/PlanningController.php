@@ -258,10 +258,6 @@ class PlanningController extends Controller
 
         JobCard::where(['id'=>$job_card->id])->update(['required_sheet' => $required_sheet]);
 
-        $job_card_paper = JobCardPaper::firstOrNew(['job_card_id'=>$job_card->id]);
-        $job_card_paper->sheet_size = $dye_details?$dye_details->sheet_size:null;
-        $job_card_paper->required_sheet = $required_sheet;
-        $job_card_paper->save();
 
         return response()->json(['message'=>'Planning created successfully', 'class'=>'success', 'error'=>false]);
 

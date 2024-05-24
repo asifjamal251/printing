@@ -29,7 +29,9 @@ class CuttingController extends Controller
             
             $datas = Cutting::orderBy('id','desc')
             ->with(['user', 'jobCard'=>function($query){
-                $query->with(['paper', 'putPaperWarehouse', 'getPaperWarehouse', 'jobCardItems'=>function($query){
+                $query->with(['jobCardPapers'=>function($query){
+                    $query->with(['product']);
+                }, 'putPaperWarehouse', 'getPaperWarehouse', 'jobCardItems'=>function($query){
                     $query->with(['PO', 'POItem']);
                 }]);
             }])->has('jobCard');

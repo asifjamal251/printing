@@ -52,7 +52,7 @@
                                 <th>Carton</th>
                                 <th>Set No.</th>
                                 <th>Paper</th>
-                                <th>Required Sheets</th>
+                                <th>Required Sheet</th>
                                 <th>Paper Divide</th>
                                 <th>Sheet Size</th>
                                 <th>Total Sheet</th>
@@ -235,16 +235,16 @@ $(document).ready(function() {
             { "data": "job_card_no" },
             { "data": "carton_name" },
             { "data": "set_no" },
-            { "data": "paper" },
-            { "data": "total_sheet" },
-            { "data": "divide" },
-            { "data": "sheet_size" },
+            { "data": "paper_details" },
             { "data": "required_sheet" },
+            { "data": "paper_devide" },
+            { "data": "sheet_size" },
+            { "data": "total_sheet" },
             { "data": "cutting_sheet", render: function(data, type, row) {
                 if (row['status_id'] == 5) {
                     return row['required_sheet_total'];
                 } else {
-                    return '<input data-total="'+row['required_sheet_need']+'" data-id="'+row['id']+'" type="text" class="form-control form-control-sm cutting-sheet-input" name="cutting_sheets[]" value="'+row['required_sheet_total']+'" placeholder="Cutting Sheets" style="max-width:100px;">';
+                    return '<input data-total="'+row['total_sheet']+'" data-id="'+row['id']+'" type="text" class="form-control form-control-sm cutting-sheet-input" name="cutting_sheets[]" value="'+row['required_sheet_total']+'" placeholder="Cutting Sheets" style="max-width:100px;">';
                 }
             }},
             { "data": "file" },

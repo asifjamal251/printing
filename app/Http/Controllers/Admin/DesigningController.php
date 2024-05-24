@@ -117,7 +117,7 @@ class DesigningController extends Controller
     public function sheetSizeUpdate(Request $request)
     {
         if(JobCard::whereIn('id', [$request->job_card_id])->update(['sheet_size'=>$request->sheet_size])){
-            JobCardPaper::whereIn('job_card_id', [$request->job_card_id])->update(['sheet_size'=>$request->sheet_size]);
+
             Designing::whereIn('job_card_id', [$request->job_card_id])->update(['sheet_size'=>$request->sheet_size]);
             return response()->json(['message'=>'Sheet Size updated successfully', 'class'=>'success', 'error'=>false]);     
         }
@@ -128,7 +128,7 @@ class DesigningController extends Controller
     public function totalSheetUpdate(Request $request)
     {
         if(JobCard::whereIn('id', [$request->job_card_id])->update(['required_sheet'=>$request->total_sheet])){
-            JobCardPaper::whereIn('job_card_id', [$request->job_card_id])->update(['required_sheet'=>$request->total_sheet]);
+            
             Designing::whereIn('job_card_id', [$request->job_card_id])->update(['required_sheet'=>$request->total_sheet]);
             return response()->json(['message'=>'Total Sheet updated successfully', 'class'=>'success', 'error'=>false]);     
         }
@@ -170,6 +170,11 @@ class DesigningController extends Controller
 
     public function changeStatus(Request $request){ 
         if(JobCard::where('id', $request->job_card_id)->update(['status_id'=>2])){
+
+            $job_card = JobCard::where('id', $request->job_card_id)->first();
+
+
+
             Designing::where('job_card_id', $request->job_card_id)->update(['status_id'=>$request->status]);
             return response()->json(['message'=>'Designing has been completed successfully', 'class'=>'success', 'error'=>false]);     
         }

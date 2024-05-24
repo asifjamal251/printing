@@ -37,13 +37,14 @@ class ProductResource extends JsonResource
             'sn'=>++$request->start,
             'id'=>$this->id,
             'product'=>$this->name.' - '.$this->category->name, 
+            'product_type'=>@$this->productType->type, 
             'hsn'=>$this->hsn, 
             'code'=>$this->code, 
             'quantity'=>$this->quantity, 
             'wt_pc'=>$this->weight_per_piece, 
             'total_weight'=>$this->totalweight($this->weight_per_piece, $this->quantity), 
             'unit'=>$this->unit->name, 
-            'product_type'=>$this->gsm?'paper':'other', 
+            //'product_type'=>$this->gsm?'paper':'other', 
             'created_at' => $this->created_at->format('d F, Y'),
         ];
     }

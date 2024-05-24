@@ -19,7 +19,7 @@ class ProductController extends Controller
 {
    
     public function index(Request $request){
-       
+       //return Product::orderBy('created_at', 'desc')->with(['unit', 'productType'])->get();
         if ($request->ajax()) {
 
             if ($request->type === 'category') {
@@ -47,16 +47,16 @@ class ProductController extends Controller
                 });
             }
 
-            if($request->product_type){
+            // if($request->product_type){
 
-                if($request->product_type == 1 || $request->product_type == '1'){
-                    $datas->where('type', 1);
-                }
+            //     if($request->product_type == 1 || $request->product_type == '1'){
+            //         $datas->where('type', 1);
+            //     }
 
-                if($request->product_type == 0 || $request->product_type == '0'){
-                    $datas->where('type', 0);
-                }
-            }
+            //     if($request->product_type == 0 || $request->product_type == '0'){
+            //         $datas->where('type', 0);
+            //     }
+            // }
 
             if($request->stock == 1 || $request->stock == '1'){
                 $datas->whereColumn('quantity', '<=', 'in_hand_quantity');

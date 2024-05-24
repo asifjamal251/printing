@@ -108,6 +108,7 @@
                             <th style="width:12px">Si</th>
                             <th>Code</th>
                             <th>Product</th>
+                            <th>Product Type</th>
                             <th>HSN</th>
                             <th>Quantity</th>
                             <th>Unit</th>
@@ -569,6 +570,7 @@
                 { "data": "sn" },
                 { "data": "code" },
                 { "data": "product" },
+                { "data": "product_type" },
                 { "data": "hsn" },
                 { "data": "quantity" },
                  { "data": "unit" },
