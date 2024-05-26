@@ -1,12 +1,50 @@
 <?php
 namespace App\Http\Resources\Admin\DyeBreaking;
 use App\Models\Admin;
+use App\Models\JobCardTimer;
 use App\Models\ModuleUser;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class DyeBreakingResource extends JsonResource
+class DyeBreakingResource extends JsonResource{
+    private function timer($jobCardId, $type){
+        $timer = JobCardTimer::where(['machine' => 'Dye Breaking', 'job_card_id' => $jobCardId])->first();
+        if($timer){
+            if($type == 'Timer'){
+                
+                if($timer->worked_time){
+                    return formatTime($timer->worked_time);
+                }else{
+                    return '0:0:0';
+                }
+                
+            }
 
-{
+            if($type == 'Status'){
+                if ($timer){
+                    return $timer->status;
+                } else {
+                    return '0:0:0';
+                }
+            }
+
+
+            if($type == 'Default'){
+                if ($timer->status == 1){
+                    $pauseTime = Carbon::parse($timer->resume_at); // Manually create a Carbon instance
+                    $now = Carbon::now();
+
+                    $diffInSeconds = $pauseTime->diffInSeconds($now);
+                    $finalResult = $diffInSeconds + $timer->worked_time;
+
+                    return formatTime($finalResult); // Use $finalResult instead of $timer->finalResult
+                }
+            }
+        } else{
+            return '0:0:0';
+        }
+
+    }
+
     private function moduleUser($user, $id){
         $options = '<option selected="" value="">Oprator</option>';
 
@@ -92,6 +130,9 @@ class DyeBreakingResource extends JsonResource
             'status_id'=>$this->status_id,
             'job_card_id'=>$this->job_card_id,
             'file' => $this->jobCard->mediaFiles->count()>0?"<a class='glightbox' data-gallery='".$this->id."' href='".asset($this->jobCard->mediaFiles[0]['file'])."'> <img class='rounded avatar-sm' src='".asset($this->jobCard->mediaFiles[0]['file'])."'/></a>":"N/A",
+            'timer' => $this->timer(@$this->job_card_id, 'Timer'),
+            'timer_status' => $this->timer(@$this->job_card_id, 'Status'),
+            'timer_default' => $this->timer(@$this->job_card_id, 'Default'),
         ];
 
     }

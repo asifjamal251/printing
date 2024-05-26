@@ -12,25 +12,39 @@ class PrintingResource extends JsonResource{
 
     private function timer($jobCardId, $type){
         $timer = JobCardTimer::where(['machine' => 'Printing', 'job_card_id' => $jobCardId])->first();
-        if($type == 'Timer'){
-            if ($timer) {
+        if($timer){
+            if($type == 'Timer'){
+                
                 if($timer->worked_time){
                     return formatTime($timer->worked_time);
                 }else{
                     return '0:0:0';
                 }
-            } 
-            else {
-                return '0:0:0';
+                
             }
-        }
 
-        if($type == 'Status'){
-            if ($timer){
-                return $timer->status;
-            } else {
-                return 'N/A';
+            if($type == 'Status'){
+                if ($timer){
+                    return $timer->status;
+                } else {
+                    return '0:0:0';
+                }
             }
+
+
+            if($type == 'Default'){
+                if ($timer->status == 1){
+                    $pauseTime = Carbon::parse($timer->resume_at); // Manually create a Carbon instance
+                    $now = Carbon::now();
+
+                    $diffInSeconds = $pauseTime->diffInSeconds($now);
+                    $finalResult = $diffInSeconds + $timer->worked_time;
+
+                    return formatTime($finalResult); // Use $finalResult instead of $timer->finalResult
+                }
+            }
+        } else{
+            return '0:0:0';
         }
 
     }

@@ -10,8 +10,12 @@ class Issue extends Model
 	    'id', 'issue_at'
 	];
 
-     public function issueItems(){
+    public function issueItems(){
         return $this->hasMany(IssueItem::class,'issue_id','id');
+    }
+
+    public function user(){
+        return $this->hasOne(Admin::class,'id','user_id');
     }
 
 

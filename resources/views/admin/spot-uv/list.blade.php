@@ -201,15 +201,16 @@ $(document).ready(function(){
     },
     "columns": [
         { "data": "sn" },
-        { "data": "oprator",
+        { "data": "oprator", 
             render: function(data, type, row) {
-                if(row['user'] == null){
-                    return row['oprator'];
+                if(row['status_id'] == 5) {
+                    return row['user']
                 }
                 else{
-                    return row['user'];
+                    return row['oprator'];
                 }
-            } 
+                
+            }
         },
         { "data": "job_card_no" },
         { "data": "set_no" },

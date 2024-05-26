@@ -108,6 +108,10 @@ class JobCardTimerController extends Controller{
         }
 
         if($id == 9){
+            return 'Dye Breaking';
+        }
+
+        if($id == 10){
             return 'Pasting';
         }
     }

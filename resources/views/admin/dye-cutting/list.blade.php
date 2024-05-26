@@ -44,7 +44,7 @@
                             <thead class="gridjs-thead">
                             <tr>
                                 <th style="width:12px">Si</th>
-                                <th  style="width:120px">Oprator</th>
+                                <th  style="width:120px">Oprator</th>>
                                 <th>Job No.</th>
                                 <th>Set No.</th>
                                 <th>Carton</th>
@@ -52,9 +52,6 @@
                                 <th>Dye Machine</th>
                                 <th>Total Sheets</th>
                                 <th>Counter</th>
-                                @can(['user_chemical_coating'])
-                                    <th>Oprator</th>
-                                @endcan
                                 <th>File</th>
                                 <th>Status</th>
                                 <th>Timer</th>
@@ -179,6 +176,9 @@ $(document).ready(function(){
     var table2 = $('#datatable').DataTable({
         "drawCallback": function( settings ) {
         lightbox.reload();
+        $('#datatable tbody tr').each(function() {
+            startTimer(this);
+        });
     },
     language: {
         search: '',
@@ -204,15 +204,16 @@ $(document).ready(function(){
     },
     "columns": [
         { "data": "sn" },
-        { "data": "oprator",
+        { "data": "oprator", 
             render: function(data, type, row) {
-                if(row['user'] == null){
-                    return row['oprator'];
+                if(row['status_id'] == 5) {
+                    return row['user']
                 }
                 else{
-                    return row['user'];
+                    return row['oprator'];
                 }
-            } 
+                
+            }
         },
         { "data": "job_card_no" },
         { "data": "set_no" },
@@ -230,12 +231,21 @@ $(document).ready(function(){
                 
             }
         },
-        @can(['user_chemical_coating'])
-            { "data": "user" },
-        @endcan
         { "data": "file" },
         { "data": "status" },
-        { "data": "timer" },
+        
+        { "data": "timer", 
+                render: function(data, type, row) {
+                    if(row['timer_status'] == 1){
+                        return '<span class="timer" data-start-time="'+row['timer_default']+'">'+formatTime(parseTime(row['timer']))+'</span>';
+                    }
+                    else{
+                        return '<span class="timers" data-start-time="'+row['timer']+'">'+formatTime(parseTime(row['timer']))+'</span>';
+                        //return row['timer'];
+                    }
+                    
+                }
+            },    
         {
             "data": "action",
             render: function(data, type, row) {
@@ -272,6 +282,62 @@ $(document).ready(function(){
     }]
 
 });
+
+var table = table2;
+
+    // Object to hold interval IDs for each row
+    var intervalIds = {};
+
+    // Function to format time in hh:mm:ss
+    function formatTime(seconds) {
+        var hours = Math.floor(seconds / 3600);
+        var minutes = Math.floor((seconds % 3600) / 60);
+        var remainingSeconds = seconds % 60;
+        return (hours < 10 ? "0" : "") + hours + ":" + 
+               (minutes < 10 ? "0" : "") + minutes + ":" + 
+               (remainingSeconds < 10 ? "0" : "") + remainingSeconds;
+    }
+
+    // Function to parse time in hh:mm:ss to seconds
+    function parseTime(time) {
+        console.log('Time', time);
+        var parts = time.split(':');
+        var hours = parseInt(parts[0], 10);
+        var minutes = parseInt(parts[1], 10);
+        var seconds = parseInt(parts[2], 10);
+        return (hours * 3600) + (minutes * 60) + seconds;
+    }
+
+    // Function to start timer for each row
+    function startTimer(row) {
+        var timerCell = $(row).find('.timer');
+        
+        if(timerCell.length > 0){
+            var startTime = parseTime(timerCell.attr('data-start-time'));
+
+            // If timer is already running, do not start another one
+            if (timerCell.data('intervalId')) return;
+
+            // Update the display to show the starting time
+            timerCell.text(formatTime(startTime));
+
+            // Set interval and store the ID
+            var intervalId = setInterval(function() {
+                startTime++;
+                timerCell.text(formatTime(startTime));
+                timerCell.attr('data-start-time', formatTime(startTime)); // Update data-start-time attribute
+            }, 1000);
+
+            // Store interval ID in the cell's data attribute
+            timerCell.data('intervalId', intervalId);
+        }
+    }
+
+    // Start timer for each row on page load
+    $('#datatable tbody tr').each(function() {
+        startTimer(this);
+    });
+
 
  $('body').on('click', '.filters', function(){
         table2.draw('page');

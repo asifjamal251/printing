@@ -56,6 +56,7 @@
                                 <th>Ready Box</th>
                                 <th>File</th>
                                 <th>Status</th>
+                                <th>Timer</th>
                                 @can(['edit_pasting','delete_pasting', 'read_pasting', 'change_status_pasting'])
                                   <th>Action</th>
                                 @endcan
@@ -203,15 +204,16 @@ $(document).ready(function(){
     },
     "columns": [
         { "data": "sn" },
-        { "data": "oprator",
+        { "data": "oprator", 
             render: function(data, type, row) {
-                if(row['user'] == null){
-                    return row['oprator'];
+                if(row['status_id'] == 5) {
+                    return row['user']
                 }
                 else{
-                    return row['user'];
+                    return row['oprator'];
                 }
-            } 
+                
+            }
         },
         { "data": "job_card_no" },
         { "data": "set_no" },
@@ -253,6 +255,18 @@ $(document).ready(function(){
       
         { "data": "file" },
         { "data": "status" },
+        { "data": "timer", 
+            render: function(data, type, row) {
+                if(row['timer_status'] == 1){
+                    return '<span class="timer" data-start-time="'+row['timer_default']+'">'+formatTime(parseTime(row['timer']))+'</span>';
+                }
+                else{
+                    return '<span class="timers" data-start-time="'+row['timer']+'">'+formatTime(parseTime(row['timer']))+'</span>';
+                    //return row['timer'];
+                }
+                
+            }
+        },
         {
             "data": "action",
             render: function(data, type, row) {
@@ -260,6 +274,8 @@ $(document).ready(function(){
                     var btn = '<div class="dropdown d-inline-block"><button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="ri-more-fill align-middle"></i></button><ul class="dropdown-menu dropdown-menu-end">';
 
                     @can(['edit_pasting','delete_pasting','read_pasting', 'change_status_pasting'])
+
+                    btn += '<li><a class="dropdown-item edit-item-btn" onclick="updateTimer(\'{{ route('admin.job-card.timer.content') }}\',{machine:10, id:'+row['id']+',job_card_id:'+row['job_card_id']+'})" href="javascript:void(0);"><i class="ri-alarm-line align-bottom me-2 text-muted"></i> Timer</a></li>';
 
                     // @can('edit_pasting')
                     //     btn+='<li><a class="dropdown-item edit-item-btn" onclick="updateData(\'{{ route('admin.printing.changeStatus') }}\',{status:3,id:'+row['id']+',job_card_id:'+row['job_card_id']+'})"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Send To Warehouse</a></li>';

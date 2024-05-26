@@ -10,25 +10,39 @@ class SpotUvResource extends JsonResource{
 
     private function timer($jobCardId, $type){
         $timer = JobCardTimer::where(['machine' => 'Spot Uv', 'job_card_id' => $jobCardId])->first();
-        if($type == 'Timer'){
-            if ($timer) {
+        if($timer){
+            if($type == 'Timer'){
+                
                 if($timer->worked_time){
                     return formatTime($timer->worked_time);
                 }else{
-                    return 'N/A';
+                    return '0:0:0';
                 }
-            } 
-            else {
-                return 'N/A';
+                
             }
-        }
 
-        if($type == 'Status'){
-            if ($timer){
-                return $timer->status;
-            } else {
-                return 'N/A';
+            if($type == 'Status'){
+                if ($timer){
+                    return $timer->status;
+                } else {
+                    return '0:0:0';
+                }
             }
+
+
+            if($type == 'Default'){
+                if ($timer->status == 1){
+                    $pauseTime = Carbon::parse($timer->resume_at); // Manually create a Carbon instance
+                    $now = Carbon::now();
+
+                    $diffInSeconds = $pauseTime->diffInSeconds($now);
+                    $finalResult = $diffInSeconds + $timer->worked_time;
+
+                    return formatTime($finalResult); // Use $finalResult instead of $timer->finalResult
+                }
+            }
+        } else{
+            return '0:0:0';
         }
 
     }
@@ -104,6 +118,7 @@ class SpotUvResource extends JsonResource{
             'job_card_id'=>$this->job_card_id,
             'file' => $this->jobCard->mediaFiles->count()>0?"<a class='glightbox' data-gallery='".$this->id."' href='".asset($this->jobCard->mediaFiles[0]['file'])."'> <img class='rounded avatar-sm' src='".asset($this->jobCard->mediaFiles[0]['file'])."'/></a>":"N/A",
             'carton_name'=>$this->job_card_id?getCartonNames(@$this->jobCard->jobCardItems):'',
+            'timer_status' => $this->timer($this->job_card_id, 'Status'),
             'timer' => $this->timer($this->job_card_id, 'Timer'),
             'timer_status' => $this->timer($this->job_card_id, 'Status'),
         ];

@@ -573,14 +573,14 @@ Route::middleware('admin')->name('admin.')->group(function() {
 
 
 
-     //issue
+     //Issue
     Route::controller(IssueController::class)->group(function(){
         Route::match(['get','patch'],'issue', 'index')->name('issue.index')->middleware('can:browse_issue');
         Route::get('issue/create', 'create')->name('issue.create')->middleware('can:add_issue');
         Route::get('issue/{issue}', 'show')->name('issue.show')->middleware('can:read_issue');
         Route::get('issue/{issue}/edit', 'edit')->name('issue.edit')->middleware('can:edit_issue');
         Route::post('issue', 'store')->name('issue.store')->middleware('can:add_issue');
-        Route::put('issue/update/data', 'update')->name('issue.update')->middleware('can:edit_issue');
+        Route::put('issue/{issue}', 'update')->name('issue.update')->middleware('can:edit_issue');
         Route::delete('issue/{issue}/delete', 'destroy')->name('issue.destroy')->middleware('can:delete_issue');
     });
 

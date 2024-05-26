@@ -188,6 +188,7 @@ class JobCardController extends Controller
                 if($changeQuantity != 0){
                     $today = Carbon::now()->format('d-m');
                     $issue = Issue::firstorNew(['issue_at' => $today]);
+                    $issue->issue_type = 1;
                     $issue->save();
 
                     $issue_item = IssueItem::firstorNew(['product_id' => $product->id]);
@@ -198,7 +199,6 @@ class JobCardController extends Controller
                     $issue_item->unit = $product->unit->name;
                     $issue_item->issue_by = $user->id;
                     $issue_item->issue_for = 1;
-                    $issue_item->issue_type = 0;
                     $issue_item->save();
 
                     $transaction = new Transaction;

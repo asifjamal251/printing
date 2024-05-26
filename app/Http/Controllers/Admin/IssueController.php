@@ -7,19 +7,17 @@ use App\Http\Resources\Admin\Issue\IssueCollection;
 use App\Models\Issue;
 use App\Models\IssueItem;
 use App\Models\Product;
+use App\Models\ProductTransaction;
 use App\Models\Transaction;
+use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
-use Illuminate\Validation\Rule;
 
 class IssueController extends Controller
 {
    
     public function index(Request $request){
+       
         if ($request->ajax()) {
             $datas = Issue::orderBy('created_at', 'desc')->with(['issueItems']);
             $totaldata = $datas->count();
@@ -27,8 +25,11 @@ class IssueController extends Controller
             $search = $request->search['value'];
 
             if ($search) {
-                $datas->where('carton_size', 'like', '%'.$search.'%');
-                $datas->orWhere('dye_no', 'like', '%'.$search.'%');
+                $datas->where('receipt_no', 'like', '%'.$search.'%');
+            }
+
+            if($request->vendor){
+                $datas->where('vendor_id', $request->vendor);
             }
 
             $request->merge(['recordsTotal' => $datas->count(), 'length' => $request->length]);
@@ -48,138 +49,170 @@ class IssueController extends Controller
 
 
     public function store(Request $request) {
-       
+
+       // return $request->all();
         $user = Auth::guard('admin')->user();
-        $this->validate($request,[ 
-            'product'=>'required',  
-            'quantity'=>'required',  
-            'unit'=>'required',  
-            'issue_for'=>'required', 
+        $this->validate($request, [
+            'kt_docs_repeater_advanced' => 'required|array',
+            'kt_docs_repeater_advanced.*.product' => 'required',
+            'kt_docs_repeater_advanced.*.quantity' => 'required', 
+            'kt_docs_repeater_advanced.*.unit' => 'required', 
+            'kt_docs_repeater_advanced.*.issue_for' => 'required', 
+        ],
+        [
+            'kt_docs_repeater_advanced.*.product.required' => 'product is required.',
+            'kt_docs_repeater_advanced.*.quantity.required' => 'quantity is required.',
+            'kt_docs_repeater_advanced.*.unit.required' => 'unit is required.',
+            'kt_docs_repeater_advanced.*.issue_for.required' => 'issue for is required.',
         ]);
-        $today = Carbon::now()->format('d-m');
-        $product = Product::where('id', $request->product)->with('unit')->first();
 
-        $issue = Issue::firstorNew(['issue_at' => $today]);
-        $issue->save();
+        $issue = new Issue;
+        $issue->issue_type = 1;
+        $issue->user_id = auth('admin')->user()->id;
 
-        $issue_item = new IssueItem;
-        $issue_item->issue_id = $issue->id;
-        $issue_item->product_id = $product->id;
-        $issue_item->quantity = $request->quantity;
-        $issue_item->unit = $product->unit->name;
-        $issue_item->issue_for = $request->issue_for;
-        $issue_item->issue_by = $user->id;
-        $issue_item->issue_type = 1;
-        $issue_item->oprator_name = $request->oprator_name;
-       
-        if($issue_item->save()){ 
+        if($issue->save()){ 
+            $inputs = $request->input('kt_docs_repeater_advanced');
+            foreach ($inputs as $input) {
+                $product = Product::find($input['product']);
+                $item = new IssueItem;
+                $item->issue_id = $issue->id;
+                $item->product_id = $product->id;
+                $item->quantity = $input['quantity'];
+                $item->issue_for = $input['issue_for'];
+                $item->unit = $input['unit'];
+                $item->save();
 
-            $transaction = new Transaction;
-            $transaction->product_id = $product->id;
-            $transaction->type = 'Debit';
-            $transaction->current_quantity = $product->quantity;
-            $transaction->new_quantity = $request->quantity;
-            $transaction->total_quantity = $product->quantity - $request->quantity;
-            $transaction->remarks = 'Manual Issued Item';
-            $transaction->trancation_by = $user->id;
-            $transaction->issue_item_id = $issue_item->id;
-            $transaction->save();
+                $transaction = new Transaction;
+                $transaction->product_id = $product->id;
+                $transaction->type = 'Debit';
+                $transaction->current_quantity = $product->quantity;
+                $transaction->new_quantity = $request->quantity;
+                $transaction->total_quantity = $product->quantity - $request->quantity;
+                $transaction->remarks = 'Manual Issued Item';
+                $transaction->trancation_by = $user->id;
+                $transaction->issue_item_id = $item->id;
+                $transaction->save();
 
-            $product->quantity = $product->quantity - $request->quantity;
-            $product->save();
-
-
-            return redirect()->route('admin.issue.index')->with(['class'=>'success','message'=>'Issue saved successfully.']);
+                $product->quantity = $product->quantity - $input['quantity'];
+                $product->save();
+            }
+            
+            return redirect()->route('admin.issue.index')->with(['class'=>'success','message'=>'Paper Inward saved successfully.']);
         }
 
         return redirect()->back()->with(['class'=>'error','message'=>'Whoops, looks like something went wrong ! Try again ...']);
     }
 
 
-    public function edit($id){
-        $issue = IssueItem::find($id);
-        return view('admin.issue.edit', compact('issue'));
+    public function show($id){
+        $material =  Issue::where('id', $id)->with(['user', 'issueItems'=>function($query){
+            $query->with(['product', 'issueFor']);
+        }])->first();
+        return view('admin.issue.view', compact('material'));
     }
 
-    public function show($id){
-        $issue = Issue::where('id', $id)->with('issueItems')->first();
-        return view('admin.issue.view', compact('issue'));
+
+    public function edit($id){
+        $material =  Issue::where('id', $id)->with(['issueItems'])->first();
+        return view('admin.issue.edit', compact('material'));
     }
 
 
     public function update(Request $request, $id) {
+       // return $request->deleted;
+        //return $request->all();
         $user = Auth::guard('admin')->user();
-        $this->validate($request,[ 
-            'product'=>'required',  
-            'quantity'=>'required',  
-            'unit'=>'required',  
-            'issue_for'=>'required', 
+        $this->validate($request, [
+            'kt_docs_repeater_advanced' => 'required|array',
+            'kt_docs_repeater_advanced.*.product' => 'required',
+            'kt_docs_repeater_advanced.*.quantity' => 'required', 
+            'kt_docs_repeater_advanced.*.unit' => 'required', 
+            'kt_docs_repeater_advanced.*.issue_for' => 'required', 
+        ],
+        [
+            'kt_docs_repeater_advanced.*.product.required' => 'product is required.',
+            'kt_docs_repeater_advanced.*.quantity.required' => 'quantity is required.',
+            'kt_docs_repeater_advanced.*.unit.required' => 'unit is required.',
+            'kt_docs_repeater_advanced.*.issue_for.required' => 'issue for is required.',
         ]);
 
-        $product = Product::where('id', $request->product)->with('unit')->first();
-        $issue = IssueItem::find($id);
-        $issue->product_id = $product->id;
-        $issue->quantity = $request->quantity;
-        $issue->unit = $product->unit->name;
-        $issue->issue_for = $request->issue_for;
-        $issue->issue_by = $user->id;
-        $issue->issue_type = 1;
-        $issue->oprator_name = $request->oprator_name;
-
-        $changeQuantity = $request->quantity - $request->old_quantity;
-
-        $tr_type = 0;
-        $total_quantity = 0;
-        if($request->quantity > $request->old_quantity){
-            $tr_type = 'Debit';
-            $total_quantity = $product->quantity - $changeQuantity;
-        }else{
-            $tr_type = 'Credit';
-            $total_quantity = $product->quantity + $changeQuantity;
-        }
-
+        $issue = Issue::find($id);
         if($issue->save()){ 
-            if($changeQuantity != 0){
-                if($request->old_product_id == $product->id){
-                    $transaction = Transaction::where('issue_id', $id)->first();
+            $inputs = $request->input('kt_docs_repeater_advanced');
+            foreach ($inputs as $input) {
+                $product = Product::find($input['product']);
+
+                if($input['item'] != null && $input['item'] != ''){
+                    $item = IssueItem::find($input['item']);
+                    $item->product_id = $product->id;
+                    $item->requisition_id = $input['issue_for'];
+                    $item->unit = $input['unit'];
+                    $item->quantity = $input['quantity'];
+                    $item->save();
+
+
+                    $old_quantity = $input['old_quantity'];
+                    $changeQuantity = $old_quantity - $input['quantity'];
+
+
+                    $transaction = new ProductTransaction;
                     $transaction->product_id = $product->id;
-                    $transaction->type = $tr_type;
+                    $transaction->type = 'Debit';
                     $transaction->current_quantity = $product->quantity;
-                    $transaction->new_quantity = $changeQuantity;
-                    $transaction->total_quantity = $product->quantity - $changeQuantity;
-                    $transaction->remarks = 'Manual Issued Item';
+                    $transaction->new_quantity += abs($changeQuantity);
+                    $transaction->total_quantity = $product->quantity+$changeQuantity;
+                    $transaction->remarks = 'Product Inward Update';
                     $transaction->trancation_by = $user->id;
-                    $transaction->job_card_id = $job_card->id;
+                    $transaction->issue_item_id = $item->id;
                     $transaction->save();
 
-                    $product->quantity = $total_quantity;
+
+                    $product->quantity += $changeQuantity;
                     $product->save();
 
                 }
                 else{
-                    $transaction = Transaction::where('issue_id', $id)->first();
+                    $item = new IssueItem;
+                    $item->product_id = $product->id;
+                    $item->requisition_id = $input['issue_for'];
+                    $item->unit = $input['unit'];
+                    $item->quantity = $input['quantity'];
+                    $item->issue_id = $issue->id;
+                    $item->deleted_at = null;
+                    $item->save();
+
+                    $transaction = new ProductTransaction;
                     $transaction->product_id = $product->id;
                     $transaction->type = 'Debit';
                     $transaction->current_quantity = $product->quantity;
-                    $transaction->new_quantity = $request->quantity;
-                    $transaction->total_quantity = $product->quantity - $request->quantity;
-                    $transaction->remarks = 'Manual Issued Item';
+                    $transaction->new_quantity = $input['quantity'];
+                    $transaction->total_quantity = $product->quantity-$input['quantity'];
+                    $transaction->remarks = 'Product issue';
                     $transaction->trancation_by = $user->id;
-                    $transaction->issue_item_id = $issue->id;
+                    $transaction->issue_item_id = $item->id;
                     $transaction->save();
 
-                    $product->quantity = $product->quantity - $request->quantity;
+                    $product->quantity = $product->quantity - $input['quantity'];
+                    $product->save();
+                    
+
+                }
+
+            }
+            if($request->deleted){
+                foreach($request->deleted as $id){
+                    $deleted_item = IssueItem::find($id);
+                    $product = Product::find($deleted_item->product_id);
+
+                    $product->quantity = $product->quantity + $deleted_item->quantity;
                     $product->save();
 
-                    $oldProduct = Product::find($request->old_quantity);
-                    $oldProduct->quantity += $request->old_quantity;
-                    $oldProduct->save();
                 }
-                
+                IssueItem::whereIn('id', $request->deleted)->delete();
             }
-
-
-            return redirect()->route('admin.issue.index')->with(['class'=>'success','message'=>'Issue saved successfully.']);
+            
+            
+            return redirect()->route('admin.issue.index')->with(['class'=>'success','message'=>'Paper Inward saved successfully.']);
         }
 
         return redirect()->back()->with(['class'=>'error','message'=>'Whoops, looks like something went wrong ! Try again ...']);
@@ -191,21 +224,12 @@ class IssueController extends Controller
     public function destroy($id)
     {
        
-        $issue = Issue::where(['id'=>$id, 'issue_type'=>1])->first();
-        if($issue != ''){
-            $transaction = Transaction::where('issue_id', $id)->first();
-            $product = Product::where('id', $issue->product_id)->first();
-            $product->quantity += $issue->quantity;
-            $product->save();
-            if($issue->delete()){
-                $transaction->delete();
-                return response()->json(['message'=>'Dye Details  deleted successfully ...', 'class'=>'success']);  
-            }
-            return response()->json(['message'=>'Whoops, looks like something went wrong ! Try again ...', 'class'=>'error']);
+        $paper_inward = Issue::find($id);
+        if($paper_inward->delete()){
+            
+            return response()->json(['message'=>'Dye Details  deleted successfully ...', 'class'=>'success']);  
         }
-        else{
-            return response()->json(['message'=>'Product is auto isse by job card', 'class'=>'error']);
-        }
+        return response()->json(['message'=>'Whoops, looks like something went wrong ! Try again ...', 'class'=>'error']);
     }
 
     
