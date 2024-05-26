@@ -41,36 +41,36 @@ class Product extends Model
         return $this->hasOne(ProductType::class,'id','product_type_id');
     }
 
-    public static function boot()
-    {
-        parent::boot();
+    // public static function boot()
+    // {
+    //     parent::boot();
 
-        static::creating(function ($product) {
-            // Generate code number based on product type
-            $product->code = static::generateCode($product->productType);
-        });
-    }
+    //     static::creating(function ($product) {
+    //         // Generate code number based on product type
+    //         $product->code = static::generateCode($product->productType);
+    //     });
+    // }
 
- protected static function generateCode($productType)
-{
-    if (!$productType) {
-        return null; // Handle invalid product type
-    }
+//  protected static function generateCode($productType)
+// {
+//     if (!$productType) {
+//         return null; // Handle invalid product type
+//     }
 
-    $startSeries = $productType->start_series;
+//     $startSeries = $productType->start_series;
 
-    // Get the last product of this type to determine the next code number
-    $lastProduct = static::where('product_type_id', $productType->id)->orderBy('code', 'desc')->first();
-    $lastCodeNumber = $lastProduct ? intval(substr($lastProduct->code, strlen($startSeries))) : 0;
+//     // Get the last product of this type to determine the next code number
+//     $lastProduct = static::where('product_type_id', $productType->id)->orderBy('code', 'desc')->first();
+//     $lastCodeNumber = $lastProduct ? intval(substr($lastProduct->code, strlen($startSeries))) : 0;
 
-    // Increment the code number
-    $nextCodeNumber = $lastCodeNumber + 1;
+//     // Increment the code number
+//     $nextCodeNumber = $lastCodeNumber + 1;
 
-    // Combine start series with the generated number, padding with leading zeros
-    $code = $startSeries . str_pad($nextCodeNumber, strlen($startSeries), '0', STR_PAD_LEFT);
+//     // Combine start series with the generated number, padding with leading zeros
+//     $code = $startSeries . str_pad($nextCodeNumber, strlen($startSeries), '0', STR_PAD_LEFT);
 
-    return $code;
-}
+//     return $code;
+// }
 
     public function getActivitylogOptions(): LogOptions
     {

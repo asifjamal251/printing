@@ -1,16 +1,16 @@
 <?php
-namespace App\Http\Resources\Admin\Pasting;
+namespace App\Http\Resources\Admin\DyeBreaking;
 use App\Models\Admin;
 use App\Models\ModuleUser;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PastingResource extends JsonResource
+class DyeBreakingResource extends JsonResource
 
 {
     private function moduleUser($user, $id){
         $options = '<option selected="" value="">Oprator</option>';
 
-        foreach (ModuleUser::where("module_id", 8)->get() as $alluser) {
+        foreach (ModuleUser::where("module_id", 9)->get() as $alluser) {
             $options .= '<option value="' . $alluser->id . '" ' . ($user == $alluser->id ? 'selected' : '') . '>' . $alluser->name . '</option>';
         }
 
@@ -33,7 +33,7 @@ class PastingResource extends JsonResource
 
     private function dataUser($user, $id)
     {
-        $current_user = ($user != '') ? $this->assignUser($this->jobCard->jobCardUser->pastingUser ?? '') : '';
+        $current_user = ($user != '') ? $this->assignUser($this->jobCard->jobCardUser->DyeBreakingUser ?? '') : '';
 
         $options = '<option selected="" value="">Choose an User</option>';
 
@@ -46,7 +46,7 @@ class PastingResource extends JsonResource
 
         return collect([
             'html' => '<div class="m-0 form-group" style="max-width:150px;">' .
-                '<select data-id="' . $id . '" data-machine="pasting" class="form-select form-select-sm selectUser" aria-label=".form-select-sm example">' .
+                '<select data-id="' . $id . '" data-machine="DyeBreaking" class="form-select form-select-sm selectUser" aria-label=".form-select-sm example">' .
                 $options .
                 '</select>' .
                 '</div>',
@@ -84,7 +84,6 @@ class PastingResource extends JsonResource
             'set_no' => $this->jobCard->set_no,
             'carton_name' => @$this->POItem->carton_name,
             'po_quantity' => @$this->POItem->quantity,
-            'dye_breaking' => @$this->dye_breaking_quantity,
             'client' => $this->PO->client->company_name, 
             'ready_quantity' => $this->ready_quantity??'', 
             'pending_quantity' => @$this->POItem->quantity - $this->ready_quantity??0, 

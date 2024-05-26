@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\DyeCutting\DyeCuttingCollection;
+use App\Models\DyeBreaking;
 use App\Models\DyeCutting;
 use App\Models\JobCard;
 use App\Models\JobCardHistory;
@@ -162,15 +163,15 @@ class DyeCuttingController extends Controller
         }
 
         if($request->status == 2){
-            $check_jobcard = Pasting::where(['job_card_id'=>$request->job_card_id])->whereIn('status_id', [1, 5])->get(); 
+            $check_jobcard = DyeBreaking::where(['job_card_id'=>$request->job_card_id])->whereIn('status_id', [1, 5])->get(); 
             if($check_jobcard->count() > 0){
-                return response()->json(['message'=>'JobCard Has Start On Pasting.', 'class'=>'error']);
+                return response()->json(['message'=>'JobCard Has Start On Dye Breaking.', 'class'=>'error']);
             }else{
-                Pasting::where(['job_card_id'=>$request->job_card_id, 'status_id' => 2])->delete(); 
+                DyeBreaking::where(['job_card_id'=>$request->job_card_id, 'status_id' => 2])->delete(); 
                 DyeCutting::where(['id'=>$request->id])->update(['status_id'=>2]); 
-                JobCardHistory::where(['job_card_id'=>$request->job_card_id, 'machine'=>'Pasting'])->delete();
+                JobCardHistory::where(['job_card_id'=>$request->job_card_id, 'machine'=>'Dye Breaking'])->delete();
                 JobCard::where(['id'=>$request->job_card_id])->update(['status_id'=>19]); 
-                return response()->json(['message'=>'Jobcard Cancelled From Pasting', 'class'=>'error']);
+                return response()->json(['message'=>'Jobcard Cancelled From Dye Breaking', 'class'=>'error']);
             }
         }
 
@@ -178,24 +179,32 @@ class DyeCuttingController extends Controller
         $old_history->job_card_out = now();
         $old_history->save();
 
-        $history = JobCardHistory::firstorNew(['job_card_id'=>$request->job_card_id, 'machine'=>'Pasting']);
+        $history = JobCardHistory::firstorNew(['job_card_id'=>$request->job_card_id, 'machine'=>'Dye Breaking']);
         $history->job_card_in = now();
         $history->counter = $job_card->dye_counter;
         $history->save();
 
 
         foreach($job_card->jobCardItems as $item){
-            $pasting = Pasting::firstorNew(['purchase_order_item_id'=>$item->purchase_order_item_id]);
+            $pasting = DyeBreaking::firstorNew(['purchase_order_item_id'=>$item->purchase_order_item_id]);
             $pasting->job_card_id = $item->job_card_id;
             $pasting->purchase_order_id = $item->purchase_order_id;
             $pasting->status_id = 2;
             $pasting->save();
         }
+
+        foreach($job_card->jobCardItems as $item){
+            $pasting = Pasting::firstorNew(['purchase_order_item_id'=>$item->purchase_order_item_id]);
+            $pasting->job_card_id = $item->job_card_id;
+            $pasting->purchase_order_id = $item->purchase_order_id;
+            $pasting->status_id = 99;
+            $pasting->save();
+        }
         
-        JobCard::where(['id'=>$request->job_card_id])->update(['status_id'=>21]);  
+        JobCard::where(['id'=>$request->job_card_id])->update(['status_id'=>25]);  
         DyeCutting::where(['id'=>$request->id])->update(['status_id'=>5]);  
         $purchase_order_item_ids = JobCardItem::where(['job_card_id'=>$request->job_card_id])->pluck('purchase_order_item_id'); 
-        PurchaseOrderItem::whereIn('id', $purchase_order_item_ids)->update(['status_id'=>21]);
+        PurchaseOrderItem::whereIn('id', $purchase_order_item_ids)->update(['status_id'=>25]);
         return response()->json(['message'=>'Job Card Assigned to printing.', 'class'=>'success']);
     }
 

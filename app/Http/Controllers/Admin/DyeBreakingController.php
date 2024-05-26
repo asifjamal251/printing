@@ -3,21 +3,18 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Admin\Pasting\PastingCollection;
-use App\Models\Billing;
-use App\Models\BillingItem;
+use App\Http\Resources\Admin\DyeBreaking\DyeBreakingCollection;
+use App\Models\DyeBreaking;
 use App\Models\JobCard;
 use App\Models\JobCardHistory;
 use App\Models\JobCardItem;
 use App\Models\Pasting;
 use App\Models\Project;
-use App\Models\PurchaseOrder;
 use App\Models\PurchaseOrderItem;
-use App\Models\Warehouse;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class PastingController extends Controller
+class DyeBreakingController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -28,10 +25,10 @@ class PastingController extends Controller
     {
      
         if ($request->wantsJson()) {
-            $datas = Pasting::orderByRaw("CASE
+            $datas = DyeBreaking::orderByRaw("CASE
                 WHEN status_id = 5 THEN 1
                 ELSE 0
-            END")->orderBy('created_at', 'desc')->whereNotIn('status_id', [99])
+            END")->orderBy('created_at', 'desc')
             ->with(['user', 'PO', 'POItem', 'jobCard'=>function($query){
                 $query->with(['paper', 'jobCardItems','putPaperWarehouse', 'getPaperWarehouse', 'jobCardUser' => function ($query2) {
                         $query2->with('printingUser');
@@ -43,7 +40,7 @@ class PastingController extends Controller
             //     $datas->whereNotIn('status_id', [5])
             //         ->whereHas('jobCard', function ($query) {
             //             $query->whereHas('jobCardUser', function ($query2) {
-            //                 $query2->where('pasting', auth('admin')->user()->id);
+            //                 $query2->where('DyeBreaking', auth('admin')->user()->id);
             //             });
             //         });
             // }
@@ -75,9 +72,9 @@ class PastingController extends Controller
 
             $request->merge(['recordsTotal' => $datas->count(), 'length' => $request->length]);
             $datas = $datas->limit($request->length)->offset($request->start)->get();
-            return response()->json(new PastingCollection($datas));
+            return response()->json(new DyeBreakingCollection($datas));
         }
-        return view('admin.pasting.list');
+        return view('admin.dye-breaking.list');
     }
 
     /**
@@ -109,13 +106,7 @@ class PastingController extends Controller
      */
     public function show($id)
     {
-        $pasting = Pasting::where('id', $id)
-            ->with(['jobCard'=>function($query){
-                $query->with(['paper', 'putPaperWarehouse', 'getPaperWarehouse', 'jobCardItems'=>function($query){
-                    $query->with(['PO', 'POItem']);
-                }]);
-            }])->has('jobCard')->first();
-        return view('admin.pasting.view', compact('pasting'));
+        //
     }
 
     /**
@@ -139,69 +130,45 @@ class PastingController extends Controller
     public function update(Request $request, $id) {
         
         if(auth('admin')->user()->role_id == 1 || auth('admin')->user()->role_id == 2){
-            $pasting = Pasting::where(['id' => $id])->first();
+            $dye_breaking = DyeBreaking::where(['id' => $id])->first();
         }else{
-            $pasting = Pasting::where(['id' => $id, 'user_id' => $request->user_id ])->first();
-            if($pasting == null){
+            $dye_breaking = DyeBreaking::where(['id' => $id, 'user_id' => $request->user_id ])->first();
+            if($dye_breaking == null){
                 return response()->json(['message'=>'Please Choose Your Carton Name', 'class'=>'error', 'error'=>true]);
             }
         }
         if($request->ready_quantity != ''){
-            if($pasting->dye_breaking_quantity >= $request->ready_quantity){
-                if(auth('admin')->user()->role_id == 1 || auth('admin')->user()->role_id == 2){
-                    $pasting->ready_quantity = $request->ready_quantity;
-                }else{
-                    $pasting->ready_quantity += $request->ready_quantity;
-                }
-                if($pasting->save()){
-
-                    $warehouse = Warehouse::firstorNew(['client_id' => $pasting->PO->client->id, 'carton_name' => $pasting->POItem->carton_name, 'carton_size' => $pasting->POItem->carton_size]);
-                    $warehouse->purchase_order_id = $pasting->purchase_order_id;
-                    $warehouse->purchase_order_item_id = $pasting->purchase_order_item_id;
-                    if(auth('admin')->user()->role_id == 1 || auth('admin')->user()->role_id == 2){
-                        $warehouse->new_quantity = $request->ready_quantity;
-                    }else{
-                        $warehouse->new_quantity += $request->ready_quantity;
-                    }
-                    
-                    $warehouse->save();
-
-                    return response()->json(['message'=>'Ready Quantity updated successfully', 'class'=>'success', 'error'=>false]);     
-                }
-                return response()->json(['message'=>'Whoops, looks like something went wrong ! Try again ...', 'class'=>'error', 'error'=>true]);
+            if(auth('admin')->user()->role_id == 1 || auth('admin')->user()->role_id == 2){
+                $dye_breaking->ready_quantity = $request->ready_quantity;
+            }else{
+                $dye_breaking->ready_quantity += $request->ready_quantity;
             }
-            else{
-                return response()->json(['message'=>'Pasting quantity always less or equal to Dye Breaking Quantity', 'class'=>'error', 'error'=>true]);
-            }
-        }
+            if($dye_breaking->save()){
 
-        if($request->ready_box != ''){
-            $pasting->ready_box = $request->ready_box;
-            if($pasting->save()){
-                $warehouse = Warehouse::firstorNew(['client_id' => $pasting->PO->client->id, 'carton_name' => $pasting->POItem->carton_name, 'carton_size' => $pasting->POItem->carton_size]);
-                $warehouse->pasting_ready_box = $pasting->ready_box;
-                $warehouse->save();
-                return response()->json(['message'=>'Ready Box updated successfully', 'class'=>'success', 'error'=>false]);     
+                Pasting::where(['purchase_order_item_id' => $dye_breaking->purchase_order_item_id])->update(['dye_breaking_quantity'=>$dye_breaking->ready_quantity, 'status_id'=>2]);
+
+                return response()->json(['message'=>'Ready Quantity updated successfully', 'class'=>'success', 'error'=>false]);     
             }
             return response()->json(['message'=>'Whoops, looks like something went wrong ! Try again ...', 'class'=>'error', 'error'=>true]);
         }
 
-
         return response()->json(['message'=>'Whoops, looks like something went wrong ! Try again ...', 'class'=>'error', 'error'=>true]);
     }
+
+
 
     public function changeStatus(Request $request)
     { 
        // return $request->all();
         if($request->status == 2){
-            $pasting = Pasting::where(['id' => $request->id])->first();
+            $pasting = DyeBreaking::where(['id' => $request->id])->first();
             $pasting->status_id = 1;
             $pasting->save();
-            return response()->json(['message'=>'Pasting in pending', 'class'=>'success', 'error'=>false]);
+            return response()->json(['message'=>'Dye Breaking in pending', 'class'=>'success', 'error'=>false]);
         }
 
         if($request->status == 1){
-            $pasting = Pasting::where(['id' => $request->id, 'user_id' => $request->user_id ])->first();
+            $pasting = DyeBreaking::where(['id' => $request->id, 'user_id' => $request->user_id ])->first();
             if($pasting == null){
                 return response()->json(['message'=>'Please Choose Your Carton Name', 'class'=>'error', 'error'=>true]);
             }
@@ -213,7 +180,7 @@ class PastingController extends Controller
                 if($purchase_order_total === $purchase_order_completed){
                     PurchaseOrder::where(['id' => $pasting->purchase_order_id])->update(['status_id'=>5]);
                 }
-                return response()->json(['message'=>'Pasting Completed Successfully', 'class'=>'success', 'error'=>false]);
+                return response()->json(['message'=>'Dye Breaking Completed Successfully', 'class'=>'success', 'error'=>false]);
             }
             return response()->json(['message'=>'Whoops, looks like something went wrong ! Try again ...', 'class'=>'error', 'error'=>true]);
         }
@@ -223,7 +190,7 @@ class PastingController extends Controller
 
     public function oprator(Request $request)
     {
-        $module = Pasting::find($request->id);
+        $module = DyeBreaking::find($request->id);
         if($request->user_id != ''){
             $module->user_id = $request->user_id;
             $module->status_id = 1;
@@ -237,12 +204,5 @@ class PastingController extends Controller
         return response()->json(['message'=>'Whoops, looks like something went wrong ! Try again ...', 'class'=>'error']);
     }
 
-    
-    public function destroy($id)
-    {
-        if(Pasting::where('id',$id)->delete()){
-         return response()->json(['message'=>ucfirst(str_singular(request()->segment(2))).' Successfully Deleted', 'class'=>'success']); 
-        }
-        return back()->with(array('message' => 'Something Wrong', 'class' => 'error')); 
-    }
+
 }

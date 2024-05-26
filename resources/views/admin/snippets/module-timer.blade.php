@@ -1,5 +1,5 @@
 <!-- timerModel Modal -->
-<div class="modal fade" id="timerModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="timerModel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <form id="timerForm">
             @csrf

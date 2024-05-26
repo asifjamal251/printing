@@ -5,6 +5,11 @@
 
 
                     <div class="d-flex gap-3">
+                        <div class="form-group{{ $errors->has('product_code') ? ' has-error' : '' }}">
+                            {!! Form::label('product_code', 'Product Code') !!}
+                            {!! Form::text('product_code', null, ['class' => 'form-control', 'placeholder' => 'Product']) !!}
+                            <small class="text-danger">{{ $errors->first('product_code') }}</small>
+                        </div>
                         <div class="w-100 form-group{{ $errors->has('category') ? ' has-error' : '' }}">
                             {!! Form::label('category', 'Category') !!}
                             {!! Form::select('category', App\Models\Category::where('id', $category_id)->pluck('name', 'id'), $category_id,['class' => 'form-control product_category', 'required' => 'required', 'readonly']) !!}

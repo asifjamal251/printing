@@ -252,7 +252,7 @@ $(document).ready(function() {
             { "data": "timer", 
                 render: function(data, type, row) {
                     if(row['timer_status'] == 1){
-                        return '<span class="timer" data-start-time="'+row['timer']+'">'+formatTime(parseTime(row['timer']))+'</span>';
+                        return '<span class="timer" data-start-time="'+row['timer_default']+'">'+formatTime(parseTime(row['timer']))+'</span>';
                     }
                     else{
                         return '<span class="timers" data-start-time="'+row['timer']+'">'+formatTime(parseTime(row['timer']))+'</span>';

@@ -50,13 +50,11 @@
                                 <th>Carton</th>
                                 <th>Client</th>
                                 <th>PO Quantity</th>
-                                <th>Dye Breaking Quantity</th>
-                                <th>Pasted Quantity</th>
                                 <th>Ready Quantity</th>
-                                <th>Ready Box</th>
+                                <th>Quantity</th>
                                 <th>File</th>
                                 <th>Status</th>
-                                @can(['edit_pasting','delete_pasting', 'read_pasting', 'change_status_pasting'])
+                                @can(['edit_dye_breaking','delete_dye_breaking', 'read_dye_breaking', 'change_status_dye_breaking'])
                                   <th>Action</th>
                                 @endcan
                             </tr>
@@ -218,7 +216,6 @@ $(document).ready(function(){
         { "data": "carton_name" },
         { "data": "client" },
         { "data": "po_quantity" },
-        { "data": "dye_breaking" },
         { "data": "ready_quantity" },
         { "data": "add_quantity",
             render: function(data, type, row) {
@@ -234,21 +231,6 @@ $(document).ready(function(){
                 
             }
         },
-
-        { "data": "ready_box",
-            render: function(data, type, row) {
-                if(row['status_id'] == 5){
-                    return row['ready_box'];
-                }else{
-                    @if (auth('admin')->user()->role_id != 1 && auth('admin')->user()->role_id != 2)
-                        return '<input   data-user="'+row['user_id']+'"  data-id="'+row['id']+'" type="text" class="form-control form-control-sm ready-box" value="'+row['ready_box']+'" name="ready_box[]" placeholder="Ready box" style="max-width:100px;">';
-                    @else
-                        return '<input  data-id="'+row['id']+'" value="'+row['ready_box']+'" type="text" class="form-control form-control-sm ready-box" name="ready_box[]" placeholder="Ready Quantity" style="max-width:100px;">';
-                    @endif
-                }
-                
-            }
-        },
      
       
         { "data": "file" },
@@ -259,22 +241,22 @@ $(document).ready(function(){
                 if (type === 'display') {
                     var btn = '<div class="dropdown d-inline-block"><button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="ri-more-fill align-middle"></i></button><ul class="dropdown-menu dropdown-menu-end">';
 
-                    @can(['edit_pasting','delete_pasting','read_pasting', 'change_status_pasting'])
+                    @can(['edit_dye_breaking','delete_dye_breaking','read_dye_breaking', 'change_status_dye_breaking'])
 
-                    // @can('edit_pasting')
+                    // @can('edit_dye_breaking')
                     //     btn+='<li><a class="dropdown-item edit-item-btn" onclick="updateData(\'{{ route('admin.printing.changeStatus') }}\',{status:3,id:'+row['id']+',job_card_id:'+row['job_card_id']+'})"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Send To Warehouse</a></li>';
                     // @endcan
 
-                    @can('change_status_pasting')
+                    @can('change_status_dye_breaking')
                         if(row['status_id'] == 1){
-                            btn+='<li><a onclick="updateData(\'{{ route('admin.pasting.changeStatus') }}\',{user_id:'+row['user_id']+', status:1,id:'+row['id']+',job_card_id:'+row['job_card_id']+'})" class="dropdown-item edit-item-btn" href="javascript:void(0);"><i class="ri-check-double-line align-bottom me-2 text-muted"></i> Completed</a></li>';
+                            btn+='<li><a onclick="updateData(\'{{ route('admin.dye-breaking.changeStatus') }}\',{user_id:'+row['user_id']+', status:1,id:'+row['id']+',job_card_id:'+row['job_card_id']+'})" class="dropdown-item edit-item-btn" href="javascript:void(0);"><i class="ri-check-double-line align-bottom me-2 text-muted"></i> Completed</a></li>';
                         }
                         if(row['status_id'] == 5){
-                            btn+='<li><a onclick="updateData(\'{{ route('admin.pasting.changeStatus') }}\',{user_id:'+row['user_id']+', status:2,id:'+row['id']+',job_card_id:'+row['job_card_id']+'})" class="dropdown-item edit-item-btn" href="javascript:void(0);"><i class="ri-check-double-line align-bottom me-2 text-muted"></i> Cancel</a></li>';
+                            btn+='<li><a onclick="updateData(\'{{ route('admin.dye-breaking.changeStatus') }}\',{user_id:'+row['user_id']+', status:2,id:'+row['id']+',job_card_id:'+row['job_card_id']+'})" class="dropdown-item edit-item-btn" href="javascript:void(0);"><i class="ri-check-double-line align-bottom me-2 text-muted"></i> Cancel</a></li>';
                         }
                     @endcan
 
-                    // @can('delete_pasting')
+                    // @can('delete_dye_breaking')
                     //     btn += '<li><button type="button" onclick="deleteAjax(\''+window.location.href+'/'+row['id']+'/delete\')" class="dropdown-item remove-item-btn"><i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete</button></li>';
                     // @endcan
 
@@ -310,7 +292,7 @@ $('body').on('click', '.filters', function(){
             $.ajax({
                 type: "POST",
                 enctype: 'multipart/form-data',
-                url: '{{ route('admin.pasting.update', '') }}/'+id,
+                url: '{{ route('admin.dye-breaking.update', '') }}/'+id,
                 data: { 'ready_box': null, 'user_id':user_id, 'ready_quantity': ready_quantity, '_method': 'PUT', '_token': '{{ csrf_token() }}' },
                 success: function (response) {
                     Toastify({
@@ -322,12 +304,6 @@ $('body').on('click', '.filters', function(){
                         stopOnFocus: true, // Prevents dismissing of toast on hover
                         className: response.class,
                     }).showToast(); 
-                    console.log('error', response.class)
-                    
-                    var audio = document.getElementById('success-sound');
-                    audio.play();
-                    
-
                     $('.datatable').DataTable().draw('page');
                 },
                 error: function (error) {
@@ -352,45 +328,6 @@ $('body').on('click', '.filters', function(){
     });
 
 
-    $('body').on('change', '.ready-box', function(){
-        var ready_box = $(this).val();
-        var id = $(this).attr('data-id');
-        var user_id = $(this).attr('data-user');
-        if(ready_box != ''){
-            $.ajax({
-                type: "POST",
-                enctype: 'multipart/form-data',
-                url: '{{ route('admin.pasting.update', '') }}/'+id,
-                data: { 'ready_quantity': null, 'user_id':user_id, 'ready_box': ready_box, '_method': 'PUT', '_token': '{{ csrf_token() }}' },
-                success: function (response) {
-                    Toastify({
-                        text: response.message,
-                        duration: 3000,
-                        close: true,
-                        gravity: "top", // `top` or `bottom`
-                        position: "right", // `left`, `center` or `right`
-                        stopOnFocus: true, // Prevents dismissing of toast on hover
-                        className: response.class,
-                    }).showToast(); 
-                    $('.datatable').DataTable().draw('page');
-                },
-                error: function (error) {
-                    // Handle error
-                }
-            });
-        }
-        else{
-            Toastify({
-                text: 'Printed Sheets always less than Total Sheets.',
-                duration: 3000,
-                close: true,
-                gravity: "top", // `top` or `bottom`
-                position: "right", // `left`, `center` or `right`
-                stopOnFocus: true, // Prevents dismissing of toast on hover
-                className: 'error',
-            }).showToast(); 
-        }
-    });
 
 
 });

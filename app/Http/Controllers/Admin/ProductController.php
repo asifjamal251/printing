@@ -85,6 +85,7 @@ class ProductController extends Controller
 
        if($request->id != ''){
             $this->validate($request,[
+                'product_code'=>'required',  
                 'category'=>'required',  
                 'product_name'=>'required',   
                 'weight_per_piece'=>'required',  
@@ -93,6 +94,7 @@ class ProductController extends Controller
        }else{
 
             $this->validate($request,[
+                'product_code'=>'required',  
                 'category'=>'required',  
                 'product_name'=>'required|unique:products,name',   
                 'weight_per_piece'=>'required',  
@@ -101,6 +103,7 @@ class ProductController extends Controller
         }
 
         $product = Product::firstOrNew(['id'=>$request->id]);
+        $product->code = $request->product_code;
         $product->name = $request->product_name;
         $product->unit_id = $request->unit;
         $product->category_id = $request->category;
@@ -142,6 +145,7 @@ class ProductController extends Controller
         }
 
         $this->validate($request,[
+            'product_code'=>'required',     
             'category'=>'required',     
             'paper_length'=>'required',     
             'paper_width'=>'required',     
@@ -156,6 +160,7 @@ class ProductController extends Controller
         $product = Product::firstOrNew(['id'=>$request->id]);
         $product->name = $product_name;
         $product->category_id = $request->category;
+        $product->code = $request->product_code;
         $product->length = $request->paper_length;
         $product->width = $request->paper_width;
         $product->gsm = $request->paper_gsm;

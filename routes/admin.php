@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\CuttingController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DesigningController;
 use App\Http\Controllers\Admin\DominantController;
+use App\Http\Controllers\Admin\DyeBreakingController;
 use App\Http\Controllers\Admin\DyeCuttingController;
 use App\Http\Controllers\Admin\DyeDetailsController;
 use App\Http\Controllers\Admin\EmbossingController;
@@ -521,6 +522,21 @@ Route::middleware('admin')->name('admin.')->group(function() {
         Route::put('leafings/change-status', 'changeStatus')->name('leafing.changeStatus')->middleware('can:change_status_leafing');
 
         Route::post('leafing/oprater/update', 'oprator')->name('leafing.oprator');
+    });
+
+
+      //DyeBreaking
+    Route::controller(DyeBreakingController::class)->group(function(){
+        Route::match(['get','patch'],'dye-breaking', 'index')->name('dye-breaking.index')->middleware('can:browse_dye_breaking');
+        Route::get('dye-breaking/create', 'create')->name('dye-breaking.create')->middleware('can:add_dye_breaking');
+        Route::get('dye-breaking/{dye-breaking}', 'show')->name('dye-breaking.show')->middleware('can:read_dye_breaking');
+        Route::get('dye-breaking/{dye-breaking}/edit', 'edit')->name('dye-breaking.edit')->middleware('can:edit_dye_breaking');
+        Route::post('dye-breaking', 'store')->name('dye-breaking.store')->middleware('can:add_dye_breaking');
+        Route::put('dye-breaking/{dye_breaking}', 'update')->name('dye-breaking.update')->middleware('can:edit_dye_breaking');
+        Route::delete('dye-breaking/{id}', 'destroy')->name('dye-breaking.destroy')->middleware('can:delete_dye_breaking');
+        Route::put('dye-breakings/change-status', 'changeStatus')->name('dye-breaking.changeStatus')->middleware('can:change_status_dye_breaking');
+
+        Route::post('dye-breaking/oprater/update', 'oprator')->name('dye-breaking.oprator');
     });
 
 

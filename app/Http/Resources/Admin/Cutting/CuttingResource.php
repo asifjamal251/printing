@@ -10,30 +10,45 @@ use App\Models\JobCardHistory;
 use App\Models\JobCardTimer;
 use App\Models\ModuleUser;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Carbon\Carbon;
 
 class CuttingResource extends JsonResource{
 
     private function timer($jobCardId, $type){
         $timer = JobCardTimer::where(['machine' => 'Cutting', 'job_card_id' => $jobCardId])->first();
-        if($type == 'Timer'){
-            if ($timer) {
+        if($timer){
+            if($type == 'Timer'){
+                
                 if($timer->worked_time){
                     return formatTime($timer->worked_time);
                 }else{
                     return '0:0:0';
                 }
-            } 
-            else {
-                return '0:0:0';
+                
             }
-        }
 
-        if($type == 'Status'){
-            if ($timer){
-                return $timer->status;
-            } else {
-                return '0:0:0';
+            if($type == 'Status'){
+                if ($timer){
+                    return $timer->status;
+                } else {
+                    return '0:0:0';
+                }
             }
+
+
+            if($type == 'Default'){
+                if ($timer->status == 1){
+                    $pauseTime = Carbon::parse($timer->resume_at); // Manually create a Carbon instance
+                    $now = Carbon::now();
+
+                    $diffInSeconds = $pauseTime->diffInSeconds($now);
+                    $finalResult = $diffInSeconds + $timer->worked_time;
+
+                    return formatTime($finalResult); // Use $finalResult instead of $timer->finalResult
+                }
+            }
+        } else{
+            return '0:0:0';
         }
 
     }
@@ -120,12 +135,12 @@ class CuttingResource extends JsonResource{
         $jobCardPaper = [];
         
         foreach ($paperDetails as $key=>$item) {
-            if($paperDetails->count() > 1){
+            if($paperDetails->count() > 0){
                 $jobCardPaper[] = '<p class="m-0 carton-list">' . @$item->product->name.'-'.@$item->product->productType->type.'</p>';
             }
         }
 
-        if($paperDetails->count() > 1){
+        if($paperDetails->count() > 0){
             $jobCardPaper[] = '';
         }
         $uniqueJobCardPaper = array_unique($jobCardPaper);
@@ -138,12 +153,12 @@ class CuttingResource extends JsonResource{
         $jobCardPaper = [];
         
         foreach ($paperDetails as $key=>$item) {
-            if($paperDetails->count() > 1){
+            if($paperDetails->count() > 0){
                 $jobCardPaper[] = '<p class="m-0 carton-list">' . @$item->paper_divide.'</p>';
             }
         }
 
-        if($paperDetails->count() > 1){
+        if($paperDetails->count() > 0){
             $jobCardPaper[] = '';
         }
         //$uniqueJobCardPaper = array_unique($jobCardPaper);
@@ -155,12 +170,12 @@ class CuttingResource extends JsonResource{
         $jobCardPaper = [];
         
         foreach ($paperDetails as $key=>$item) {
-            if($paperDetails->count() > 1){
+            if($paperDetails->count() > 0){
                 $jobCardPaper[] = '<p class="m-0 carton-list">' . @$item->total_sheet.'</p>';
             }
         }
 
-        if($paperDetails->count() > 1){
+        if($paperDetails->count() > 0){
             $jobCardPaper[] = '';
         }
         //$uniqueJobCardPaper = array_unique($jobCardPaper);
@@ -189,14 +204,15 @@ class CuttingResource extends JsonResource{
             'divide' => $this->paperDivide($this->jobCard->paper_divide, $this->jobCard->warehouse_type),
             'required_sheet_need' => ($this->jobCard->required_sheet + $this->jobCard->wastage_sheet),
             'required_sheet_total' =>  $this->cutting_sheets??'',
-            'status'=> status($this->status_id),
-            'status_id'=>$this->status_id,
+            'status'=> status(@$this->status_id),
+            'status_id'=>@$this->status_id,
             'job_card_id'=>$this->job_card_id,
             'cutting_sheets'=>$this->cutting_sheets??'',
             'file' => $this->jobCard->mediaFiles->count()>0?"<a class='glightbox' data-gallery='".$this->id."' href='".asset($this->jobCard->mediaFiles[0]['file'])."'> <img class='rounded avatar-sm' src='".asset($this->jobCard->mediaFiles[0]['file'])."'/></a>":"N/A",
             'carton_name'=>$this->job_card_id?getCartonNames(@$this->jobCard->jobCardItems):'',
-            'timer' => $this->timer($this->job_card_id, 'Timer'),
-            'timer_status' => $this->timer($this->job_card_id, 'Status'),
+            'timer' => $this->timer(@$this->job_card_id, 'Timer'),
+            'timer_status' => $this->timer(@$this->job_card_id, 'Status'),
+            'timer_default' => $this->timer(@$this->job_card_id, 'Default'),
         ];
 
     }

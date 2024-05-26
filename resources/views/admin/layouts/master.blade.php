@@ -39,7 +39,8 @@
 </head>
 
 <body>
-
+    <audio id="success-sound" src="{{ asset('sounds/success.mp3') }}" preload="auto"></audio>
+    <audio id="error-sound" src="{{ asset('sounds/errors.mp3') }}" preload="auto"></audio>
     <!-- Begin page -->
     <div id="layout-wrapper">
 
@@ -119,7 +120,30 @@
 
             }).showToast();
         </script>
+
+
+        @if(Session::get('class') == 'success')
+            <script>
+                console.log('error', {{Session::get('class')}})
+                document.addEventListener('DOMContentLoaded', function () {
+                    var audio = document.getElementById('success-sound');
+                    audio.play();
+                });
+            </script>
+        @endif
+
+        @if(Session::get('class') == 'error')
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    var audio = document.getElementById('error-sound');
+                    audio.play();
+                });
+            </script>
+        @endif
+
     @endif
+
+
     <!-- App js -->
     
     <script type="text/javascript">
