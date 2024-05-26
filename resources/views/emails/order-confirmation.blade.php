@@ -29,7 +29,9 @@
     </style>
 </head>
 <body>
-
+@if($material['status_id'] == 7)
+<div class=""></div>
+@endif
 <table style="width: 100%;">
     <tr>
         <td colspan="6">

@@ -92,7 +92,7 @@ class DesigningController extends Controller
         $jobCardItem = JobCardItem::where('purchase_order_item_id', $id)->first();
         $count = JobCardItem::where('job_card_id', $jobCardItem->job_card_id)->count();
         if(JobCardItem::where('purchase_order_item_id', $id)->delete()){
-            Planning::whereIn('purchase_order_item_id', [$id])->update(['status_id' => 2, 'ups' => null ]);
+            Planning::whereIn('purchase_order_item_id', [$id])->update(['status_id' => 2]);
 
             $count = JobCardItem::where('job_card_id', $jobCardItem->job_card_id)->count();
             if($count > 0){
@@ -100,13 +100,16 @@ class DesigningController extends Controller
             }
             else{
               JobCard::where('id', $jobCardItem->job_card_id)->delete();  
+              JobCardItem::where('job_card_id', $jobCardItem->job_card_id)->delete();  
               Designing::where('job_card_id', $jobCardItem->job_card_id)->delete();  
             }
 
-            $total_quantity = JobCardItem::where(['job_card_id'=>$jobCardItem->job_card_id])->sum('quantity');
-            $total_ups = JobCardItem::where(['job_card_id'=>$jobCardItem->job_card_id])->sum('ups');
-            $required_sheet = $total_quantity / $total_ups;
-            JobCard::where(['id'=>$jobCardItem->job_card_id])->update(['required_sheet' => $required_sheet]);
+            if($count > 0){
+                $total_quantity = JobCardItem::where(['job_card_id'=>$jobCardItem->job_card_id])->sum('quantity');
+                $total_ups = JobCardItem::where(['job_card_id'=>$jobCardItem->job_card_id])->sum('ups');
+                $required_sheet = $total_quantity / $total_ups;
+                JobCard::where(['id'=>$jobCardItem->job_card_id])->update(['required_sheet' => $required_sheet]);
+            }
 
 
             return response()->json(['message'=>'Item removed successfully', 'class'=>'success']);  

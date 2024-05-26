@@ -40,6 +40,7 @@ class ProductResource extends JsonResource
             'product_type'=>@$this->productType->type, 
             'hsn'=>$this->hsn, 
             'code'=>$this->code, 
+            'gsm'=>$this->gsm?'paper':'other', 
             'quantity'=>$this->quantity, 
             'wt_pc'=>$this->weight_per_piece, 
             'total_weight'=>$this->totalweight($this->weight_per_piece, $this->quantity), 

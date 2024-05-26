@@ -171,7 +171,7 @@ th {
                     {!! Form::open(['route'=>['admin.'.request()->segment(2).'.statusChange',$material->id],'method'=>'put', 'files'=>true]) !!}
                     <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
                         {!! Form::label('status', 'Status') !!}
-                        {!! Form::select('status', App\Models\Status::whereIn('id', [2, 3, 6, 8])->pluck('name', 'id'), $material->status_id, ['id' => 'status_id', 'class' => 'form-control', 'placeholder' => 'Chosse Status']) !!}
+                        {!! Form::select('status', App\Models\Status::whereIn('id', [2, 3, 5, 6, 26, 8])->pluck('name', 'id'), $material->status_id, ['id' => 'status_id', 'class' => 'form-control', 'placeholder' => 'Chosse Status']) !!}
                         <small class="text-danger">{{ $errors->first('status') }}</small>
                     </div>
 

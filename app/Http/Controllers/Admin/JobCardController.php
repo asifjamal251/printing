@@ -62,6 +62,16 @@ class JobCardController extends Controller
                 $datas->where('status_id', $request->status_id);
             }
 
+           if ($request->client) {
+                $datas->where(function ($query) use ($request) {
+                    $query->orWhereHas('jobCardItems.PO', function ($subQuery) use ($request) {
+                        $subQuery->whereHas('client', function ($clientQuery) use ($request) {
+                            $clientQuery->where('id', '=', $request->client);
+                        });
+                    });
+                });
+            }
+
             $request->merge(['recordsTotal' => $datas->count(), 'length' => $request->length]);
             $datas = $datas->limit($request->length)->offset($request->start)->get();
 

@@ -36,7 +36,7 @@ class MaterialOrderController extends Controller
             $search = $request->search['value'];
 
             if ($search) {
-                $datas->where('receipt_no', 'like', '%'.$search.'%');
+                $datas->where('order_no', 'like', '%'.$search.'%');
             }
 
             if($request->vendor){
@@ -286,6 +286,9 @@ class MaterialOrderController extends Controller
         
         // Update the status
         $materialData->status_id = $request->status;
+        if($request->status == 5){
+            $materialData->completed_at = Carbon::now()->format('Y-m-d');
+        }
         $materialData->save();
         
         if($request->send_email){
@@ -311,12 +314,13 @@ class MaterialOrderController extends Controller
             if (!empty($toAddresses)) {
                 // Send the email
                 Mail::send(new MaterialOrderConfirmation($pdf, $toAddresses, $ccAddresses, $material, $items));
-
-                return redirect()->back()->with(['class'=>'success','message'=>'Save has changed and email sent']);
+                return redirect()->route('admin.material-order.index')->with(['class'=>'success','message'=>'Status Changed and email sent.']);
             } else {
                return redirect()->back()->with(['class'=>'success','message'=>'Save has changed']);
             }
         }
+
+       return redirect()->route('admin.material-order.index')->with(['class'=>'success','message'=>'Status Changed.']);
     }
 }
 

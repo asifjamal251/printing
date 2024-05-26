@@ -40,7 +40,7 @@
                     
                     <div class="card-body">
                         <div class="table-responsive">
-                        <table id="datatable" class="datatable table table-bordered border-secondary table-sm nowrap align-middle" style="width:100%">
+                        <table id="datatable" class="datatable table table-bordered border-secondary table-sm nowrap table-hover align-middle" style="width:100%">
                             <thead class="gridjs-thead">
                             <tr>
                                 <th style="width:12px">Si</th>
@@ -100,6 +100,17 @@
                 </div>
             </div>
 
+        </div>
+
+
+        <div class="card">
+            <div class="card-body">
+                <div class="m-0 form-group{{ $errors->has('client') ? ' has-error' : '' }}">
+                    {!! Form::label('client', 'Client') !!}
+                    {!! Form::select('client', App\Models\Client::orderBy('company_name', 'asc')->pluck('company_name', 'id'), null, ['id' => 'filter_client', 'class' => 'form-control form-control-sm', 'placeholder' => 'Choose Client']) !!}
+                    <small class="text-danger">{{ $errors->first('client') }}</small>
+                </div>
+            </div>
         </div>
 
 
@@ -204,6 +215,7 @@ $(document).ready(function(){
         d._token = '{{ csrf_token() }}';
         d._method = 'PATCH';
         d.status_id = $('#status_id').val();
+        d.client = $('#filter_client').val();
     }
 
     },
@@ -244,16 +256,12 @@ $(document).ready(function(){
 
                     @can('edit_job_card')
 
-                        btn += '<li><a target="_blank" class="dropdown-item" href="{{ request()->url() }}/track/' + row['id'] + '"><i class="ri-pulse-line  align-bottom me-2 text-muted"></i> View</a></li>';
-
                         btn += '<li><a target="_blank" class="dropdown-item" href="{{ request()->url() }}/track/' + row['id'] + '"><i class="ri-pulse-line  align-bottom me-2 text-muted"></i> Track</a></li>';
 
                         btn+='<li><a class="dropdown-item edit-item-btn" href="'+window.location.href+'/'+row['id']+'/edit"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>';
                     @endcan
 
-                    @can('user_job_card')
-                        btn+='<li><a class="dropdown-item edit-item-btn" href="'+window.location.href+'/user/assign/'+row['id']+'"><i class="ri-user-follow-fill  align-bottom me-2 text-muted"></i>Assign User</a></li>';
-                    @endcan
+                   
 
                     @can('delete_job_card')
                         btn += '<li><button type="button" onclick="deleteAjax(\''+window.location.href+'/'+row['id']+'/delete\')" class="dropdown-item remove-item-btn"><i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete</button></li>';

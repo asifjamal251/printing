@@ -56,6 +56,7 @@
                             <tr>
                                 <th style="width:12px">Si</th>
                                 <th>Receipt No.</th>
+                                <th>Material Order No</th>
                                 <th>Vendor</th>
                                 <th>Bill No.</th>
                                 <th>Bill Date</th>
@@ -194,6 +195,7 @@ $(document).ready(function(){
     "columns": [
         { "data": "sn" },
         { "data": "receipt_no" },
+        { "data": "material_order_no" },
         { "data": "vendor" },
         { "data": "bill_no" },
         { "data": "bill_date" },

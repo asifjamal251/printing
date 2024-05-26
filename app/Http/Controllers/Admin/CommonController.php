@@ -145,7 +145,51 @@ class CommonController extends Controller{
 
     
 
-   public function productList(Request $request){
+    public function productList(Request $request){
+        if ($request->ajax()) {
+            $page = $request->input('page', 1); // Default to page 1 if not provided
+            $resultCount = 5;
+            $offset = ($page - 1) * $resultCount;
+            $term = $request->input('term', ''); // Default to an empty string if not provided
+
+            $query = Product::join('categories', 'products.category_id', '=', 'categories.id')
+                            ->join('product_types', 'products.product_type_id', '=', 'product_types.id')
+                            ->where(function ($query) use ($term) {
+                                $query->where('products.name', 'LIKE', '%' . $term . '%')
+                                      ->orWhere('products.code', 'LIKE', '%' . $term . '%');
+                            })
+                            ->orderBy('products.created_at', 'asc');
+
+            $count = $query->count();
+
+            $name = $query->skip($offset)
+                          ->take($resultCount)
+                          ->selectRaw('products.id, CONCAT(products.name, " (", products.code, ", ", product_types.type, ")-", categories.name) as text, products.id as product_id')
+                          ->get();
+
+            $endCount = $offset + $resultCount;
+            $morePages = $count > $endCount;
+
+            $results = [
+                "results" => $name,
+                "pagination" => [
+                    "more" => $morePages
+                ]
+            ];
+
+            return response()->json($results);
+        }
+
+        return response()->json('oops');
+    }
+
+
+
+
+
+
+
+public function productListCode(Request $request){
     if ($request->ajax()) {
         $page = $request->page;
         $resultCount = 5;
@@ -156,19 +200,19 @@ class CommonController extends Controller{
         $term = $request->term;
 
         if ($paper_type != '') {
-            $query = Product::where('products.name', 'LIKE', '%' . $term . '%')
+            $query = Product::where('products.code', 'LIKE', '%' . $term . '%')
                         ->join('categories', 'products.category_id', '=', 'categories.id')
                         ->join('product_types', 'products.product_type_id', '=', 'product_types.id')
                         ->orderBy('products.created_at', 'asc');
 
             $name = $query->skip($offset)
                         ->take($resultCount)
-                        ->selectRaw('products.id, CONCAT(products.name, " (", categories.name, ", ", product_types.type, ")") as text, products.id as product_id')
+                        ->selectRaw('products.id, CONCAT(products.code, " (", products.name, ", ", categories.name, ")") as text, products.id as product_id')
                         ->get();
 
             $count = $query->count();
         } else {
-            $query = Product::where('products.name', 'LIKE', '%' . $term . '%')
+            $query = Product::where('products.code', 'LIKE', '%' . $term . '%')
                         ->join('categories', 'products.category_id', '=', 'categories.id')
                         ->orderBy('products.created_at', 'asc');
 

@@ -10,6 +10,7 @@ use App\Models\JobCardHistory;
 use App\Models\JobCardItem;
 use App\Models\Pasting;
 use App\Models\Project;
+use App\Models\PurchaseOrder;
 use App\Models\PurchaseOrderItem;
 use Carbon\Carbon;
 use Illuminate\Http\Request;

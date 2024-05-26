@@ -6,11 +6,11 @@
         <small class="text-danger">{{ $errors->first('product_type') }}</small>
     </div>
 
-    <div class="form-group{{ $errors->has('start_series') ? ' has-error' : '' }}">
+    {{-- <div class="form-group{{ $errors->has('start_series') ? ' has-error' : '' }}">
         {!! Form::label('start_series', 'Start Series') !!}
         {!! Form::text('start_series', $product_type->start_series, ['class' => 'form-control', 'placeholder' => 'Start Series']) !!}
         <small class="text-danger">{{ $errors->first('start_series') }}</small>
-    </div>
+    </div> --}}
 
     <div class="btn-group">
         {!! Form::button("Update Product Type", ['class' => 'btn btn-soft-secondary ','onClick'=>'UpdateTag(this, '.$product_type->id.')']) !!}

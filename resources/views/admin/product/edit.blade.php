@@ -4,32 +4,25 @@
                 <div class="row">
 
                     {!! Form::hidden('id', $product->id) !!}
-                    <div class="d-flex gap-3">
-                        <div class="form-group{{ $errors->has('product_code') ? ' has-error' : '' }}">
-                            {!! Form::label('product_code', 'Product Code') !!}
-                            {!! Form::text('product_code', $product->code, ['class' => 'form-control', 'placeholder' => 'Product']) !!}
-                            <small class="text-danger">{{ $errors->first('product_code') }}</small>
-                        </div>
+                    
 
-                        <div class="w-100 form-group{{ $errors->has('category') ? ' has-error' : '' }}">
-                            {!! Form::label('category', 'Category') !!}
-                            {!! Form::select('category', App\Models\Category::pluck('name', 'id'), $product->category_id,['class' => 'form-control product_category', 'required' => 'required']) !!}
-                            {{-- {!! Form::hidden('category', $product->category_id,['class' => 'productCategoryID']) !!} --}}
-                            <small class="text-danger">{{ $errors->first('category') }}</small>
-                        </div>
-
+                    <div class="form-group col-md-4 col-sm-12">
                         <div class="w-100 form-group{{ $errors->has('paper_length') ? ' has-error' : '' }}">
                             {!! Form::label('paper_length', 'Length') !!}
                             {!! Form::text('paper_length', $product->length, ['class' => 'form-control', 'placeholder' => 'Length']) !!}
                             <small class="text-danger">{{ $errors->first('paper_length') }}</small>
                         </div>
+                    </div>
 
+                    <div class="form-group col-md-4 col-sm-12">
                         <div class="w-100 form-group{{ $errors->has('paper_width') ? ' has-error' : '' }}">
                             {!! Form::label('paper_width', 'Width') !!}
                             {!! Form::text('paper_width', $product->width, ['class' => 'form-control', 'placeholder' => 'Width']) !!}
                             <small class="text-danger">{{ $errors->first('paper_width') }}</small>
                         </div>
+                    </div>
 
+                    <div class="form-group col-md-4 col-sm-12">
                         <div class="w-100 form-group{{ $errors->has('paper_gsm') ? ' has-error' : '' }}">
                             {!! Form::label('paper_gsm', 'GSM') !!}
                             {!! Form::text('paper_gsm', $product->gsm, ['class' => 'form-control', 'placeholder' => 'GSM']) !!}
@@ -37,8 +30,32 @@
                         </div>
                     </div>
 
+                    <div class="form-group col-md-4 col-sm-12">
+                        <div class="form-group{{ $errors->has('product_code') ? ' has-error' : '' }}">
+                            {!! Form::label('product_code', 'Product Code') !!}
+                            {!! Form::text('product_code', $product->code, ['class' => 'form-control', 'placeholder' => 'Product']) !!}
+                            <small class="text-danger">{{ $errors->first('product_code') }}</small>
+                        </div>
+                    </div>
 
-                    <div class="form-group col-md-6 col-sm-12">
+                    <div class="form-group col-md-4 col-sm-12">
+                        <div class="w-100 form-group{{ $errors->has('category') ? ' has-error' : '' }}">
+                            {!! Form::label('category', 'Category') !!}
+                            {!! Form::select('category', App\Models\Category::pluck('name', 'id'), $product->category_id,['class' => 'form-control product_category', 'required' => 'required']) !!}
+                            <small class="text-danger">{{ $errors->first('category') }}</small>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-4 col-sm-12">
+                        <div class="form-group{{ $errors->has('product_type') ? ' has-error' : '' }}">
+                            {!! Form::label('product_type', 'Paper Type') !!}
+                            {!! Form::select('product_type', App\Models\ProductType::pluck('type', 'id'), $product->product_type_id, ['id' => 'product_type', 'class' => 'form-control', 'required' => 'required', 'placeholder'=>'Choose an option']) !!}
+                            <small class="text-danger">{{ $errors->first('product_type') }}</small>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group col-md-4 col-sm-12">
                         <div class="form-group{{ $errors->has('paper_hsn') ? ' has-error' : '' }}">
                             {!! Form::label('paper_hsn', 'Paper HSN') !!}
                             {!! Form::text('paper_hsn', $product->hsn, ['class' => 'form-control', 'placeholder' => 'Paper HSN']) !!}
@@ -46,15 +63,9 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-md-6 col-sm-12">
-                        <div class="form-group{{ $errors->has('paper_type') ? ' has-error' : '' }}">
-                            {!! Form::label('paper_type', 'Paper Type') !!}
-                            {!! Form::select('paper_type', App\Models\ProductType::pluck('type', 'id'), $product->product_type_id, ['id' => 'paper_type', 'class' => 'form-control', 'required' => 'required', 'placeholder'=>'Choose an option']) !!}
-                            <small class="text-danger">{{ $errors->first('paper_type') }}</small>
-                        </div>
-                    </div>
+                    
 
-                    <div class="form-group col-md-6 col-sm-12">
+                    <div class="form-group col-md-4 col-sm-12">
                         <div class="form-group{{ $errors->has('paper_packet_weight') ? ' has-error' : '' }}">
                             {!! Form::label('paper_packet_weight', 'Packet Weight') !!}
                             {!! Form::text('paper_packet_weight', $product->packet_weight, ['class' => 'form-control get-weight-per-sheet', 'placeholder' => 'Packet Weight']) !!}
@@ -62,7 +73,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-md-6 col-sm-12">
+                    <div class="form-group col-md-4 col-sm-12">
                         <div class="form-group{{ $errors->has('sheet_per_packet') ? ' has-error' : '' }}">
                             {!! Form::label('sheet_per_packet', 'Sheet/Packet') !!}
                             {!! Form::text('sheet_per_packet', $product->item_per_packet, ['class' => 'form-control get-weight-per-sheet', 'placeholder' => 'Sheet/Packet']) !!}
@@ -110,7 +121,7 @@
 
                     {!! Form::hidden('id', $product->id) !!}
 
-                    <div class="form-group col-md-6 col-sm-12">
+                    <div class="form-group col-md-4 col-sm-12">
                         <div class="form-group{{ $errors->has('category') ? ' has-error' : '' }}">
                             {!! Form::label('category', 'Category') !!}
                              {!! Form::select('category', App\Models\Category::pluck('name', 'id'), $product->category_id,['class' => 'form-control product_category', 'required' => 'required']) !!}
@@ -120,8 +131,17 @@
                     </div>
 
 
+                    <div class="form-group col-md-4 col-sm-12">
+                        <div class="form-group{{ $errors->has('product_code') ? ' has-error' : '' }}">
+                            {!! Form::label('product_code', 'Product Code') !!}
+                            {!! Form::text('product_code', $product->code, ['class' => 'form-control', 'placeholder' => 'Product']) !!}
+                            <small class="text-danger">{{ $errors->first('product_code') }}</small>
+                        </div>
+                    </div>
 
-                    <div class="form-group col-md-6 col-sm-12">
+
+
+                    <div class="form-group col-md-4 col-sm-12">
                         <div class="form-group{{ $errors->has('product_name') ? ' has-error' : '' }}">
                             {!! Form::label('product_name', 'Product Name') !!}
                             {!! Form::text('product_name', $product->name, ['class' => 'form-control', 'placeholder' => 'Product Name']) !!}
@@ -129,7 +149,15 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-md-6 col-sm-12">
+                    <div class="form-group col-md-4 col-sm-12">
+                        <div class="form-group{{ $errors->has('product_type') ? ' has-error' : '' }}">
+                            {!! Form::label('product_type', 'Paper Type') !!}
+                            {!! Form::select('product_type', App\Models\ProductType::pluck('type', 'id'), $product->product_type_id, ['id' => 'product_type', 'class' => 'form-control', 'required' => 'required', 'placeholder'=>'Choose an option']) !!}
+                            <small class="text-danger">{{ $errors->first('product_type') }}</small>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-4 col-sm-12">
                         <div class="form-group{{ $errors->has('hsn') ? ' has-error' : '' }}">
                             {!! Form::label('hsn', 'HSN') !!}
                             {!! Form::text('hsn', $product->hsn, ['class' => 'form-control', 'placeholder' => 'HSN']) !!}
@@ -138,7 +166,7 @@
                     </div>
 
 
-                    <div class="form-group col-md-6 col-sm-12">
+                    <div class="form-group col-md-4 col-sm-12">
                         <div class="form-group{{ $errors->has('weight_per_piece') ? ' has-error' : '' }}">
                             {!! Form::label('weight_per_piece', 'Weight Per Piece') !!}
                             {!! Form::text('weight_per_piece', $product->weight_per_piece, ['class' => 'form-control', 'placeholder' => 'Weight Per Piece']) !!}
@@ -147,7 +175,7 @@
                     </div>
 
 
-                    <div class="form-group col-md-6 col-sm-12">
+                    <div class="form-group col-md-4 col-sm-12">
                         <div class="form-group{{ $errors->has('unit') ? ' has-error' : '' }}">
                             {!! Form::label('unit', 'Unit') !!}
                             {!! Form::select('unit', \App\Models\Unit::select(\DB::raw('CONCAT(name, " (", code, ") ") as unit'), 'id')->pluck('unit', 'id'), $product->unit_id, ['id' => 'unit', 'class' => 'form-control', 'placeholder' => 'Choose an option']) !!}

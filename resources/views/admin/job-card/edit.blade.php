@@ -43,7 +43,7 @@
                 </tr>
 
                 <tr>
-                    <th style="width:160px;">Set No.</th>
+                    <th style="width:160px;">Set No./Doc No.</th>
                     <td>{{ $job_card->set_no }}</td>
                 </tr>
 
@@ -272,7 +272,7 @@
 
 
 
-     <div class="card card border card-border-danger">
+     {{-- <div class="card card border card-border-danger">
         <div class="card-header">
             <h6 class="card-title mb-0 text-center">Trimmed Paper Stock</h6>
         </div>
@@ -344,7 +344,7 @@
 
             </div>
         </div>
-    </div>
+    </div> --}}
 
 <hr>
 
@@ -362,7 +362,7 @@
 
                                         <div class="w-100 paper-check">
                                             <div class="m-0 form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.product') ? ' has-error' : '' }}">
-                                                <label class="form-label">Choose Product</label>
+                                                <label class="form-label">Choose Product <span name="my_stock" class="badge bg-success"></span></label>
                                                 <select name="product" class="form-select form-select-sm getProduct" data-kt-repeater="select2" data-placeholder="Select an option">
 
                                                     <option selected="selected" value="{{$jobCardPaper->product_id}}">{{App\Models\Product::where('id', $jobCardPaper->product_id)->value('name')}}</option>
@@ -433,17 +433,17 @@
 
                                             <div class="w-100 paper-check">
                                                 <div class="m-0 form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.product') ? ' has-error' : '' }}">
-                                                        <label class="form-label">Choose Product</label>
-                                                        <select name="product" class="form-select form-select-sm getProduct" data-kt-repeater="select2" data-placeholder="Select an option">
+                                                    <label class="form-label">Choose Product <span name="my_stock" class="badge bg-success"></span></label></label>
+                                                    <select name="product" class="form-select form-select-sm getProduct" data-kt-repeater="select2" data-placeholder="Select an option">
 
-                                                            @if(old('kt_docs_repeater_advanced.'.$loop->index.'.product'))
-                                                            <option selected="selected" value="{{$item['product']}}">{{App\Models\Product::where('id', $item['product'])->value('name')}}</option>
-                                                            @else
-                                                            <option></option>
-                                                            @endif
-                                                        </select>
-                                                        <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.product') }}</small>
-                                                    </div>
+                                                        @if(old('kt_docs_repeater_advanced.'.$loop->index.'.product'))
+                                                        <option selected="selected" value="{{$item['product']}}">{{App\Models\Product::where('id', $item['product'])->value('name')}}</option>
+                                                        @else
+                                                        <option></option>
+                                                        @endif
+                                                    </select>
+                                                    <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.product') }}</small>
+                                                </div>
                                             </div>
 
 
@@ -518,7 +518,7 @@
 
                                                 <div class="w-100 paper-check">
                                                     <div class="m-0 form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.product') ? ' has-error' : '' }}">
-                                                            <label class="form-label">Choose Product</label>
+                                                            <label class="form-label">Choose Product <span name="my_stock" class="badge bg-success"></span></label></label>
                                                             <select name="product" class="form-select form-select-sm getProduct" data-kt-repeater="select2" data-placeholder="Select an option">
 
                                                                 @if(old('kt_docs_repeater_advanced.'.$loop->index.'.product'))
@@ -790,8 +790,13 @@ $('#kt_docs_repeater_advanced').repeater({
 
 
 $('body').on('change', '.getProduct', function(){
+    var current_name = $(this).attr('name');
+    var parts = current_name.split(/\[|\]/);
+    var position = parts[1];
+
     $('.paper-check .stock').html('');
     var product_id = $(this).val();
+    console.log('product_id', product_id);
     $.ajax({
         type: "POST",
         dataType: 'json',
@@ -799,7 +804,7 @@ $('body').on('change', '.getProduct', function(){
         data: {'id':product_id, '_method': 'POST', '_token': '{{ csrf_token() }}'},
         success:function(response){
             var data = response.datas;
-            $('.paper-check .stock').html('Instock: '+parseInt(data.quantity)+' Sheets');
+            $('span[name="kt_docs_repeater_advanced[' + position + '][my_stock]"]').html(parseInt(data.quantity)+' Sheets');
         },
         error:function(error){
     

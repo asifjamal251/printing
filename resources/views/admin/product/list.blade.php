@@ -590,7 +590,7 @@
                             @endcan
 
                             @can('edit_product')
-                                btn+='<li><a data-type="'+row['product_type']+'" data-id="'+row['id']+'" class="editProduct dropdown-item edit-item-btn" href="javascript:void(0);"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>';
+                                btn+='<li><a data-type="'+row['gsm']+'" data-id="'+row['id']+'" class="editProduct dropdown-item edit-item-btn" href="javascript:void(0);"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>';
                             @endcan
 
                             // @can('delete_product')
@@ -680,7 +680,6 @@ $('body').on('click', '.editProduct', function(){
         processData: false,
         cache: false,
         success: function (response) {
-
             if(type == 'paper'){
                 $('#paper-form').html(response);
                 $('#prductCreateModelPaper').modal("show");
@@ -737,6 +736,7 @@ function refreshParentCategoryDropdown() {
 
 
 function saveProduct(element){
+    console.log('ok')
     var button = new Button(element);
     button.process();
     clearErrors();

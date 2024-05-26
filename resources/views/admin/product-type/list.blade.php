@@ -16,15 +16,6 @@
     <div class="col-12">
         <div class="page-title-box d-sm-flex align-items-center justify-content-between">
             <h4 class="mb-sm-0">{{Str::title(str_replace('-', ' ', request()->segment(2)))}}</h4>
-            @can('add_admin')
-            <div class="page-title-right">
-                <a href="{{ route('admin.'.request()->segment(2).'.create') }}"  class="btn-sm btn btn-primary btn-label rounded-pill">
-                    <i class="bx bx-plus label-icon align-middle rounded-pill fs-16 me-2"></i>
-                    Add {{Str::title(str_replace('-', ' ', request()->segment(2)))}}
-                </a>
-            </div>
-            @endcan
-
         </div>
     </div>
 </div>
@@ -48,11 +39,11 @@
                             <small class="text-danger">{{ $errors->first('product_type') }}</small>
                         </div>
 
-                        <div class="form-group{{ $errors->has('start_series') ? ' has-error' : '' }}">
+                       {{--  <div class="form-group{{ $errors->has('start_series') ? ' has-error' : '' }}">
                             {!! Form::label('start_series', 'Start Series') !!}
                             {!! Form::text('start_series', null, ['class' => 'form-control', 'placeholder' => 'Start Series']) !!}
                             <small class="text-danger">{{ $errors->first('start_series') }}</small>
-                        </div>
+                        </div> --}}
                     
                         <div class="btn-group">
                             {!! Form::button("Create Product Type", ['class' => 'btn btn-soft-secondary ','onClick'=>'createTag(this)']) !!}
@@ -81,9 +72,9 @@
                             <tr>
                                 <th>Si</th>
                                 <th>Product Type</th>
-                                <th>Product Series Code</th>
+                                {{-- <th>Product Series Code</th> --}}
                                 <th>Created at</th>
-                                @can(['edit_requisition','delete_requisition'])
+                                @can(['edit_product_type','delete_product_type'])
                                   <th>Action</th>
                                 @endcan
 
@@ -124,7 +115,7 @@ var table2 = $('#dataTableAjax').DataTable({
     "columns": [
         { "data": "sn" }, 
         { "data": "name" }, 
-        { "data": "code" }, 
+        // { "data": "code" }, 
         { "data": "created_at" }, 
         {
             "data": "action",
@@ -132,17 +123,17 @@ var table2 = $('#dataTableAjax').DataTable({
                 if (type === 'display') {
                     var btn = '<div class="dropdown d-inline-block"><button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="ri-more-fill align-middle"></i></button><ul class="dropdown-menu dropdown-menu-end">';
 
-                    @can(['edit_requisition','delete_requisition','read_requisition'])
+                    @can(['edit_product_type','delete_product_type','read_product_type'])
 
-                    @can('read_requisition')
+                    @can('read_product_type')
                     // btn += '<li><a class="dropdown-item" href="{{ request()->url() }}/' + row['id'] + '"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li>';
                     @endcan
 
-                    @can('edit_requisition')
+                    @can('edit_product_type')
                         btn+='<li><button class="dropdown-item edit-item-btn" onClick="editData(\''+window.location.href+'/'+row['id']+'\')"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</button></li>';
                     @endcan
 
-                    // @can('delete_requisition')
+                    // @can('delete_product_type')
                     //     btn += '<li><button type="button" onclick="deleteAjax(\''+window.location.href+'/'+row['id']+'/delete\')" class="dropdown-item remove-item-btn"><i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete</button></li>';
                     // @endcan
 
@@ -266,6 +257,13 @@ function UpdateTag(element,id){
 function createData(){
     $('#form').html(create());
 }
+
+$('#requisitionForm').on('keypress', function(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            return false;
+        }
+    });
 </script>
 
 

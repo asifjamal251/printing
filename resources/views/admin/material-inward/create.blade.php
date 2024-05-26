@@ -98,7 +98,7 @@
             <div class="card-body">
                 <div class="row">
 
-                    <div class="form-group col-md-4 col-sm-12">
+                    <div class="form-group col-md-3 col-sm-12">
                         <div class="form-group{{ $errors->has('vendor') ? ' has-error' : '' }}">
                             {!! Form::label('vendor', 'Vendor') !!}
                             {!! Form::select('vendor', App\Models\Vendor::pluck('name', 'id'), null, ['id' => 'vendor', 'class' => 'form-control select2', 'placeholder' => 'Choose Vendor']) !!}
@@ -107,22 +107,31 @@
                     </div>
 
 
-                    <div class="form-group col-md-4 col-sm-12">
+                    <div class="form-group col-md-3 col-sm-12">
                         <div class="form-group{{ $errors->has('bill_no') ? ' has-error' : '' }}">
                             {!! Form::label('bill_no', 'Bill No.') !!}
-                            {!! Form::text('bill_no', null, ['class' => 'form-control', 'placeholder' => 'Enter Bill Number']) !!}
+                            {!! Form::text('bill_no', null, ['class' => 'form-control form-control-sm', 'placeholder' => 'Enter Bill Number']) !!}
                             <small class="text-danger">{{ $errors->first('bill_no') }}</small>
                         </div>
                     </div>
 
 
-                    <div class="form-group col-md-4 col-sm-12">
+                    <div class="form-group col-md-3 col-sm-12">
                         <div class="form-group{{ $errors->has('bill_date') ? ' has-error' : '' }}">
                             {!! Form::label('bill_date', 'Bill Date') !!}
-                            {!! Form::text('bill_date', null, ['class' => 'form-control dateSelector', 'placeholder' => 'Enter Bill Date']) !!}
+                            {!! Form::text('bill_date', null, ['class' => 'form-control form-control-sm dateSelector', 'placeholder' => 'Enter Bill Date']) !!}
                             <small class="text-danger">{{ $errors->first('bill_date') }}</small>
                         </div>
                     </div>
+
+                    <div class="form-group col-md-3 col-sm-12">
+                        <div class="form-group{{ $errors->has('material_order_no') ? ' has-error' : '' }}">
+                            {!! Form::label('material_order_no', 'Material Order No') !!}
+                            {!! Form::text('material_order_no', null, ['class' => 'form-control form-control-sm', 'placeholder' => 'Material Order No']) !!}
+                            <small class="text-danger">{{ $errors->first('material_order_no') }}</small>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

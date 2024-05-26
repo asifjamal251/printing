@@ -61,7 +61,7 @@
                             </tr>
 
                             <tr>
-                                <th>Set No.</th>
+                                <th>Set No./Doc No.</th>
                                 <td>{{ $job_card->set_no }}</td>
                                 <th>PO Date</th>
                                 <td>{!! PODate($job_card->jobCardItems) !!}</td>

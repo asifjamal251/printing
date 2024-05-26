@@ -33,6 +33,7 @@ class MaterialInwardController extends Controller
 
             if ($search) {
                 $datas->where('receipt_no', 'like', '%'.$search.'%');
+                $datas->orWhere('material_order_no', 'like', '%'.$search.'%');
             }
 
             if($request->vendor){
@@ -60,6 +61,7 @@ class MaterialInwardController extends Controller
         //return $request->all();
         $user = Auth::guard('admin')->user();
         $this->validate($request, [
+            'material_order_no' => 'required',
             'vendor' => 'required',
             'bill_no' => 'required',
             'bill_date' => 'required',
@@ -82,6 +84,7 @@ class MaterialInwardController extends Controller
 
         $material_inward = new MaterialInward;
         $material_inward->vendor_id = $request->vendor;
+        $material_inward->material_order_no = $request->material_order_no;
         $material_inward->bill_no = $request->bill_no;
         $material_inward->bill_date = Carbon::parse($request->job_card_date)->format('Y-m-d');
 
@@ -153,6 +156,7 @@ class MaterialInwardController extends Controller
         //return $request->all();
         $user = Auth::guard('admin')->user();
         $this->validate($request, [
+            'material_order_no' => 'required',
             'vendor' => 'required',
             'bill_no' => 'required',
             'bill_date' => 'required',
@@ -174,6 +178,7 @@ class MaterialInwardController extends Controller
         ]);
 
         $material_inward = MaterialInward::find($id);
+        $material_inward->material_order_no = $request->material_order_no;
         $material_inward->vendor_id = $request->vendor;
         $material_inward->bill_no = $request->bill_no;
         $material_inward->bill_date = Carbon::parse($request->job_card_date)->format('Y-m-d');

@@ -86,6 +86,7 @@ class ProductController extends Controller
        if($request->id != ''){
             $this->validate($request,[
                 'product_code'=>'required',  
+                'product_type'=>'required',  
                 'category'=>'required',  
                 'product_name'=>'required',   
                 'weight_per_piece'=>'required',  
@@ -95,6 +96,7 @@ class ProductController extends Controller
 
             $this->validate($request,[
                 'product_code'=>'required',  
+                'product_type'=>'required',  
                 'category'=>'required',  
                 'product_name'=>'required|unique:products,name',   
                 'weight_per_piece'=>'required',  

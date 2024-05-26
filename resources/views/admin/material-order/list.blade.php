@@ -215,12 +215,12 @@ $(document).ready(function(){
                     @endcan
 
                     @can('edit_material_order')
-                        btn+='<li><a class="dropdown-item edit-item-btn" href="'+window.location.href+'/'+row['id']+'/edit"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>';
+                        if(row['status_id'] == 2){
+                            btn+='<li><a class="dropdown-item edit-item-btn" href="'+window.location.href+'/'+row['id']+'/edit"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>';
+                        }
                     @endcan
 
-                    @can('delete_material_order')
-                        btn += '<li><button type="button" onclick="deleteAjax(\''+window.location.href+'/'+row['id']+'/delete\')" class="dropdown-item remove-item-btn"><i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete</button></li>';
-                    @endcan
+                   
 
                     @endcan
                      btn += '</ul></div>';

@@ -19,6 +19,7 @@ class MaterialInwardResource extends JsonResource
             'sn'=>++$request->start,
             'id'=>$this->id,
             'receipt_no'=>$this->receipt_no, 
+            'material_order_no'=>$this->material_order_no, 
             'vendor'=>$this->vendor->name, 
             'bill_no'=>$this->bill_no, 
             'bill_date'=>$this->bill_date->format('d F, Y'), 

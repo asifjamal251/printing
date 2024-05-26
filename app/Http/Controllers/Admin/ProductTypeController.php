@@ -22,7 +22,7 @@ class ProductTypeController extends Controller
             
             $search = $request->search['value'];
             if ($search) {
-                $datas->where('name', 'like', '%'.$search.'%');
+                $datas->where('type', 'like', '%'.$search.'%');
               
             }
             $request->request->add(['page'=>(($request->start+$request->length)/$request->length )]);
@@ -63,7 +63,7 @@ class ProductTypeController extends Controller
 
             $this->validate($request,[
                 'product_type'=>'required',    
-                'start_series'=>'required|integer|digits:2|unique:product_types',    
+                //'start_series'=>'required|integer|digits:2|unique:product_types',    
             ]);
 
             $product_type = new ProductType;
@@ -100,12 +100,12 @@ class ProductTypeController extends Controller
     {
         $this->validate($request,[
             'product_type'=>'required',    
-            'start_series' => [
-                'required',
-                'integer',
-                'digits:2',
-                Rule::unique('product_types')->ignore($id),
-            ],  
+            // 'start_series' => [
+            //     'required',
+            //     'integer',
+            //     'digits:2',
+            //     Rule::unique('product_types')->ignore($id),
+            // ],  
         ]);
 
         $product_type = ProductType::find($id);
