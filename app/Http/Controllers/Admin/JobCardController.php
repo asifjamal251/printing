@@ -187,8 +187,8 @@ class JobCardController extends Controller
 
                 if($changeQuantity != 0){
                     $today = Carbon::now()->format('d-m');
-                    $issue = Issue::firstorNew(['issue_at' => $today]);
-                    $issue->issue_type = 1;
+                    $issue = Issue::firstorNew(['issue_at' => $today, 'issue_type'=>1]);
+                    $issue->user_id = auth('admin')->user()->id;
                     $issue->save();
 
                     $issue_item = IssueItem::firstorNew(['product_id' => $product->id]);

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Issue extends Model
 {
     protected $fillable = [
-	    'id', 'issue_at'
+	    'id', 'issue_at', 'issue_type'
 	];
 
     public function issueItems(){

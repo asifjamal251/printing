@@ -67,7 +67,7 @@ class IssueController extends Controller
         ]);
 
         $issue = new Issue;
-        $issue->issue_type = 1;
+        $issue->issue_type = 0;
         $issue->user_id = auth('admin')->user()->id;
 
         if($issue->save()){ 
