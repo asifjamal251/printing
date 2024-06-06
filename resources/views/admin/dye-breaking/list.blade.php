@@ -140,7 +140,7 @@
 </form>
 @endsection
 
-
+@include('admin.snippets.module-timer')
 @push('scripts')
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
@@ -177,6 +177,9 @@ $(document).ready(function(){
     var table2 = $('#datatable').DataTable({
         "drawCallback": function( settings ) {
         lightbox.reload();
+        $('#datatable tbody tr').each(function() {
+            startTimer(this);
+        });
     },
     language: {
         search: '',
@@ -288,6 +291,62 @@ $(document).ready(function(){
 });
 
 
+var table = table2;
+
+    // Object to hold interval IDs for each row
+    var intervalIds = {};
+
+    // Function to format time in hh:mm:ss
+    function formatTime(seconds) {
+        var hours = Math.floor(seconds / 3600);
+        var minutes = Math.floor((seconds % 3600) / 60);
+        var remainingSeconds = seconds % 60;
+        return (hours < 10 ? "0" : "") + hours + ":" + 
+               (minutes < 10 ? "0" : "") + minutes + ":" + 
+               (remainingSeconds < 10 ? "0" : "") + remainingSeconds;
+    }
+
+    // Function to parse time in hh:mm:ss to seconds
+    function parseTime(time) {
+        console.log('Time', time);
+        var parts = time.split(':');
+        var hours = parseInt(parts[0], 10);
+        var minutes = parseInt(parts[1], 10);
+        var seconds = parseInt(parts[2], 10);
+        return (hours * 3600) + (minutes * 60) + seconds;
+    }
+
+    // Function to start timer for each row
+    function startTimer(row) {
+        var timerCell = $(row).find('.timer');
+        
+        if(timerCell.length > 0){
+            var startTime = parseTime(timerCell.attr('data-start-time'));
+
+            // If timer is already running, do not start another one
+            if (timerCell.data('intervalId')) return;
+
+            // Update the display to show the starting time
+            timerCell.text(formatTime(startTime));
+
+            // Set interval and store the ID
+            var intervalId = setInterval(function() {
+                startTime++;
+                timerCell.text(formatTime(startTime));
+                timerCell.attr('data-start-time', formatTime(startTime)); // Update data-start-time attribute
+            }, 1000);
+
+            // Store interval ID in the cell's data attribute
+            timerCell.data('intervalId', intervalId);
+        }
+    }
+
+    // Start timer for each row on page load
+    $('#datatable tbody tr').each(function() {
+        startTimer(this);
+    });
+
+    
 $('body').on('click', '.filters', function(){
         table2.draw('page');
         $('#offcanvasTop').offcanvas('hide');

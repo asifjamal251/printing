@@ -67,10 +67,13 @@ Route::middleware('admin.guest')->name('admin.')->group(function() {
     Route::get('new-password/{id}', [LoginController::class, 'newPasswordForm'])->name('password.newPassword');
     Route::post('password/set-password/{id}', [LoginController::class, 'sepPassword'])->name('password.setPassword');
 
+    Route::get('2fa/verify', [LoginController::class, 'show2FAVerificationForm'])->name('2fa.verify');
+    Route::post('2fa/verify', [LoginController::class, 'verify2FA'])->name('2fa.verify.post');
+
    
 });
+Route::middleware(['admin', '2fa'])->name('admin.')->group(function() {
 
-Route::middleware('admin')->name('admin.')->group(function() {
 
     Route::get('logout', [LoginController::class, 'logout'])->name('logout');
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard.index')->middleware('can:browse_dashboard');
@@ -161,6 +164,10 @@ Route::middleware('admin')->name('admin.')->group(function() {
         Route::get('change-password/{admin}', 'changePassword')->name('change-password');
         Route::put('update-password/{admin}', 'updatePassword')->name('update-password');
         Route::put('update-setting/{admin}', 'updateAetting')->name('update-setting');
+
+        Route::get('admin/2fa/setup/{id}', 'setup2FA')->name('admin.2fa.setup');
+        Route::post('admin/2fa/setup/{id}', 'enable2FA')->name('admin.2fa.enable');
+
 
     });
 
@@ -428,6 +435,8 @@ Route::middleware('admin')->name('admin.')->group(function() {
         Route::delete('printing/{printing}/delete', 'destroy')->name('printing.destroy')->middleware('can:delete_printing');
         Route::put('printing/change-status', 'changeStatus')->name('printing.changeStatus')->middleware('can:change_status_printing');
         Route::post('printing/user/assign/{user_id}', 'assignUser')->name('printing.user.assign')->middleware('can:user_printing');
+
+        Route::post('printing/oprater/update', 'oprator')->name('printing.oprator');
     });
 
 
@@ -667,6 +676,18 @@ Route::middleware('admin')->name('admin.')->group(function() {
         Route::post('carton', 'store')->name('carton.store')->middleware('can:add_carton');
         Route::put('carton/{carton}', 'update')->name('carton.update')->middleware('can:edit_carton');
         Route::delete('carton/{carton}', 'destroy')->name('carton.destroy')->middleware('can:delete_carton');
+    });
+
+
+    //PaperWarehouse
+    Route::controller(PaperWarehouseController::class)->group(function(){
+        Route::match(['get','patch'],'paper-warehouse', 'index')->name('paper-warehouse.index')->middleware('can:browse_paper_warehouse');
+        Route::get('paper-warehouse/create', 'create')->name('paper-warehouse.create')->middleware('can:add_paper_warehouse');
+        Route::get('paper-warehouse/{dye_details}', 'show')->name('paper-warehouse.show')->middleware('can:read_paper_warehouse');
+        Route::get('paper-warehouse/{dye_details}/edit', 'edit')->name('paper-warehouse.edit')->middleware('can:edit_paper_warehouse');
+        Route::post('paper-warehouse', 'store')->name('paper-warehouse.store')->middleware('can:add_paper_warehouse');
+        Route::put('paper-warehouse/{dye_details}', 'update')->name('paper-warehouse.update')->middleware('can:edit_paper_warehouse');
+        Route::delete('paper-warehouse/{dye_details}/delete', 'destroy')->name('paper-warehouse.destroy')->middleware('can:delete_paper_warehouse');
     });
 
 

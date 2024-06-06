@@ -121,7 +121,7 @@
                                     <div class="form-group col-product">
                                         <div class="form-group{{ $errors->has('issue_for') ? ' has-error' : '' }}">
                                             {!! Form::label('issue_for', 'Issue For') !!}
-                                            {!! Form::select('issue_for', App\Models\Requisition::orderBy('name', 'asc')->pluck('name', 'id'),  $item->requisition_id, ['id' => 'issue_for', 'class' => 'form-control form-control-sm', 'placeholder' => 'Issue For']) !!}
+                                            {!! Form::select('issue_for', App\Models\Requisition::orderBy('name', 'asc')->pluck('name', 'id'),  $item->issue_for, ['id' => 'issue_for', 'class' => 'form-control form-control-sm', 'placeholder' => 'Issue For']) !!}
                                             <small class="text-danger">{{ $errors->first('issue_for') }}</small>
                                         </div>
                                     </div>
@@ -158,6 +158,14 @@
                                             {!! Form::label('unit', 'Unit') !!}
                                             {!! Form::text('unit', $item->unit, ['class' => 'form-control form-control-sm', 'placeholder' => 'Unit', 'readonly']) !!}
                                           <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.unit') }}</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-product">
+                                        <div class="form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.remarks') ? ' has-error' : '' }}">
+                                            {!! Form::label('remarks', 'Remarks') !!}
+                                            {!! Form::text('remarks', $item->remarks, ['class' => 'form-control form-control-sm Remarks', 'placeholder' => 'remarks']) !!}
+                                           <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.remarks') }}</small>
                                         </div>
                                     </div>
 
@@ -232,6 +240,15 @@
                                         </div>
                                     </div>
 
+
+                                    <div class="form-group col-remarks">
+                                        <div class="form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.remarks') ? ' has-error' : '' }}">
+                                            {!! Form::label('remarks', 'Remarks') !!} 
+                                            {!! Form::text('remarks', old('kt_docs_repeater_advanced.'.$loop->index.'.remarks', $item['remarks'] ?? ''), ['class' => 'form-control form-control-sm remarks', 'placeholder' => 'Remarks']) !!}
+                                           <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.remarks') }}</small>
+                                        </div>
+                                    </div>
+
                                 <div class="form-group remove-item">
                                     <div class="form-group text-end">
                                         <button data-repeater-delete type="button" class="btn-labels btn btn-danger btn-sm" style="margin-top: 26px;"><i class="label-icon ri-delete-bin-fill"></i></button>
@@ -267,7 +284,7 @@
                     
 
                     <div class="form-group">
-                        {!! Form::submit('Update Material Inward', ['class' => 'btn btn-secondary btn-animation waves-effect waves-light']) !!}
+                        {!! Form::submit('Update Issue', ['class' => 'btn btn-secondary btn-animation waves-effect waves-light']) !!}
                     </div>
                 </div>
             </div>

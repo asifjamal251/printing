@@ -25,7 +25,7 @@ class IssueResource extends JsonResource
             // 'quantity'=>$this->quantity, 
             // 'unit'=>$this->unit, 
             // 'issue_type'=>$this->issue_type, 
-            // 'issue_by'=>$this->issueBy->name, 
+             'user'=>$this->user->name, 
             // 'oprator_name'=>$this->oprator_name??'N/A', 
             // 'issue_for'=>$this->issue_for?$this->issueFor->name:'Inssued for a Job Card', 
             'created_at' => $this->created_at->format('d F, Y'),

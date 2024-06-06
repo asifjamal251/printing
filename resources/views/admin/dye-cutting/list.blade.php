@@ -257,10 +257,12 @@ $(document).ready(function(){
                     btn+='<li><a class="dropdown-item edit-item-btn" onclick="updateTimer(\'{{ route('admin.job-card.timer.content') }}\',{machine:8, id:'+row['id']+',job_card_id:'+row['job_card_id']+'})" href="javascript:void(0);"><i class="ri-alarm-line align-bottom me-2 text-muted"></i> Timer</a></li>';
 
                     @can('change_status_dye_cutting')
-                        if(row['status_id'] == 2){
-                            btn+='<li><a onclick="updateData(\'{{ route('admin.dye-cutting.changeStatus') }}\',{status:1,id:'+row['id']+',job_card_id:'+row['job_card_id']+'})" class="dropdown-item edit-item-btn" href="javascript:void(0);"><i class="ri-check-double-line align-bottom me-2 text-muted"></i> Completed</a></li>';
-                        }else{
-                            btn+='<li><a onclick="updateData(\'{{ route('admin.dye-cutting.changeStatus') }}\',{status:2,id:'+row['id']+',job_card_id:'+row['job_card_id']+'})" class="dropdown-item edit-item-btn" href="javascript:void(0);"><i class="bx bx-x align-bottom me-2 fs-24 text-muted"></i> Cancel</a></li>';
+                        if (row['timer_status'] == 2) {
+                            if(row['status_id'] == 2){
+                                btn+='<li><a onclick="updateData(\'{{ route('admin.dye-cutting.changeStatus') }}\',{status:1,id:'+row['id']+',job_card_id:'+row['job_card_id']+'})" class="dropdown-item edit-item-btn" href="javascript:void(0);"><i class="ri-check-double-line align-bottom me-2 text-muted"></i> Completed</a></li>';
+                            }else{
+                                btn+='<li><a onclick="updateData(\'{{ route('admin.dye-cutting.changeStatus') }}\',{status:2,id:'+row['id']+',job_card_id:'+row['job_card_id']+'})" class="dropdown-item edit-item-btn" href="javascript:void(0);"><i class="bx bx-x align-bottom me-2 fs-24 text-muted"></i> Cancel</a></li>';
+                            }
                         }
                     @endcan
 
@@ -430,13 +432,14 @@ var table = table2;
 
 $('body').on('change', '.selectOprator', function(){
     var id = $(this).attr('data-id');
+    var jobCardId = $(this).attr('data-jobcard');
     var user = $(this).val();
 
     $.ajax({
         type: "POST",
         enctype: 'multipart/form-data',
         url:'{{route('admin.'.request()->segment(2).'.oprator')}}',
-        data: {'id':id,'user_id':user,'_method': 'POST', '_token': '{{ csrf_token() }}'},
+        data: {'id':id, 'job_card_id':jobCardId, 'user_id':user,'_method': 'POST', '_token': '{{ csrf_token() }}'},
         success:function(response){
             Toastify({
                 text: response.message,

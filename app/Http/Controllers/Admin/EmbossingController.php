@@ -28,7 +28,7 @@ class EmbossingController extends Controller
         if ($request->wantsJson()) {
             $datas = Embossing::orderBy('id','desc')
             ->with(['user', 'jobCard'=>function($query){
-                $query->with(['paper', 'jobCardHistory', 'putPaperWarehouse', 'getPaperWarehouse','jobCardItems'=>function($query){
+                $query->with(['paper', 'jobCardHistory', 'jobCardItems'=>function($query){
                     $query->with(['PO', 'POItem']);
                 }]);
             }])->has('jobCard');
@@ -63,6 +63,17 @@ class EmbossingController extends Controller
 
             if($request->user_id){
                 $datas->where('user_id', $request->user_id);
+            }
+
+            $getDate = request()->input('datefilter');
+            if($getDate != '' && $getDate != 'All'){ //|| $getDate != 'all' || $getDate != 'All'
+                $filterDate = explode(' - ', $getDate);
+                $startDate = Carbon::parse($filterDate[0])->format('Y-m-d');
+                $endDate = Carbon::parse($filterDate[1])->format('Y-m-d');
+
+                $datas->when($getDate != '', function ($query) use ($startDate, $endDate) {
+                    $query->whereBetween('created_at', [$startDate . ' 00:00:00', $endDate . ' 23:59:59']);
+                });
             }
 
             $request->merge(['recordsTotal' => $datas->count(), 'length' => $request->length]);

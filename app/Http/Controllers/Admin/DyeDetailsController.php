@@ -71,6 +71,7 @@ class DyeDetailsController extends Controller
 
 
         $dye_details = new DyeDetails;
+        $dye_details->dye_no = $request->dye_no;
         $dye_details->length = $request->length;
         $dye_details->width = $request->width;
         $dye_details->height = $request->height;
@@ -117,6 +118,7 @@ class DyeDetailsController extends Controller
         ]);
 
         $dye_details = DyeDetails::find($id);
+        $dye_details->dye_no = $request->dye_no;
         $dye_details->length = $request->length;
         $dye_details->width = $request->width;
         $dye_details->height = $request->height;

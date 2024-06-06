@@ -181,6 +181,9 @@ $(document).ready(function(){
     var table2 = $('#datatable').DataTable({
         "drawCallback": function( settings ) {
         lightbox.reload();
+        $('#datatable tbody tr').each(function() {
+            startTimer(this);
+        });
     },
 
     language: {
@@ -240,7 +243,18 @@ $(document).ready(function(){
         @endcan
         { "data": "file" },
         { "data": "status" },
-        { "data": "timer" },
+        { "data": "timer", 
+            render: function(data, type, row) {
+                if(row['timer_status'] == 1){
+                    return '<span class="timer" data-start-time="'+row['timer_default']+'">'+formatTime(parseTime(row['timer']))+'</span>';
+                }
+                else{
+                    return '<span class="timers" data-start-time="'+row['timer']+'">'+formatTime(parseTime(row['timer']))+'</span>';
+                    //return row['timer'];
+                }
+                
+            }
+        },
         {
             "data": "action",
             render: function(data, type, row) {
@@ -249,14 +263,18 @@ $(document).ready(function(){
 
                     @can(['edit_chemical_coating','delete_chemical_coating','read_chemical_coating', 'change_status_chemical_coating'])
 
-                    btn+='<li><a class="dropdown-item edit-item-btn" onclick="updateTimer(\'{{ route('admin.job-card.timer.content') }}\',{machine:3, id:'+row['id']+',job_card_id:'+row['job_card_id']+'})" href="javascript:void(0);"><i class="ri-alarm-line align-bottom me-2 text-muted"></i> Timer</a></li>';
+                    btn += '<li><a class="dropdown-item edit-item-btn" onclick="updateTimer(\'{{ route('admin.job-card.timer.content') }}\',{machine:1, id:'+row['id']+',job_card_id:'+row['job_card_id']+'})" href="javascript:void(0);"><i class="ri-alarm-line align-bottom me-2 text-muted"></i>Timer</a></li>';
 
                     @can('change_status_chemical_coating')
-                        if(row['status_id'] == 2){
-                            btn+='<li><a onclick="updateData(\'{{ route('admin.chemical-coating.changeStatus') }}\',{status:1,id:'+row['id']+',job_card_id:'+row['job_card_id']+'})" class="dropdown-item edit-item-btn" href="javascript:void(0);"><i class="ri-check-double-line align-bottom me-2 text-muted"></i> Completed</a></li>';
-                        }else{
-                            btn+='<li><a onclick="updateData(\'{{ route('admin.chemical-coating.changeStatus') }}\',{status:2,id:'+row['id']+',job_card_id:'+row['job_card_id']+'})" class="dropdown-item edit-item-btn" href="javascript:void(0);"><i class="ri-check-double-line align-bottom me-2 text-muted"></i> Cancel</a></li>';
-                        }
+                        @can('change_status_cutting')
+                            if (row['timer_status'] == 2) {
+                                if (row['status_id'] == 2) {
+                                    btn += '<li><a onclick="updateData(\'{{ route('admin.chemical-coating.changeStatus') }}\',{status:1, id:'+row['id']+',job_card_id:'+row['job_card_id']+'})" class="dropdown-item edit-item-btn" href="javascript:void(0);"><i class="ri-check-double-line align-bottom me-2 text-muted"></i> Completed</a></li>';
+                                } else {
+                                    btn += '<li><a onclick="updateData(\'{{ route('admin.chemical-coating.changeStatus') }}\',{status:2, id:'+row['id']+',job_card_id:'+row['job_card_id']+'})" class="dropdown-item edit-item-btn" href="javascript:void(0);"><i class="bx bx-x align-bottom me-2 fs-24 text-muted"></i> Cancel</a></li>';
+                                }
+                            }
+                        @endcan
                     @endcan
 
 
@@ -278,6 +296,60 @@ $(document).ready(function(){
 
 });
 
+var table = table2;
+
+    // Object to hold interval IDs for each row
+    var intervalIds = {};
+
+    // Function to format time in hh:mm:ss
+    function formatTime(seconds) {
+        var hours = Math.floor(seconds / 3600);
+        var minutes = Math.floor((seconds % 3600) / 60);
+        var remainingSeconds = seconds % 60;
+        return (hours < 10 ? "0" : "") + hours + ":" + 
+               (minutes < 10 ? "0" : "") + minutes + ":" + 
+               (remainingSeconds < 10 ? "0" : "") + remainingSeconds;
+    }
+
+    // Function to parse time in hh:mm:ss to seconds
+    function parseTime(time) {
+        console.log('Time', time);
+        var parts = time.split(':');
+        var hours = parseInt(parts[0], 10);
+        var minutes = parseInt(parts[1], 10);
+        var seconds = parseInt(parts[2], 10);
+        return (hours * 3600) + (minutes * 60) + seconds;
+    }
+
+    // Function to start timer for each row
+    function startTimer(row) {
+        var timerCell = $(row).find('.timer');
+        
+        if(timerCell.length > 0){
+            var startTime = parseTime(timerCell.attr('data-start-time'));
+
+            // If timer is already running, do not start another one
+            if (timerCell.data('intervalId')) return;
+
+            // Update the display to show the starting time
+            timerCell.text(formatTime(startTime));
+
+            // Set interval and store the ID
+            var intervalId = setInterval(function() {
+                startTime++;
+                timerCell.text(formatTime(startTime));
+                timerCell.attr('data-start-time', formatTime(startTime)); // Update data-start-time attribute
+            }, 1000);
+
+            // Store interval ID in the cell's data attribute
+            timerCell.data('intervalId', intervalId);
+        }
+    }
+
+    // Start timer for each row on page load
+    $('#datatable tbody tr').each(function() {
+        startTimer(this);
+    });
 $('body').on('click', '.filters', function(){
         table2.draw('page');
         $('#offcanvasTop').offcanvas('hide');

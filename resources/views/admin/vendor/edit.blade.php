@@ -69,9 +69,15 @@
                                 <small class="text-danger">{{ $errors->first('phone_no') }}</small>
                             </div>
 
+                            <div class="form-group{{ $errors->has('gst') ? ' has-error' : '' }}">
+                                {!! Form::label('gst', 'GST') !!}
+                                {!! Form::text('gst', $vendor->gst, ['class' => 'form-control', 'placeholder' => 'GST']) !!}
+                                <small class="text-danger">{{ $errors->first('gst') }}</small>
+                            </div>
+
                             <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
                                 {!! Form::label('address', 'Address') !!}
-                                {!! Form::textarea('address', $vendor->address, ['class' => 'form-control', 'placeholder' => 'Address']) !!}
+                                {!! Form::textarea('address', $vendor->address, ['class' => 'form-control', 'placeholder' => 'Address', 'rows'=>3]) !!}
                                 <small class="text-danger">{{ $errors->first('address') }}</small>
                             </div>
                         </div>

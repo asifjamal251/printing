@@ -11,6 +11,7 @@ use App\Models\Embossing;
 use App\Models\JobCard;
 use App\Models\JobCardHistory;
 use App\Models\JobCardItem;
+use App\Models\JobCardUser;
 use App\Models\Lamination;
 use App\Models\Leafing;
 use App\Models\Project;
@@ -37,7 +38,7 @@ class LaminationController extends Controller
             // }
             $datas = Lamination::orderBy('id','desc')
             ->with(['user', 'jobCard'=>function($query){
-                $query->with(['paper', 'putPaperWarehouse', 'getPaperWarehouse', 'jobCardItems'=>function($query){
+                $query->with(['paper', 'jobCardItems'=>function($query){
                     $query->with(['PO', 'POItem']);
                 }]);
             }])->has('jobCard');
@@ -71,6 +72,17 @@ class LaminationController extends Controller
 
             if($request->user_id){
                 $datas->where('user_id', $request->user_id);
+            }
+
+            $getDate = request()->input('datefilter');
+            if($getDate != '' && $getDate != 'All'){ //|| $getDate != 'all' || $getDate != 'All'
+                $filterDate = explode(' - ', $getDate);
+                $startDate = Carbon::parse($filterDate[0])->format('Y-m-d');
+                $endDate = Carbon::parse($filterDate[1])->format('Y-m-d');
+
+                $datas->when($getDate != '', function ($query) use ($startDate, $endDate) {
+                    $query->whereBetween('created_at', [$startDate . ' 00:00:00', $endDate . ' 23:59:59']);
+                });
             }
 
             $request->merge(['recordsTotal' => $datas->count(), 'length' => $request->length]);
@@ -190,6 +202,10 @@ class LaminationController extends Controller
 
             $leafing = Leafing::firstorNew(['job_card_id'=>$request->job_card_id]);
             $leafing->status_id = 2;
+
+            $user = JobCardUser::where(['job_card_id'=>$request->job_card_id, 'module_id'=>5])->first();
+            $leafing->user_id = $user->module_user_id;
+
             if ($leafing->save()) {
                 JobCard::where(['id'=>$request->job_card_id])->update(['status_id'=>17]); 
                 Lamination::where(['id'=>$request->id])->update(['status_id'=>5]);  
@@ -232,6 +248,10 @@ class LaminationController extends Controller
 
             $spot_uv = SpotUv::firstorNew(['job_card_id'=>$request->job_card_id]);
             $spot_uv->status_id = 2;
+
+            $user = JobCardUser::where(['job_card_id'=>$request->job_card_id, 'module_id'=>6])->first();
+            $spot_uv->user_id = $user->module_user_id;
+
             if ($spot_uv->save()) {
                 JobCard::where(['id'=>$request->job_card_id])->update(['status_id'=>20]); 
                 Lamination::where(['id'=>$request->id])->update(['status_id'=>5]);  
@@ -274,6 +294,10 @@ class LaminationController extends Controller
 
             $spot_uv = SpotUv::firstorNew(['job_card_id'=>$request->job_card_id]);
             $spot_uv->status_id = 2;
+
+            $user = JobCardUser::where(['job_card_id'=>$request->job_card_id, 'module_id'=>6])->first();
+            $spot_uv->user_id = $user->module_user_id;
+
             if ($spot_uv->save()) {
                 JobCard::where(['id'=>$request->job_card_id])->update(['status_id'=>20]); 
                 Lamination::where(['id'=>$request->id])->update(['status_id'=>5]);  
@@ -317,9 +341,13 @@ class LaminationController extends Controller
             $history->counter = $job_card->laminated_sheets;
             $history->save();
 
-            $embossing = SpotUv::firstorNew(['job_card_id'=>$request->job_card_id]);
-            $embossing->status_id = 2;
-            if ($embossing->save()) {
+            $spot_uv = SpotUv::firstorNew(['job_card_id'=>$request->job_card_id]);
+            $spot_uv->status_id = 2;
+
+            $user = JobCardUser::where(['job_card_id'=>$request->job_card_id, 'module_id'=>6])->first();
+            $spot_uv->user_id = $user->module_user_id;
+
+            if ($spot_uv->save()) {
                 JobCard::where(['id'=>$request->job_card_id])->update(['status_id'=>20]); 
                 Lamination::where(['id'=>$request->id])->update(['status_id'=>5]);  
                 $purchase_order_item_ids = JobCardItem::where(['job_card_id'=>$request->job_card_id])->pluck('purchase_order_item_id'); 
@@ -366,6 +394,10 @@ class LaminationController extends Controller
 
             $cutting = Cutting::firstorNew(['job_card_id'=>$request->job_card_id, 'metalic_status'=>1]);
             $cutting->status_id = 2;
+
+            $user = JobCardUser::where(['job_card_id'=>$request->job_card_id, 'module_id'=>1])->first();
+            $cutting->user_id = $user->module_user_id;
+
             if ($cutting->save()) {
                 JobCard::where(['id'=>$request->job_card_id])->update(['status_id'=>13]); 
                 Lamination::where(['id'=>$request->id])->update(['status_id'=>5]);  
@@ -407,9 +439,13 @@ class LaminationController extends Controller
             $history->counter = $job_card->laminated_sheets;
             $history->save();
 
-            $cutting = DyeCutting::firstorNew(['job_card_id'=>$request->job_card_id]);
-            $cutting->status_id = 2;
-            if ($cutting->save()) {
+            $dye_cutting = DyeCutting::firstorNew(['job_card_id'=>$request->job_card_id]);
+            $dye_cutting->status_id = 2;
+
+            $user = JobCardUser::where(['job_card_id'=>$request->job_card_id, 'module_id'=>7])->first();
+            $dye_cutting->user_id = $user->module_user_id;
+
+            if ($dye_cutting->save()) {
                 JobCard::where(['id'=>$request->job_card_id])->update(['status_id'=>19]); 
                 Lamination::where(['id'=>$request->id])->update(['status_id'=>5]);  
                 $purchase_order_item_ids = JobCardItem::where(['job_card_id'=>$request->job_card_id])->pluck('purchase_order_item_id'); 
@@ -450,9 +486,13 @@ class LaminationController extends Controller
             $history->counter = $job_card->laminated_sheets;
             $history->save();
             
-            $cutting = Embossing::firstorNew(['job_card_id'=>$request->job_card_id]);
-            $cutting->status_id = 2;
-            if ($cutting->save()) {
+            $embossing = Embossing::firstorNew(['job_card_id'=>$request->job_card_id]);
+            $embossing->status_id = 2;
+
+            $user = JobCardUser::where(['job_card_id'=>$request->job_card_id, 'module_id'=>4])->first();
+            $embossing->user_id = $user->module_user_id;
+
+            if ($embossing->save()) {
                 JobCard::where(['id'=>$request->job_card_id])->update(['status_id'=>18]); 
                 Lamination::where(['id'=>$request->id])->update(['status_id'=>5]);  
                 $purchase_order_item_ids = JobCardItem::where(['job_card_id'=>$request->job_card_id])->pluck('purchase_order_item_id'); 
@@ -472,6 +512,7 @@ class LaminationController extends Controller
     {
         $module = Lamination::find($request->id);
         if($request->user_id != ''){
+            JobCardUser::where(['module_id' => 3, 'job_card_id' => $request->job_card_id])->update(['module_user_id' => $request->user_id]);
             $module->user_id = $request->user_id;
         }else{
             $module->user_id = null;

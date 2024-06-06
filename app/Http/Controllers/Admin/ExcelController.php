@@ -66,4 +66,21 @@ class ExcelController extends Controller
         Excel::store(new CartonPositionExport($stocks), 'excell-download/carton-position.xlsx');
         return response()->json(['filename' => 'https://colourimpration.s3.eu-north-1.amazonaws.com/excell-download/carton-position.xlsx']);
     }
+
+
+    public function cuttingReport(Request $request)
+    {
+        $cutting = Cutting::orderBy('id','desc')
+            ->with(['user', 'jobCard'=>function($query){
+                $query->with(['jobCardPapers'=>function($query){
+                    $query->with(['product']);
+                }, 'putPaperWarehouse', 'JobCardUser', 'jobCardItems'=>function($query){
+                    $query->with(['PO', 'POItem']);
+                }]);
+            }])->has('jobCard')->get();
+
+        $export = new CuttingReportExport($cutting);
+        Excel::store(new CuttingReportExport($stocks), 'excell-download/cutting-report.xlsx');
+        return response()->json(['filename' => 'https://colourimpration.s3.eu-north-1.amazonaws.com/excell-download/carton-position.xlsx']);
+    }
 }

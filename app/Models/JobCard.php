@@ -103,7 +103,7 @@ class JobCard extends Model
     }
 
     public function jobCardUser(){
-        return $this->hasOne(JobCardUser::class,'job_card_id','id');
+        return $this->hasMany(JobCardUser::class,'job_card_id','id');
     }
 
 

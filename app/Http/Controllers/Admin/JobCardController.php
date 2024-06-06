@@ -5,7 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\JobCard\JobCardCollection;
 use App\Models\Admin;
+use App\Models\ChemicalCoating;
 use App\Models\Cutting;
+use App\Models\DyeBreaking;
+use App\Models\DyeCutting;
+use App\Models\Embossing;
 use App\Models\Issue;
 use App\Models\IssueItem;
 use App\Models\JobCard;
@@ -13,11 +17,15 @@ use App\Models\JobCardHistory;
 use App\Models\JobCardItem;
 use App\Models\JobCardPaper;
 use App\Models\JobCardUser;
+use App\Models\Lamination;
+use App\Models\Leafing;
 use App\Models\Media;
 use App\Models\PaperWarehouse;
+use App\Models\Pasting;
 use App\Models\Printing;
 use App\Models\Product;
 use App\Models\PurchaseOrderItem;
+use App\Models\SpotUv;
 use App\Models\Transaction;
 use Auth;
 use Carbon\Carbon;
@@ -38,7 +46,7 @@ class JobCardController extends Controller
                         $query->with(['PO', 'POItem']);
                     },
                     'jobCardUser' => function ($query2) {
-                        $query2->with('printingUser');
+                        $query2->with('module', 'moduleUser');
                     }
                 ]);
 
@@ -95,7 +103,7 @@ class JobCardController extends Controller
 
 
     public function edit($id){
-        $job_card = JobCard::where('id', $id)->with(['mediaFiles', 'putPaperWarehouse', 'getPaperWarehouse', 'planningBy', 'deyDetail', 'jobCardPapers', 'jobCardItems'=>function($query){
+        $job_card = JobCard::where('id', $id)->with(['mediaFiles', 'planningBy', 'deyDetail', 'jobCardPapers', 'jobCardItems'=>function($query){
                         $query->with(['PO', 'POItem']);
                     }])->first();
         return view('admin.job-card.edit', compact('job_card'));
@@ -129,40 +137,6 @@ class JobCardController extends Controller
         $job_card->other_coating_machine = $request->other_coating_machine;
         $job_card->status_id = $request->status_id==2?1:$request->status_id;
         //return $request->warehouse_type;
-        if($request->warehouse_type != ''){
-            if($request->warehouse_type == 1){
-                if(is_numeric($request->paper_stock)) {
-                    //return "Yes";
-                    $warehouse = PaperWarehouse::find($request->paper_stock);
-                    $warehouse->warehouse_type = $request->warehouse_type;
-                    $new_sheet = $request->old_sheets - $request->sheets;
-                    $warehouse->sheets += $new_sheet;
-                    $warehouse->save();
-                }
-                else{
-                    //return "No";
-                    $warehouse = PaperWarehouse::firstorNew(['put_job_card_id' =>$id]);
-                    $warehouse->warehouse_type = $request->warehouse_type;
-                    $warehouse->paper_stock = Str::upper($request->paper_stock);
-                    $warehouse->sheets = $request->sheets;
-                    $warehouse->put_job_card_id = $job_card->id;
-                    $warehouse->save();
-                }
-                
-            }else{
-                $warehouse = PaperWarehouse::find($request->paper_stock);
-                $warehouse->warehouse_type = $request->warehouse_type;
-                $warehouse->paper_stock = $warehouse->paper_stock;
-                $new_sheet = $request->sheets - $request->old_sheets;
-                $warehouse->sheets -= $new_sheet;
-                $warehouse->get_job_card_id = $job_card->id;
-                $warehouse->save();
-            }
-            $job_card->warehouse_type = $warehouse->warehouse_type;
-            $job_card->warehouse_paper = $warehouse->paper_stock;
-            $job_card->warehouse_sheet = $request->sheets;
-            
-        }
         if($job_card->save()){
             $job_card->mediaFiles()->sync($request->file); 
             
@@ -197,7 +171,6 @@ class JobCardController extends Controller
                     $issue_item->job_card_id = $job_card->id;
                     $issue_item->quantity = $changeQuantity;
                     $issue_item->unit = $product->unit->name;
-                    $issue_item->issue_by = $user->id;
                     $issue_item->issue_for = 1;
                     $issue_item->save();
 
@@ -231,7 +204,11 @@ class JobCardController extends Controller
 
 
     public function show(Request $request, $id){
-        $job_card = JobCard::where('id', $id)->with(['mediaFiles', 'putPaperWarehouse', 'getPaperWarehouse', 'planningBy', 'deyDetail', 'jobCardItems'=>function($query){
+        $job_card = JobCard::where('id', $id)->with(['jobCardPapers'=>function($query){
+            $query->with(['product' => function($query){
+                $query->with(['productType']);
+            } ]);
+        }, 'mediaFiles', 'planningBy', 'deyDetail', 'jobCardItems'=>function($query){
             $query->with(['PO', 'POItem']);
         }])->first();
         return view('admin.job-card.view', compact('job_card'));
@@ -287,16 +264,15 @@ class JobCardController extends Controller
         $history->counter = $job_card->required_sheet + $job_card->wastage_sheet;
         $history->save();
 
-        $user = JobCardUser::firstorNew(['job_card_id'=>$request->job_card_id]);
-        $user->cutting = 19;
-        $user->lamination = 20;
-        $user->embossing = 21;
-        $user->leafing = 22;
-        $user->spot_uv = 23;
-        $user->save();
+        $user = JobCardUser::where(['job_card_id'=>$request->job_card_id, 'module_id'=>1])->first();
 
         $cutting = Cutting::firstorNew(['job_card_id'=>$request->job_card_id]);
         $cutting->status_id = 2;
+        if(isset($user)){
+            $cutting->user_id = $user->module_user_id;
+        }else{
+            $cutting->user_id = null;
+        }
         if ($cutting->save()) {
             JobCard::where(['id'=>$request->job_card_id])->update(['status_id'=>13]);  
             $purchase_order_item_ids = JobCardItem::where(['job_card_id'=>$request->job_card_id])->pluck('purchase_order_item_id'); 
@@ -322,28 +298,82 @@ class JobCardController extends Controller
 
     public function userAssign(Request $request, $id)
     {
-        $job_card = JobCard::where('id', $id)->with(['jobCardUser'])->first();
+        $job_card = JobCard::where('id', $id)->with(['jobCardUser'=>function($query){
+            $query->with(['module', 'moduleUser']);
+        }])->first();
         $user = Admin::orderBy('name', 'asc')->get();
         return view('admin.job-card.user', compact('job_card', 'user'));
     }
 
     public function userAssignUpdate(Request $request, $id)
     {
-        $user = JobCardUser::firstorNew(['job_card_id'=>$id]);
-        $user->printing = $request->printing;
-        $user->coating = $request->coating;
-        $user->dye_cutting = $request->dye_cutting;
-        $user->pasting = $request->pasting;
-        if($user->save()){
-            return redirect()->route('admin.job-card.index')->with(['class'=>'success','message'=>'Job Card saved successfully.']);
+        //return $request->all();
+        // $this->validate($request, [
+        //     'item' => 'required|array',
+        //     'item.*.module' => 'required',
+        //     'item.*.module_machine' => 'required',         ],
+        // [
+        //     'item.*.module.required' => 'Module is required.',
+        //     'item.*.module_machine.required' => 'Module Machine is required.',
+        // ]);
+
+
+        $inputs = $request->input('item');
+        foreach ($inputs as $input) {
+            $job_card_user = JobCardUser::firstorNew(['job_card_id'=>$id, 'module_id'=>$input['module']]);
+            $job_card_user->module_user_id = $input['module_machine'];
+            $job_card_user->save();
+
+            if($job_card_user->module_id == 1){
+                Cutting::where(['job_card_id'=>$id, 'status_id' => 2])->update(['user_id'=>$job_card_user->module_user_id]);
+            } 
+
+
+            if($job_card_user->module_id == 2){
+                ChemicalCoating::where(['job_card_id'=>$id, 'status_id' => 2])->update(['user_id'=>$job_card_user->module_user_id]);
+            }
+
+            if($job_card_user->module_id == 3){
+                Lamination::where(['job_card_id'=>$id, 'status_id' => 2])->update(['user_id'=>$job_card_user->module_user_id]);
+            }
+
+            if($job_card_user->module_id == 4){
+                Embossing::where(['job_card_id'=>$id, 'status_id' => 2])->update(['user_id'=>$job_card_user->module_user_id]);
+            }
+
+            if($job_card_user->module_id == 5){
+                Leafing::where(['job_card_id'=>$id, 'status_id' => 2])->update(['user_id'=>$job_card_user->module_user_id]);
+            }
+
+            if($job_card_user->module_id == 6){
+                SpotUv::where(['job_card_id'=>$id, 'status_id' => 2])->update(['user_id'=>$job_card_user->module_user_id]);
+            }
+
+            if($job_card_user->module_id == 7){
+                DyeCutting::where(['job_card_id'=>$id, 'status_id' => 2])->update(['user_id'=>$job_card_user->module_user_id]);
+            }
+
+            if($job_card_user->module_id == 8){
+                Pasting::where(['job_card_id'=>$id, 'status_id' => 2])->update(['user_id'=>$job_card_user->module_user_id]);
+            }
+
+            if($job_card_user->module_id == 9){
+                DyeBreaking::where(['job_card_id'=>$id, 'status_id' => 2])->update(['user_id'=>$job_card_user->module_user_id]);
+            }
+
+            if($job_card_user->module_id == 10){
+                Printing::where(['job_card_id'=>$id, 'status_id' => 2])->update(['user_id'=>$job_card_user->module_user_id]);
+            }
+
+             
         }
-        return redirect()->back()->with(['class'=>'error','message'=>'Whoops, looks like something went wrong ! Try again ...']);
+        return redirect()->route('admin.job-card.index')->with(['class'=>'success','message'=>'Job Card saved successfully.']);
     }
 
 
     public function userAssignSingle(Request $request, $id)
     {
-        //return $request->all();
+        return $request->all();
         $module = Printing::firstorNew(['job_card_id'=>$id]);
         $module->status_id = $module->status_id??0;
         $module->save();

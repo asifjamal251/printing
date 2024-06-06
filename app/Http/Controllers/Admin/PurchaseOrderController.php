@@ -112,6 +112,7 @@ class PurchaseOrderController extends Controller
                 $item->gsm = $input['gsm'];
                 $item->art_work = Str::upper($input['art_work']);
                 $item->remarks = $input['remarks'];
+                $item->back_print = $input['back_print'];
                 $item->save();
 
                 $carton = Carton::firstorNew(['client_id' => $request->client, 'carton_name' => $item->carton_name, 'carton_size' => $item->carton_size]);
@@ -244,6 +245,7 @@ class PurchaseOrderController extends Controller
                 $item->gsm = $input['gsm'];
                 $item->art_work = Str::upper($input['art_work']);
                 $item->remarks = $input['remarks'];
+                $item->back_print = $input['back_print'];
                 $item->save();
 
                 $carton = Carton::firstorNew(['client_id' => $request->client, 'carton_name' => $item->carton_name, 'carton_size' => $item->carton_size]);

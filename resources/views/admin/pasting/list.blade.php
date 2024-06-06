@@ -53,7 +53,7 @@
                                 <th>Dye Breaking Quantity</th>
                                 <th>Pasted Quantity</th>
                                 <th>Ready Quantity</th>
-                                <th>Ready Box</th>
+                                {{-- <th>Ready Box</th> --}}
                                 <th>File</th>
                                 <th>Status</th>
                                 <th>Timer</th>
@@ -142,7 +142,7 @@
 </form>
 @endsection
 
-
+@include('admin.snippets.module-timer')
 @push('scripts')
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
@@ -179,6 +179,9 @@ $(document).ready(function(){
     var table2 = $('#datatable').DataTable({
         "drawCallback": function( settings ) {
         lightbox.reload();
+        $('#datatable tbody tr').each(function() {
+            startTimer(this);
+        });
     },
     language: {
         search: '',
@@ -237,20 +240,20 @@ $(document).ready(function(){
             }
         },
 
-        { "data": "ready_box",
-            render: function(data, type, row) {
-                if(row['status_id'] == 5){
-                    return row['ready_box'];
-                }else{
-                    @if (auth('admin')->user()->role_id != 1 && auth('admin')->user()->role_id != 2)
-                        return '<input   data-user="'+row['user_id']+'"  data-id="'+row['id']+'" type="text" class="form-control form-control-sm ready-box" value="'+row['ready_box']+'" name="ready_box[]" placeholder="Ready box" style="max-width:100px;">';
-                    @else
-                        return '<input  data-id="'+row['id']+'" value="'+row['ready_box']+'" type="text" class="form-control form-control-sm ready-box" name="ready_box[]" placeholder="Ready Quantity" style="max-width:100px;">';
-                    @endif
-                }
+        // { "data": "ready_box",
+        //     render: function(data, type, row) {
+        //         if(row['status_id'] == 5){
+        //             return row['ready_box'];
+        //         }else{
+        //             @if (auth('admin')->user()->role_id != 1 && auth('admin')->user()->role_id != 2)
+        //                 return '<input   data-user="'+row['user_id']+'"  data-id="'+row['id']+'" type="text" class="form-control form-control-sm ready-box" value="'+row['ready_box']+'" name="ready_box[]" placeholder="Ready box" style="max-width:100px;">';
+        //             @else
+        //                 return '<input  data-id="'+row['id']+'" value="'+row['ready_box']+'" type="text" class="form-control form-control-sm ready-box" name="ready_box[]" placeholder="Ready Quantity" style="max-width:100px;">';
+        //             @endif
+        //         }
                 
-            }
-        },
+        //     }
+        // },
      
       
         { "data": "file" },
@@ -282,11 +285,13 @@ $(document).ready(function(){
                     // @endcan
 
                     @can('change_status_pasting')
-                        if(row['status_id'] == 1){
-                            btn+='<li><a onclick="updateData(\'{{ route('admin.pasting.changeStatus') }}\',{user_id:'+row['user_id']+', status:1,id:'+row['id']+',job_card_id:'+row['job_card_id']+'})" class="dropdown-item edit-item-btn" href="javascript:void(0);"><i class="ri-check-double-line align-bottom me-2 text-muted"></i> Completed</a></li>';
-                        }
-                        if(row['status_id'] == 5){
-                            btn+='<li><a onclick="updateData(\'{{ route('admin.pasting.changeStatus') }}\',{user_id:'+row['user_id']+', status:2,id:'+row['id']+',job_card_id:'+row['job_card_id']+'})" class="dropdown-item edit-item-btn" href="javascript:void(0);"><i class="ri-check-double-line align-bottom me-2 text-muted"></i> Cancel</a></li>';
+                        if (row['timer_status'] == 2) {
+                            if(row['status_id'] == 1){
+                                btn+='<li><a onclick="updateData(\'{{ route('admin.pasting.changeStatus') }}\',{user_id:'+row['user_id']+', status:1,id:'+row['id']+',job_card_id:'+row['job_card_id']+'})" class="dropdown-item edit-item-btn" href="javascript:void(0);"><i class="ri-check-double-line align-bottom me-2 text-muted"></i> Completed</a></li>';
+                            }
+                            if(row['status_id'] == 5){
+                                btn+='<li><a onclick="updateData(\'{{ route('admin.pasting.changeStatus') }}\',{user_id:'+row['user_id']+', status:2,id:'+row['id']+',job_card_id:'+row['job_card_id']+'})" class="dropdown-item edit-item-btn" href="javascript:void(0);"><i class="ri-check-double-line align-bottom me-2 text-muted"></i> Cancel</a></li>';
+                            }
                         }
                     @endcan
 
@@ -304,6 +309,61 @@ $(document).ready(function(){
 
 });
 
+
+var table = table2;
+
+    // Object to hold interval IDs for each row
+    var intervalIds = {};
+
+    // Function to format time in hh:mm:ss
+    function formatTime(seconds) {
+        var hours = Math.floor(seconds / 3600);
+        var minutes = Math.floor((seconds % 3600) / 60);
+        var remainingSeconds = seconds % 60;
+        return (hours < 10 ? "0" : "") + hours + ":" + 
+               (minutes < 10 ? "0" : "") + minutes + ":" + 
+               (remainingSeconds < 10 ? "0" : "") + remainingSeconds;
+    }
+
+    // Function to parse time in hh:mm:ss to seconds
+    function parseTime(time) {
+        console.log('Time', time);
+        var parts = time.split(':');
+        var hours = parseInt(parts[0], 10);
+        var minutes = parseInt(parts[1], 10);
+        var seconds = parseInt(parts[2], 10);
+        return (hours * 3600) + (minutes * 60) + seconds;
+    }
+
+    // Function to start timer for each row
+    function startTimer(row) {
+        var timerCell = $(row).find('.timer');
+        
+        if(timerCell.length > 0){
+            var startTime = parseTime(timerCell.attr('data-start-time'));
+
+            // If timer is already running, do not start another one
+            if (timerCell.data('intervalId')) return;
+
+            // Update the display to show the starting time
+            timerCell.text(formatTime(startTime));
+
+            // Set interval and store the ID
+            var intervalId = setInterval(function() {
+                startTime++;
+                timerCell.text(formatTime(startTime));
+                timerCell.attr('data-start-time', formatTime(startTime)); // Update data-start-time attribute
+            }, 1000);
+
+            // Store interval ID in the cell's data attribute
+            timerCell.data('intervalId', intervalId);
+        }
+    }
+
+    // Start timer for each row on page load
+    $('#datatable tbody tr').each(function() {
+        startTimer(this);
+    });
 
 $('body').on('click', '.filters', function(){
         table2.draw('page');

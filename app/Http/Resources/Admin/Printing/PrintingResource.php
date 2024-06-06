@@ -5,6 +5,7 @@ use App\Models\Admin;
 use App\Models\JobCardHistory;
 use App\Models\JobCardTimer;
 use App\Models\ModuleUser;
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class PrintingResource extends JsonResource{
@@ -57,17 +58,16 @@ class PrintingResource extends JsonResource{
         return $sheet_size;
     }
 
-    private function machineUser($user, $id)
-    {
-        $options = '<option selected="" value="">Choose an User</option>';
+    private function moduleUser($user, $id, $jobCardId){
+        $options = '<option selected="" value="">Oprator</option>';
 
-        foreach (Admin::where("role_id", 6)->get() as $userAll) {
-            $options .= '<option value="' . $userAll->id . '" ' . ($user == $userAll->id ? 'selected' : '') . '>' . $userAll->name . '</option>';
+        foreach (ModuleUser::where("module_id", 10)->get() as $alluser) {
+            $options .= '<option value="' . $alluser->id . '" ' . ($user == $alluser->id ? 'selected' : '') . '>' . $alluser->name . '</option>';
         }
 
         return collect([
-            'html' => '<div class="m-0 form-group" style="max-width:150px;">' .
-                        '<select data-id="'. $id.'" class="form-select form-select-sm selectUser" aria-label=".form-select-sm example">' .
+            'html' => '<div class="form-group" style="width:150px;">' .
+                        '<select data-jobcard="'.$jobCardId.'" data-id="'. $id.'" class="form-select form-select-sm selectOprator" aria-label=".form-select-sm example">' .
                             $options .
                         '</select>' .
                     '</div>',
@@ -94,11 +94,13 @@ class PrintingResource extends JsonResource{
 
 
     public function toArray($request){
-        $userData = $this->machineUser($this->user, $this->id);
+        $moduleUser = $this->moduleUser($this->user_id, $this->id, $this->job_card_id);;
         return [
 
             'sn' => ++$request->start,
-            'id' => $this->id,            
+            'id' => $this->id, 
+            'oprator' => $moduleUser['html'],           
+            'user' => $this->user_id?$this->user->name:null,           
             'job_card_no'=>'<a class="text-danger" target="_blank" href="/admin/job-card/'.$this->jobCard->id.'">'.$this->jobCard->job_card_no."</a>",
             'set_no' => $this->jobCard->set_no,
             'color' => $this->jobCard->color,
@@ -107,7 +109,6 @@ class PrintingResource extends JsonResource{
             'file' => $this->jobCard->mediaFiles->count()>0?"<a class='glightbox' data-gallery='".$this->id."' href='".asset($this->jobCard->mediaFiles[0]['file'])."'> <img class='rounded avatar-sm' src='".asset($this->jobCard->mediaFiles[0]['file'])."'/></a>":"N/A",
               
             'printed_sheet' => $this->printed_sheet??'',
-            'user' => $this->user_id?ModuleUser::where(["module_id"=>9, 'id'=>$this->user_id])->value('name'):'N/A',
             'status'=> status($this->status_id),
             'status_id'=>$this->status_id,
             'job_card_id'=>$this->job_card_id,

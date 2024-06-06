@@ -129,22 +129,45 @@ th {
                         </tr>
                         @endforeach
                         <tr>
-                            <th colspan="10" style="text-align:right;">Subtotal</th>
+                            <th colspan="9"></th>
+                            <th>Subtotal</th>
                             <td>{{$material->subtotal}}</td>
                         </tr>
                         <tr>
-                            <th colspan="10" style="text-align:right;">GST</th>
+                            <th colspan="9"></th>
+                            <th>GST</th>
                             <td>{{$material->total_gst}}</td>
                         </tr>
                         <tr>
-                            <th colspan="10" style="text-align:right;">Total</th>
+                            <th colspan="9" style="text-align:left;">{{numberToWords($material->total)}}</th>
+                            <th>Total</th>
                             <td>{{$material->total}}</td>
                         </tr>
                         <tr>
-                            <td colspan="6" rowspan="2" style="vertical-align: top;height: 80px;">Comment or Special Instructions</td>
+                            <td colspan="6" rowspan="2" style="vertical-align: top;height: 100px;">Comment or Special Instructions</td>
                             <td colspan="5" rowspan="2"></td>
                         </tr>
                         <tr>
+                        </tr>
+                        <tr>
+                            <td colspan="11">
+                                <small><b>
+                                    Terms & Conditions  
+                                </b>
+                                <p style="margin-bottom:0;">1.PAYMENT TERMS : 90 DAYS FROM THE DATE OF RECEIPT OF MATERIAL TO OUR FACTORY, SUBJECT TO APPROVAL OF MATERIAL. </p>     
+                                <p style="margin-bottom:0;">2. PLEASE ATTACH COA WITH INVOICE COPY, WITHOUT COA MATERIAL WILL NOT BE ACCEPTED. </p>                                 
+                                <p style="margin-bottom:0;">3. CONTACT FOR DELIVERY  RELATED: 7018247476. </p>                                  
+                                <p style="margin-bottom:0;">4. R.M. Mfg Date should not  be more than 3 months  otherwise we may not accept the material.</p>                            
+                                <p style="margin-bottom:0;">5. Please write GSM/Size/Qyt/Packing Details on the Invoice.</p>                                   
+                                <p style="margin-bottom:0;">6. Please attach P.O. photocopy alongwith original bill. </p>                                  
+                                <p style="margin-bottom:0;">7.Payment may not be released without P.O. No. & Date on the Bill & Challan & high light the same. </p>           
+                                <p style="margin-bottom:0;">8. In case goods are not dispatched by agreed date then we may procure goods from market & rate difference shall be debited to you’re A/C </p>                                  
+                                <p style="margin-bottom:0;">9. AII Disputes are subject to Chandigarh jurdisction only. </p>                                
+                                <p style="margin-bottom:0;">10. Bill to be prepared as per P.O. only. Extra Charge e.g. Packing Forwarding, Postage, Insurance shall not be paid by us. </p>                                
+                                <p style="margin-bottom:0;">11.  In Case Material is rejected. Inward Transportation and Testing charges will be debited.</p>                     
+                                <p style="margin-bottom:0;">12.  Kindly make the  E-Way bill according to the  Billing & Shipping Details.</p>
+                            </small>
+                            </td>
                         </tr>
                         <tr style="visibility:collapse;">
                             <td></td>

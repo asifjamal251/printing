@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class SpotUv extends Model
 {
    protected $fillable = [
-	    'id', 'job_card_id','status_id',
+	    'id', 'job_card_id','status_id','user_id'
 	];
 	protected $table = 'spot_uv';
 

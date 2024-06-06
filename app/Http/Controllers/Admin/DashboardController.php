@@ -16,16 +16,38 @@ use App\Notifications\ChallanCreated;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use OpenAI\Laravel\Facades\OpenAI;
+use Stevebauman\Location\Facades\Location;
+use GuzzleHttp\Client;
 
 
 class DashboardController extends Controller
 {
     public function index(Request $request)
     {
-        //whatsappMessage();
-        
-        return view('admin.dashboard');
+        //return request()->ip();
+        // if ($position = Location::get('127.0.0.1')) {
+        //     // Successfully retrieved position.
+        //     return $position->countryName;
+        // }
+        // $position = Location::get();
+        // dd($position);
+        $logins = request()->user('admin')->logins;
+
+// foreach($logins as $login){
+//         if ($login->latitude && $login->longitude) {
+//             // Use the Geocoding API to get the address
+//             $client = new Client();
+//             $apiKey = 'YOUR_GOOGLE_MAPS_API_KEY';
+//             $response = $client->get("https://maps.googleapis.com/maps/api/geocode/json?latlng=$login->latitude,$login->longitude&key=AIzaSyA5zaOBE-YNdQ5vL0RqUv74xzAuMMWXBcs&libraries=places");
+//             $data = json_decode($response->getBody(), true);
+//             //dd($data['results'][0]['formatted_address']);
+//             if (isset($data['results'][0])) {
+//                 dd($data['results'][0]['formatted_address']);
+//                //$data['results'][0]['formatted_address'];
+//             }
+//         }
+// }
+        return view('admin.dashboard', compact('logins'));
     }
 
     public function filter(Request $request)

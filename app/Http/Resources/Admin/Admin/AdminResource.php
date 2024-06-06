@@ -27,10 +27,11 @@ class AdminResource extends JsonResource
         return [
             'sn' => ++$request->start,
             'id' => $this->id,
-            'role' => $this->role,
+            'role' => $this->role->name,
             'name' => $this->name,
             'email' => $this->email,
-            'status' => $this->status($this->status),
+            '2fa' => $this->google2fa_enabled?'<span class="badge rounded-pill bg-success">Enabled</span>':'<span class="badge rounded-pill bg-warning">Disabled</span>',
+            'status' => $this->status?'<span class="badge rounded-pill bg-success">Active</span>':'<span class="badge rounded-pill bg-danger">Inactive</span>',
         ];
     }
 }

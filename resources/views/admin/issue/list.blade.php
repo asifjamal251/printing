@@ -106,7 +106,7 @@ $(document).ready(function(){
     "columns": [
         { "data": "sn" },
         { "data": "issue_no" },
-        { "data": "total" },
+        { "data": "items" },
         { "data": "user" },
         { "data": "created_at" },
         @can(['edit_issue','delete_issue', 'read_issue'])

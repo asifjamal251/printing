@@ -297,7 +297,7 @@ class MaterialOrderController extends Controller
             $material = $materialData->toArray();
 
             // Generate the PDF
-            $pdf = PDF::loadView('emails.order-confirmation', compact('material', 'items'))
+            $pdf = PDF::loadView('pdf.order-confirmation', compact('material', 'items'))
                 ->setPaper('A4', 'portrait') // Ensure A4 paper size in portrait mode
                 ->setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true]) // Enable HTML5 and remote options
                 ->output();

@@ -31,9 +31,7 @@ class DyeBreakingController extends Controller
                 ELSE 0
             END")->orderBy('created_at', 'desc')
             ->with(['user', 'PO', 'POItem', 'jobCard'=>function($query){
-                $query->with(['paper', 'jobCardItems','putPaperWarehouse', 'getPaperWarehouse', 'jobCardUser' => function ($query2) {
-                        $query2->with('printingUser');
-                    }]);
+                $query->with(['paper', 'jobCardItems', 'jobCardUser']);
             }])->has('jobCard');
 
 
@@ -69,6 +67,17 @@ class DyeBreakingController extends Controller
 
             if($request->user_id){
                 $datas->where('user_id', $request->user_id);
+            }
+
+            $getDate = request()->input('datefilter');
+            if($getDate != '' && $getDate != 'All'){ //|| $getDate != 'all' || $getDate != 'All'
+                $filterDate = explode(' - ', $getDate);
+                $startDate = Carbon::parse($filterDate[0])->format('Y-m-d');
+                $endDate = Carbon::parse($filterDate[1])->format('Y-m-d');
+
+                $datas->when($getDate != '', function ($query) use ($startDate, $endDate) {
+                    $query->whereBetween('created_at', [$startDate . ' 00:00:00', $endDate . ' 23:59:59']);
+                });
             }
 
             $request->merge(['recordsTotal' => $datas->count(), 'length' => $request->length]);

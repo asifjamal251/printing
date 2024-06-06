@@ -685,6 +685,7 @@ $(document).ready(function() {
 
         if (!isNaN(wastage) && !isNaN(paper_divide) && !isNaN(paper_required)) {
             var total_sheet = (paper_required + wastage) / paper_divide;
+            console.log(total_sheet);
             $('input[name="kt_docs_repeater_advanced[' + position + '][total_sheets]"]').val(parseInt(total_sheet));
         }
     }
@@ -698,6 +699,13 @@ $(document).ready(function() {
 
 
     $('body').on('change', '.paperDivide', function() {
+        var current_name = $(this).attr('name');
+        var parts = current_name.split(/\[|\]/);
+        var position = parts[1];
+        ClcSheet(position);
+    });
+
+    $('body').on('change', '.requiredSheet', function() {
         var current_name = $(this).attr('name');
         var parts = current_name.split(/\[|\]/);
         var position = parts[1];
@@ -796,7 +804,6 @@ $('body').on('change', '.getProduct', function(){
 
     $('.paper-check .stock').html('');
     var product_id = $(this).val();
-    console.log('product_id', product_id);
     $.ajax({
         type: "POST",
         dataType: 'json',

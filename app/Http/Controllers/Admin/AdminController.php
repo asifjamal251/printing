@@ -25,7 +25,10 @@ class AdminController extends Controller
     {
         if ($request->wantsJson()) {
             //dd($request->all());
-            $datas = Admin::orderBy('admins.created_at','desc')->whereNotIn('admins.id',[1])->join('roles','roles.id','admins.role_id')->select(['admins.id as id','roles.name as role','admins.name as name','email','admins.status']);
+            $datas = Admin::orderBy('admins.name','desc')->select('admins.*', 'roles.name as role_name')
+                ->orderBy('admins.created_at', 'desc')
+                ->whereNotIn('admins.id', [1])
+                ->join('roles', 'roles.id', '=', 'admins.role_id');
 
             $request->merge(['recordsTotal' => $datas->count(), 'length' => $request->length]);
             $datas = $datas->limit($request->length)->offset($request->start)->get();
@@ -52,11 +55,13 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, admin $admin )
+    public function show($id)
     {   
-        $loginTimes = adminLogin::where('admin_id',$admin->id)->get();
-        $policy = DB::table('role_policies')->where('role_id',$admin->role_id)->first();
-        return view('admin.admin.view',compact('admin','loginTimes','policy'));
+        return $admin = Admin::orderBy('admins.name','desc')->select('admins.*', 'roles.name as role_name')
+                ->orderBy('admins.created_at', 'desc')
+                ->whereNotIn('admins.id', [1])
+                ->join('roles', 'roles.id', '=', 'admins.role_id')->first();
+        return view('admin.admin.view',compact('admin'));
     }
     /**
      * Store a newly created resource in storage.
@@ -92,17 +97,7 @@ class AdminController extends Controller
 
             if($admin->save()){ 
 
-                // $data = [
-                //     'name'=>$admin->name,
-                //     'url'=>url('/').'/admin/new-password/'.Crypt::encrypt($admin->id),
-                //     'role'=>Role::where('id',$request->role)->value('name')
-                // ];
-                // Mail::send('emails.admin.new-password', $data, function($message) use($admin){
-                //     $message->to($admin->email, $admin->name)->subject
-                //         ('Set Keep backend password');
-                //     $message->from('testing@sanix.in','Keep');
-                // });
-
+                return redirect()->route('admin.admin.2fa.setup',$admin->id)->with(['class'=>'success','message'=>'Admin Created successfully.']);
                 return redirect()->route('admin.admin.index')->with(['class'=>'success','message'=>'Admin Created successfully.']);
             }
 
@@ -158,32 +153,68 @@ class AdminController extends Controller
 
 
 
-         public function profileUpdate(Request $request) {
+    public function profileUpdate(Request $request) {
 
-           // return $request->all();
-            $this->validate($request,[
-                'name'=>'required',   
-            ]);
+       // return $request->all();
+        $this->validate($request,[
+            'name'=>'required',   
+        ]);
 
-            $admin = Auth::guard('admin')->user();
-          
-            $admin->name = $request->name;
-            $admin->mobile = $request->mobile_no;
-            $admin->gender = $request->gender;
-            $admin->state = $request->state;
-            $admin->city = $request->city;
-            $admin->pincode = $request->zipcode;
-            $admin->address = $request->address;
-            $admin->bio = $request->bio;
-            $admin->date_of_birth = Carbon::parse($request->date_of_birth)->format('Y-m-d');
-           
- 
-            if($admin->save()){ 
-                return response()->json(['message'=>'Profile  Updated', 'class'=>'success']);
-            }
+        $admin = Auth::guard('admin')->user();
+      
+        $admin->name = $request->name;
+        $admin->mobile = $request->mobile_no;
+        $admin->gender = $request->gender;
+        $admin->state = $request->state;
+        $admin->city = $request->city;
+        $admin->pincode = $request->zipcode;
+        $admin->address = $request->address;
+        $admin->bio = $request->bio;
+        $admin->date_of_birth = Carbon::parse($request->date_of_birth)->format('Y-m-d');
+       
 
-             return response()->json(['message'=>'Whoops, looks like something went wrong ! Try again ...', 'class'=>'error']);
+        if($admin->save()){ 
+            return response()->json(['message'=>'Profile  Updated', 'class'=>'success']);
         }
+
+         return response()->json(['message'=>'Whoops, looks like something went wrong ! Try again ...', 'class'=>'error']);
+    }
+
+    public function setup2FA($id){
+        $admin = Admin::where('id', $id)->first();
+        $google2fa = app('pragmarx.google2fa');
+        $secretKey = $google2fa->generateSecretKey();
+
+        $qrCodeUrl = $google2fa->getQRCodeInline(
+            config('app.name'),
+            $admin->email,
+            $secretKey
+        );
+
+        return view('admin.admin.2fa_setup', ['secret' => $secretKey, 'qrCodeUrl' => $qrCodeUrl, 'id' => $id]);
+    }
+
+    public function enable2FA(Request $request, $id){
+        $request->validate([
+            'secret' => 'required',
+            'one_time_password' => 'required',
+        ]);
+
+        $google2fa = app('pragmarx.google2fa');
+
+        $valid = $google2fa->verifyKey($request->secret, $request->one_time_password);
+
+        if ($valid) {
+            $admin = Admin::where('id', $id)->first();
+            $admin->google2fa_secret = $request->secret;
+            $admin->google2fa_enabled = true;
+            $admin->save();
+
+            return redirect()->route('admin.dashboard.index')->with('status', '2FA enabled successfully.');
+        } else {
+            return redirect()->back()->withErrors(['one_time_password' => 'Invalid OTP']);
+        }
+    }
 
 
     

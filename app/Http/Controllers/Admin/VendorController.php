@@ -52,11 +52,13 @@ class VendorController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|string',
+            'gst' => 'required',
             'email' => 'email',
             'phone_no' => 'required|regex:/^[0-9]{10}$/'
         ]);
         
         $vendor = new Vendor;
+        $vendor->gst = $request->gst;
         $vendor->name = $request->name;
         $vendor->email = $request->email;
         $vendor->phone_no = $request->phone_no;
@@ -98,10 +100,12 @@ class VendorController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|string',
+            'gst' => 'required',
             'email' => 'email',
             'phone_no' => 'required|regex:/^[0-9]{10}$/'
         ]);
         
+        $vendor->gst = $request->gst;
         $vendor->name = $request->name;
         $vendor->email = $request->email;
         $vendor->phone_no = $request->phone_no;

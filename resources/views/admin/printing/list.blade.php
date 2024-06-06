@@ -214,7 +214,17 @@ $(document).ready(function(){
     "columns": [
         { "data": "sn" },
         @can(['user_printing'])
-            { "data": "user"},
+            { "data": "oprator", 
+                render: function(data, type, row) {
+                    if(row['status_id'] == 5) {
+                        return row['user']
+                    }
+                    else{
+                        return row['oprator'];
+                    }
+                    
+                }
+            },
         @endcan
         { "data": "job_card_no" },
         { "data": "set_no" },
@@ -379,6 +389,44 @@ $('body').on('change', '.selectUser', function(){
         error:function(error){
 
 
+        }
+    });
+
+});
+
+
+
+$('body').on('change', '.selectOprator', function(){
+    $('.card-preloader').addClass('show');
+    var id = $(this).attr('data-id');
+    var jobCardId = $(this).attr('data-jobcard');
+    var user = $(this).val();
+
+    $.ajax({
+        type: "POST",
+        enctype: 'multipart/form-data',
+        url:'{{route('admin.'.request()->segment(2).'.oprator')}}',
+        data: {'id':id,'user_id':user, 'job_card_id':jobCardId, '_method': 'POST', '_token': '{{ csrf_token() }}'},
+        success:function(response){
+            Toastify({
+                text: response.message,
+                duration: 3000,
+                close: true,
+                gravity: "top", // `top` or `bottom`
+                position: "right", // `left`, `center` or `right`
+                stopOnFocus: true, // Prevents dismissing of toast on hover
+                className: response.class,
+
+            }).showToast();
+            $('.datatable').DataTable().draw('page');
+            setTimeout(function(){
+                $('.card-preloader').removeClass('show');
+            }, 500);
+        },
+        error:function(error){
+            setTimeout(function(){
+                $('.card-preloader').removeClass('show');
+            }, 500);
         }
     });
 

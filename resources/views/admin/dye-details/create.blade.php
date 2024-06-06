@@ -37,7 +37,13 @@
 
                 <div class="row">
 
-  
+                    <div class="form-group col-md-3 col-sm-12">
+                        <div class="form-group{{ $errors->has('dye_no') ? ' has-error' : '' }}">
+                            {!! Form::label('dye_no', 'Dye No') !!}
+                            {!! Form::text('dye_no', null, ['class' => 'form-control', 'placeholder' => 'Dye No']) !!}
+                            <small class="text-danger">{{ $errors->first('dye_no') }}</small>
+                        </div>
+                    </div>
 
                     <div class="form-group col-md-3 col-sm-12">
                         <div class="form-group{{ $errors->has('length') ? ' has-error' : '' }}">
@@ -96,7 +102,7 @@
                         </div>
                     </div>
 
-                  <div class="form-group col-md-3 col-sm-12" style="margin-top:28px;">
+                  <div class="form-group col-sm-12" style="margin-top:28px;">
                       {!! Form::submit('Save Client Data', ['class' => 'btn btn-info pull-right']) !!}
                   </div>
 

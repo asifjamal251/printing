@@ -152,6 +152,15 @@
                                     </div>
 
 
+                                    <div class="form-group col-product">
+                                        <div class="form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.remarks') ? ' has-error' : '' }}">
+                                            {!! Form::label('remarks', 'Remarks') !!}  
+                                            {!! Form::text('remarks', old('kt_docs_repeater_advanced.'.$loop->index.'.remarks', $item['remarks'] ?? ''), ['class' => 'form-control form-control-sm remarks', 'placeholder' => 'Remarks']) !!}
+                                           <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.remarks') }}</small>
+                                        </div>
+                                    </div>
+
+
                             
 
 
@@ -190,7 +199,7 @@
                     
 
                     <div class="form-group">
-                        {!! Form::submit('Save Material Inward', ['class' => 'btn btn-secondary btn-animation waves-effect waves-light']) !!}
+                        {!! Form::submit('Save Issue', ['class' => 'btn btn-secondary btn-animation waves-effect waves-light']) !!}
                     </div>
                 </div>
 

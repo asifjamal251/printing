@@ -222,6 +222,15 @@
                                     </div>
 
 
+                                    <div class="col-width back-print">
+                                        <div class="form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.back_print') ? ' has-error' : '' }}">
+                                            {!! Form::label('back_print', 'Back Print') !!}
+                                            {!! Form::select('back_print', [1 => 'Yes', 0 => 'No'], old('kt_docs_repeater_advanced.'.$loop->index.'.back_print', $item['back_print'] ?? 0), ['id' => 'back_print', 'class' => 'form-control form-select-sm', 'placeholder'=>'Back Print']) !!}
+                                            <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.back_print') }}</small>
+                                        </div>
+                                    </div>
+
+
                                     <div class="col-width rate-main">
                                         <div class="form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.rate') ? ' has-error' : '' }}">
                                             {!! Form::label('rate', 'Rate') !!}
@@ -292,7 +301,7 @@
                                     <div class="col-width remarks-main">
                                         <div class="form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.remarks') ? ' has-error' : '' }}">
                                             {!! Form::label('remarks', 'Remarks') !!}
-                                            {!! Form::text('remarks', old('kt_docs_repeater_advanced.'.$loop->index.'.remarks', $item['remarks'] ?? ''), ['class' => 'form-control form-control-sm', 'placeholder'=>'Remarks']) !!}
+                                            {!! Form::text('remarks', old('kt_docs_repeater_advanced.'.$loop->index.'.remarks', $item['remarks'] ?? ''), ['class' => 'form-control form-control-sm', 'placeholder'=>'Remarks/Batch/Other']) !!}
                                             <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.remarks') }}</small>
                                         </div>
                                     </div>
@@ -416,6 +425,7 @@ $('#kt_docs_repeater_advanced').repeater({
     },
 
     show: function () {
+        var client_id = $('#client').val();
         $(this).addClass('row-' + rowCounter);
         rowCounter++; 
 
@@ -430,7 +440,7 @@ $('#kt_docs_repeater_advanced').repeater({
             tags:true,
             minimumInputLength: 2,
             ajax: {
-                url: '{{ route('admin.common.carton.name.list') }}',
+                url: '{{ route('admin.common.carton.name.list') }}?client_id='+ client_id,
                 dataType: 'json',
                 cache: true,
                 data: function(params) {

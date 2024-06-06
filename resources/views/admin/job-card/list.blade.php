@@ -50,7 +50,6 @@
                                 <th>Cartons</th>
                                 <th>Job Type</th>
                                 <th>Designer</th>
-                                <th>Printing User</th>
                                 <th>Required Sheet</th>
                                 <th>Wastage Sheet</th>
                                 <th>Total Sheet</th>
@@ -227,7 +226,6 @@ $(document).ready(function(){
         { "data": "carton_name" },
         { "data": "job_type" },
         { "data": "designer" },
-        { "data": "printing_user" },
         { "data": "required_sheet" },
         { "data": "wastage_sheet" },
         { "data": "total_sheet" },
@@ -258,14 +256,16 @@ $(document).ready(function(){
 
                         btn += '<li><a target="_blank" class="dropdown-item" href="{{ request()->url() }}/track/' + row['id'] + '"><i class="ri-pulse-line  align-bottom me-2 text-muted"></i> Track</a></li>';
 
+                        btn += '<li><a class="dropdown-item" href="{{ request()->url() }}/user/assign/' + row['id'] + '"><i class="ri-pulse-line  align-bottom me-2 text-muted"></i> Machine Assign</a></li>';
+
                         btn+='<li><a class="dropdown-item edit-item-btn" href="'+window.location.href+'/'+row['id']+'/edit"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>';
                     @endcan
 
                    
 
-                    @can('delete_job_card')
-                        btn += '<li><button type="button" onclick="deleteAjax(\''+window.location.href+'/'+row['id']+'/delete\')" class="dropdown-item remove-item-btn"><i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete</button></li>';
-                    @endcan
+                    // @can('delete_job_card')
+                    //     btn += '<li><button type="button" onclick="deleteAjax(\''+window.location.href+'/'+row['id']+'/delete\')" class="dropdown-item remove-item-btn"><i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete</button></li>';
+                    // @endcan
 
                     @endcan
                      btn += '</ul></div>';

@@ -45,6 +45,7 @@
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Status</th>
+                                <th>2FA</th>
                                 @can(['edit_admin','delete_admin', 'read_admin'])
                                   <th>Action</th>
                                 @endcan
@@ -83,6 +84,7 @@ $(document).ready(function(){
         { "data": "name" },
         { "data": "email" },
         { "data": "status" },
+        { "data": "2fa" },
         {
             "data": "action",
             render: function(data, type, row) {

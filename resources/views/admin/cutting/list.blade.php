@@ -99,7 +99,7 @@
 
                 <div id="reportrange" class="form-icon w-100" style="width: 280px;text-align:center;cursor:pointer;margin-right: 10px;">
                     <span>
-                        <input style="cursor:pointer;" type="text" class="form-control form-control-sm form-control-icon" name="datefilter" value="" placeholder="Select date range" />
+                        <input style="cursor:pointer;" type="text" class="form-control form-control-sm form-control-icon" id="datefilter" name="datefilter" value="" placeholder="Select date range" />
                     </span>
                     <i class="fa fa-calendar"></i>
                 </div>
@@ -211,6 +211,7 @@ $(document).ready(function() {
             'data': function(d) {
                 d._token = '{{ csrf_token() }}';
                 d._method = 'PATCH';
+                d.datefilter = $('#datefilter').val();
                 d.user_id = $('#oprator').val();
             }
         },
@@ -347,14 +348,14 @@ $(document).ready(function() {
 
 
 $('body').on('click', '.filters', function(){
-        table2.draw('page');
+        $('.datatable').DataTable().draw('page');
         $('#offcanvasTop').offcanvas('hide');
     });
 
 
     $('body').on('click', '.resetFilter', function(){
         $('#filterForm').trigger("reset");
-        table2.draw('page');
+        $('.datatable').DataTable().draw('page');
         $('#offcanvasTop').offcanvas('hide');
     });
     $('body').on('change', '.cutting-sheet-input', function(){
@@ -393,13 +394,14 @@ $('body').on('click', '.filters', function(){
 $('body').on('change', '.selectOprator', function(){
     $('.card-preloader').addClass('show');
     var id = $(this).attr('data-id');
+    var jobCardId = $(this).attr('data-jobcard');
     var user = $(this).val();
 
     $.ajax({
         type: "POST",
         enctype: 'multipart/form-data',
         url:'{{route('admin.'.request()->segment(2).'.oprator')}}',
-        data: {'id':id,'user_id':user,'_method': 'POST', '_token': '{{ csrf_token() }}'},
+        data: {'id':id,'user_id':user, 'job_card_id':jobCardId, '_method': 'POST', '_token': '{{ csrf_token() }}'},
         success:function(response){
             Toastify({
                 text: response.message,

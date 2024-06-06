@@ -49,7 +49,7 @@ class DyeCuttingResource extends JsonResource{
 
     }
 
-    private function moduleUser($user, $id){
+    private function moduleUser($user, $id, $jobCardId){
         $options = '<option selected="" value="">Oprator</option>';
 
         foreach (ModuleUser::where("module_id", 7)->get() as $alluser) {
@@ -58,7 +58,7 @@ class DyeCuttingResource extends JsonResource{
 
         return collect([
             'html' => '<div class="form-group">' .
-                        '<select data-id="'. $id.'" class="form-select form-select-sm selectOprator" aria-label=".form-select-sm example">' .
+                        '<select data-jobcard="'.$jobCardId.'" data-id="'. $id.'" class="form-select form-select-sm selectOprator" aria-label=".form-select-sm example">' .
                             $options .
                         '</select>' .
                     '</div>',
@@ -134,7 +134,7 @@ class DyeCuttingResource extends JsonResource{
     public function toArray($request)
 
     {
-       $moduleUser = $this->moduleUser($this->user_id, $this->id);
+       $moduleUser = $this->moduleUser($this->user_id, $this->id, $this->job_card_id);
         return [
             'sn' => ++$request->start,
             'id' => $this->id,

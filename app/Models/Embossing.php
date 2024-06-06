@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Embossing extends Model
 {
     protected $fillable = [
-	    'id', 'job_card_id','status_id',
+	    'id', 'job_card_id','status_id','user_id'
 	];
 
 	public function jobCard(){

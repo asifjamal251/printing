@@ -11,42 +11,17 @@ class JobCardUser extends Model
     protected $fillable = [
         'id', 
         'job_card_id', 
-        'cutting',
-        'printing',
-        'chemical_coating',
-        'embossing',
-        'leafing',
-        'dye_cutting',
-        'pasting',
+        'module_id', 
+        'module_user_id'
     ];
     protected $table = 'job_card_users';
 
-    public function printingUser(){
-        return $this->hasOne(Admin::class,'id','printing');
+    public function module(){
+        return $this->hasOne(Module::class, 'id', 'module_id');
     }
 
-    public function cuttingUser(){
-        return $this->hasOne(Admin::class,'id','cutting');
-    }
-
-    public function coatingUser(){
-        return $this->hasOne(Admin::class,'id','coating');
-    }
-
-    public function embossingUser(){
-        return $this->hasOne(Admin::class,'id','embossing');
-    }
-
-    public function leafingUser(){
-        return $this->hasOne(Admin::class,'id','leafing');
-    }
-
-    public function dyeCuttingUser(){
-        return $this->hasOne(Admin::class,'id','dye_cutting');
-    }
-
-    public function pastingUser(){
-        return $this->hasOne(Admin::class,'id','pasting');
+    public function moduleUser(){
+        return $this->hasOne(ModuleUser::class,'id','module_user_id');
     }
     
 }

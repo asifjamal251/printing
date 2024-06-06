@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class DyeBreaking extends Model
 {
     protected $fillable = [
-	    'id', 'job_card_id','status_id','purchase_order_item_id', 'dye_breaking_quantity'
+	    'id', 'job_card_id','status_id','purchase_order_item_id', 'dye_breaking_quantity','user_id'
 	];
 
 	public function jobCard(){

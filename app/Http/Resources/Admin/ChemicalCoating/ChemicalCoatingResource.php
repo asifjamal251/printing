@@ -6,6 +6,7 @@ use App\Models\JobCardHistory;
 use App\Models\JobCardTimer;
 use App\Models\ModuleUser;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Carbon\Carbon;
 
 class ChemicalCoatingResource extends JsonResource{
     private function timer($jobCardId, $type){

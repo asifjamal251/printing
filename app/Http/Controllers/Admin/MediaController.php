@@ -107,7 +107,7 @@ class MediaController extends Controller
 
                 $media_rename = $media->slug.".".$request->file('file')->getClientOriginalExtension();
                 $image = $request->file('file')->storeAs('media', $media_rename);
-                $media->file = 'https://colourimpration.s3.eu-north-1.amazonaws.com/'.$image;
+                $media->file = 'https://shreyaoffset.s3.eu-north-1.amazonaws.com/'.$image;
                 $media->save();
 
 

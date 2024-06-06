@@ -9,6 +9,7 @@ use App\Models\Dominant;
 use App\Models\JobCard;
 use App\Models\JobCardHistory;
 use App\Models\JobCardItem;
+use App\Models\JobCardUser;
 use App\Models\Lamination;
 use App\Models\Printing;
 use App\Models\PurchaseOrder;
@@ -25,13 +26,14 @@ class CuttingController extends Controller
      */
     public function index(Request $request)
     {
+        
         if ($request->wantsJson()) {
             
             $datas = Cutting::orderBy('id','desc')
             ->with(['user', 'jobCard'=>function($query){
                 $query->with(['jobCardPapers'=>function($query){
                     $query->with(['product']);
-                }, 'putPaperWarehouse', 'getPaperWarehouse', 'jobCardItems'=>function($query){
+                }, 'JobCardUser', 'jobCardItems'=>function($query){
                     $query->with(['PO', 'POItem']);
                 }]);
             }])->has('jobCard');
@@ -66,6 +68,19 @@ class CuttingController extends Controller
             if($request->user_id){
                 $datas->where('user_id', $request->user_id);
             }
+
+            $getDate = request()->input('datefilter');
+            if($getDate != '' && $getDate != 'All'){ //|| $getDate != 'all' || $getDate != 'All'
+                $filterDate = explode(' - ', $getDate);
+                $startDate = Carbon::parse($filterDate[0])->format('Y-m-d');
+                $endDate = Carbon::parse($filterDate[1])->format('Y-m-d');
+
+                $datas->when($getDate != '', function ($query) use ($startDate, $endDate) {
+                    $query->whereBetween('created_at', [$startDate . ' 00:00:00', $endDate . ' 23:59:59']);
+                });
+            }
+
+
 
             $request->merge(['recordsTotal' => $datas->count(), 'length' => $request->length]);
             $datas = $datas->limit($request->length)->offset($request->start)->get();
@@ -126,6 +141,9 @@ class CuttingController extends Controller
      */
     public function update(Request $request, $id) {
         $cutting = Cutting::find($id);
+        if($cutting->user_id == ''){
+            return response()->json(['message'=>'Cutting user is required.', 'class'=>'error']);
+        }
         $cutting->cutting_sheets = $request->cutting_sheets;
         if($cutting->save()){
             JobCard::where('id', $cutting->job_card_id)->update(['cutting_sheets'=>$cutting->cutting_sheets]);
@@ -158,6 +176,7 @@ class CuttingController extends Controller
             return response()->json(['message'=>'Cutting Sheet required.', 'class'=>'error']);
         }
 
+
         if(($job_card->coating_machine == "gloss lamination" || $job_card->coating_machine == "matt lamination" || $job_card->coating_machine == "chemical coating") && ($job_card->other_coating_machine == "spot uv" || $job_card->other_coating_machine == "none") && ($job_card->embossing_leafing == "Embossing" || $job_card->embossing_leafing == "Leafing" || $job_card->embossing_leafing == "Both" || $job_card->embossing_leafing == "None")) {
 
             if($request->status == 2){
@@ -183,9 +202,18 @@ class CuttingController extends Controller
             $history->job_card_in = now();
             $history->save();
 
-
+            
             $printing = Printing::firstorNew(['job_card_id'=>$request->job_card_id]);
             $printing->status_id = 2;
+
+            $user = JobCardUser::where(['job_card_id'=>$request->job_card_id, 'module_id'=>10])->first();
+            if(isset($user)){
+                $printing->user_id = $user->module_user_id;
+            }else{
+                $printing->user_id = null;
+            }
+            
+            
             if ($printing->save()) {
                 JobCard::where(['id'=>$request->job_card_id])->update(['status_id'=>14]);  
                 Cutting::where(['id'=>$request->id])->update(['status_id'=>5]);  
@@ -250,6 +278,14 @@ class CuttingController extends Controller
 
                 $printing = Printing::firstorNew(['job_card_id'=>$request->job_card_id]);
                 $printing->status_id = 2;
+
+                $user = JobCardUser::where(['job_card_id'=>$request->job_card_id, 'module_id'=>10])->first();
+                if(isset($user)){
+                    $printing->user_id = $user->module_user_id;
+                }else{
+                    $printing->user_id = null;
+                }
+
                 if ($printing->save()) {
                     JobCard::where(['id'=>$request->job_card_id])->update(['status_id'=>14]); 
                     Cutting::where(['id'=>$request->id])->update(['status_id'=>5]);  
@@ -277,6 +313,14 @@ class CuttingController extends Controller
 
                 $printing = Lamination::firstorNew(['job_card_id'=>$request->job_card_id]);
                 $printing->status_id = 2;
+
+                $user = JobCardUser::where(['job_card_id'=>$request->job_card_id, 'module_id'=>3])->first();
+                if(isset($user)){
+                    $printing->user_id = $user->module_user_id;
+                }else{
+                    $printing->user_id = null;
+                }
+
                 if ($printing->save()) {
                     JobCard::where(['id'=>$request->job_card_id])->update(['status_id'=>15]); 
                     Cutting::where(['id'=>$request->id])->update(['status_id'=>5]);  
@@ -302,6 +346,7 @@ class CuttingController extends Controller
     {
         $module = Cutting::find($request->id);
         if($request->user_id != ''){
+            JobCardUser::where(['module_id' => 1, 'job_card_id' => $request->job_card_id])->update(['module_user_id' => $request->user_id]);
             $module->user_id = $request->user_id;
         }else{
             $module->user_id = null;

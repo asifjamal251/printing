@@ -371,10 +371,14 @@ div#datatable_wrapper [type="search"] {
     padding: 8px;
     width: 200px;
 }
+.navbar-brand-box{
+    padding: 0;
+}
 
 .navbar-brand-box img {
     display: block;
     max-width: 100%;
+    width: 200px;
 }
 
 .card-preloader{
@@ -448,3 +452,6 @@ div#datatable_wrapper [type="search"] {
 .datatable.table-sm tr td, .datatable tr th {
     font-size: 13px;
 }
+
+
+

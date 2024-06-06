@@ -36,5 +36,9 @@ class AppServiceProvider extends ServiceProvider
             $oldQuantity = $data['billing_items'][$index]['old_quantity'];
             return $value <= $oldQuantity;
         });
+
+        \ALajusticia\Logins\Logins::getIpAddressUsing(function () {
+            return request()->ip();
+        });
     }
 }

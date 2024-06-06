@@ -37,10 +37,12 @@
 
                 <div class="row">
 
+
+
                     <div class="form-group col-md-3 col-sm-12">
                         <div class="form-group{{ $errors->has('dye_no') ? ' has-error' : '' }}">
                             {!! Form::label('dye_no', 'Dye No.') !!}
-                            {!! Form::text('dye_no', $dye_details->dye_no, ['class' => 'form-control', 'placeholder' => 'Dye No.', 'readonly']) !!}
+                            {!! Form::text('dye_no', $dye_details->dye_no, ['class' => 'form-control', 'placeholder' => 'Dye No.']) !!}
                             <small class="text-danger">{{ $errors->first('dye_no') }}</small>
                         </div>
                     </div>

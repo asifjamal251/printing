@@ -37,7 +37,7 @@
                 <div class="card">
 
                     <div class="card-header">
-                        <h6 class="card-title mb-0 text-center">COLOUR IMPRESSION</h6>
+                        <h6 class="card-title mb-0 text-center">{{get_app_setting('title')}}</h6>
                     </div>
                     
                     <div class="card-body">
@@ -101,23 +101,68 @@
                                 <th>Sheet Size</th>
                                 <td>{{ $job_card->sheet_size }}</td>
                                 <th>Paper Used</th>
-                                <td>{{ App\Models\Product::where('id', $job_card->product_id)->value('name')}}</td>
+                                <td>
+                                    @php
+                                        $jobCardPaper = [];
+                                    
+                                        foreach($job_card->jobCardPapers as $paper){
+                                            $jobCardPaper[] = '<p class="m-0 carton-list">' . $paper->product->name .' | '.$paper->product->ProductType->type.'</p>';
+                                        }
+                                    @endphp
+                                    {!! implode('', $jobCardPaper) !!}
+                                </td>
                             </tr>
 
 
                             <tr>
-                                <th>Paper Type</th>
-                                <td>{!! getPaper($job_card->jobCardItems) !!}</td>
+                                <th>Paper Divide</th>
+                                <td>
+                                    @php
+                                        $jobCardPaper = [];
+                                    
+                                        foreach($job_card->jobCardPapers as $paper){
+                                            $jobCardPaper[] = '<p class="m-0 carton-list">' . $paper->product->name .' | '.$paper->product->ProductType->type .' - 1/'. $paper->paper_divide .'</p>';
+                                        }
+                                    @endphp
+                                    {!! implode('', $jobCardPaper) !!}
+                                </td>
                                 <th>Sheets Required</th>
-                                <td>{{$job_card->required_sheet??''}}</td>
+                                <td>
+                                    @php
+                                        $jobCardPaper = [];
+                                    
+                                        foreach($job_card->jobCardPapers as $paper){
+                                            $jobCardPaper[] = '<p class="m-0 carton-list">' . $paper->product->name .' | '.$paper->product->ProductType->type .' - '. $paper->required_sheet .'</p>';
+                                        }
+                                    @endphp
+                                    {!! implode('', $jobCardPaper) !!}
+                                </td>
                             </tr>
 
 
                              <tr>
                                 <th>Wastage</th>
-                                <td>{{$job_card->wastage_sheet}}</td>
+                                <td>
+                                    @php
+                                        $jobCardPaper = [];
+                                    
+                                        foreach($job_card->jobCardPapers as $paper){
+                                            $jobCardPaper[] = '<p class="m-0 carton-list">' . $paper->product->name .' | '.$paper->product->ProductType->type .' - '. $paper->wastage_sheet .'</p>';
+                                        }
+                                    @endphp
+                                    {!! implode('', $jobCardPaper) !!}
+                                </td>
                                 <th>Total Sheets For Cutting</th>
-                                <td>{{$job_card->wastage_sheet + $job_card->required_sheet}}</td>
+                                <td>
+                                    @php
+                                        $jobCardPaper = [];
+                                    
+                                        foreach($job_card->jobCardPapers as $paper){
+                                            $jobCardPaper[] = '<p class="m-0 carton-list">' . $paper->product->name .' | '.$paper->product->ProductType->type .' - '. $paper->total_sheet .'</p>';
+                                        }
+                                    @endphp
+                                    {!! implode('', $jobCardPaper) !!}
+                                </td>
                             </tr>
 
 
@@ -127,7 +172,13 @@
 
                             <tr>
                                 <th>Dye Number</th>
-                                <td>{{ $job_card->dye_details_id?$job_card->deyDetail->dye_no:'NEW' }}</td>
+                                <td>
+                                    @if($job_card->dye_details_id)
+                                    <p class="m-0">{{$job_card->deyDetail->dye_no}} | {{$job_card->deyDetail->dye_lock}} | {!! $job_card->dye_machine??'manual' !!}</p>
+                                    @else
+                                        New
+                                    @endif
+                                </td>
                                 <th>Embossing/Leafing</th>
                                 <td>{!! jobItemEmbLeaf($job_card->jobCardItems) !!}</td>
                             </tr>
@@ -135,8 +186,40 @@
                             <tr>
                                 <th>Color</th>
                                 <td>{{ $job_card->color }}</td>
-                                <th>Dye Machine</th>
-                                <td>{!! $job_card->dye_machine??'manual' !!}</td>
+                                <th>Back Print</th>
+                                <td>
+                                    @php
+                                        $POCarton = [];
+                                    
+                                        foreach($job_card->jobCardItems as $item){
+                                            if($item->POItem->back_print == 1){
+                                                $POCarton[] = '<p class="m-0 carton-list">' .$item->POItem->carton_name .' - '. 'Yes </p>';
+                                            }
+                                            else{
+                                                $POCarton[] = '<p class="m-0 carton-list">' .$item->POItem->carton_name .' - '. 'No </p>';
+                                            }
+                                        }
+                                    @endphp
+                                    {!! implode('', $POCarton) !!}
+                                </td>
+                            </tr>
+
+                            <tr class="text-center bg-light">
+                                <th colspan="4" style="height:30px;"></th>
+                            </tr>
+
+                            <tr>
+                                <th>Carton Remarks/Bath/Other</th>
+                                <td colspan="3">
+                                    @php
+                                        $POCarton = [];
+                                    
+                                        foreach($job_card->jobCardItems as $item){
+                                            $POCarton[] = '<p class="m-0 carton-list">' .$item->POItem->carton_name .' - '. $item->POItem->remarks .'</p>';
+                                        }
+                                    @endphp
+                                    {!! implode('', $POCarton) !!}
+                                </td>
                             </tr>
 
 
@@ -145,7 +228,7 @@
                             </tr>
 
                             <tr class="text-center">
-                                <th colspan="3" style="width:50%;">Remarks</th>
+                                <th colspan="3" style="width:50%;">Special Instruction</th>
                                 <th>Auth. Sign.</th>
                             </tr>
 

@@ -48,7 +48,7 @@
                         <div class="text-center mt-sm-5 mb-4 text-white-50">
                             <div>
                                 <a href="index-2.html" class="d-inline-block auth-logo">
-                                    <img src="{{asset(get_app_setting('logo')??'assets/images/logo-light.png')}}" alt="" height="20">
+                                    <img src="{{asset(get_app_setting('logo')??'assets/images/logo-light.png')}}" alt="Printing Software" style="max-width: 250px;max-height: 50px;">
                                 </a>
                             </div>
                             <p class="mt-3 fs-15 fw-medium">Power by AR Technology</p>
@@ -63,6 +63,7 @@
                        
 
                         <div class="card mt-4">
+                           
 
                              @if (Session::has('message') && Session::get('class') == 'error')
                                    <div style="z-index: 11">
@@ -84,7 +85,7 @@
                             <div class="card-body p-4">
                                 <div class="text-center mt-2">
                                     <h5 class="text-primary">Welcome Back !</h5>
-                                    <p class="text-muted">Sign in to continue to Velzon.</p>
+                                    <p class="text-muted">Sign in to continue to Printing Software.</p>
                                 </div>
                                 <div class="p-2 mt-4">
                                     {!! Form::open(['method' => 'POST', 'route' => 'admin.login.post', 'class' => 'form-horizontal','id'=>'login', 'autocomplete'=>'off']) !!}
@@ -109,16 +110,33 @@
                                             <label class="form-check-label" for="auth-remember-check">Remember me</label>
                                         </div>
 
-                                        <div class="mt-4">
-                                            <button class="btn btn-success w-100" type="submit">Sign In</button>
-                                        </div>
+                                        <input type="hidden" id="latitude" name="latitude">
+                                        <input type="hidden" id="longitude" name="longitude">
 
+                                        <div class="mt-4">
+                                            <div id="location-status" class="mb-2"></div>
+                                            <button class="btn btn-success w-100 submit-none" type="button" disabled>Sign In</button>
+                                            <button class="btn btn-success w-100 submit" type="submit" style="display:none;" disabled>Sign In</button>
+                                        </div>
                                     {!! Form::close() !!}
+                                    <button type="button" class="text-center btn btn-success btn-load  w-100 mt-3" style="display:none;">
+                                        <span class="d-flex align-items-center justify-content-center">
+                                            <span class="spinner-border flex-shrink-0" role="status">
+                                                <span class="visually-hidden">Loading...</span>
+                                            </span>
+                                            <span class="ms-2">
+                                                Loading...
+                                            </span>
+                                        </span>
+                                    </button>
+
+                                    <button id="allow-location" class="allow-location mt-3 btn btn-success w-100" onclick="getLocation(true)">Allow Location</button>
                                 </div>
                             </div>
                             <!-- end card body -->
                         </div>
                         <!-- end card -->
+ 
 
                     </div>
                 </div>
@@ -135,7 +153,7 @@
                     <div class="col-lg-12">
                         <div class="text-center">
                             <p class="mb-0 text-muted">&copy;
-                               Medicos. Crafted with <i class="mdi mdi-heart text-danger"></i> by AR Technology
+                               Printing. Crafted with <i class="mdi mdi-heart text-danger"></i> by AR Technology
                             </p>
                         </div>
                     </div>
@@ -213,25 +231,96 @@
     @endif
 
 <script>
-    $('body').on('click', '#auth-remember-check', function(){
-        var username = encodePassword($('#login [name="email"]').val());
-        var password = encodePassword($('#login [name="password"]').val());
+    // $('body').on('click', '#auth-remember-check', function(){
+    //     var username = encodePassword($('#login [name="email"]').val());
+    //     var password = encodePassword($('#login [name="password"]').val());
 
-        setCookie('username', username, 365);
-        setCookie('password', password, 365);
+    //     setCookie('username', username, 365);
+    //     setCookie('password', password, 365);
 
-    });
+    // });
 
-    $(document).ready(function(){
-        var username = decodePassword(getCookie('username'));
-        var password = decodePassword(getCookie('password'));
-        if(username != '' && password != ''){
-            $('#login [name="email"]').val(username);
-            $('#login [name="password"]').val(password);
-            $('[name="remember_me"]').prop('checked', true)
-        }
-    });
+    // $(document).ready(function(){
+    //     var username = decodePassword(getCookie('username'));
+    //     var password = decodePassword(getCookie('password'));
+    //     if(username != '' && password != ''){
+    //         $('#login [name="email"]').val(username);
+    //         $('#login [name="password"]').val(password);
+    //         $('[name="remember_me"]').prop('checked', true)
+    //     }
+    // });
     
 </script>
+
+{{-- <script>
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        function showPosition(position) {
+            document.getElementById('latitude').value = position.coords.latitude;
+            document.getElementById('longitude').value = position.coords.longitude;
+        }
+
+        window.onload = getLocation;
+    </script> --}}
+
+    <script>
+        function getLocation(retry = false) {
+            document.querySelector('.allow-location').style.display = 'none';
+            document.querySelector('.btn-load').style.display = 'block';
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        function showPosition(position) {
+            document.querySelector('.allow-location').style.display = 'block';
+            document.querySelector('.btn-load').style.display = 'none';
+
+            document.getElementById('latitude').value = position.coords.latitude;
+            document.getElementById('longitude').value = position.coords.longitude;
+            document.getElementById('location-status').textContent = "Location captured successfully.";
+            document.getElementById('allow-location').style.display = 'none'; // Hide the allow button on success
+            document.querySelector('.submit-none').style.display = 'none'; // Hide the allow button on success
+            document.querySelector('.submit').style.display = 'block';
+            document.querySelector('.submit').disabled = false;
+        }
+
+        function showError(error) {
+            document.querySelector('.allow-location').style.display = 'block';
+            document.querySelector('.btn-load').style.display = 'none';
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    document.getElementById('location-status').textContent = "Please allow your browser location.";
+                    document.getElementById('allow-location').style.display = 'block'; // Show the allow button on denial
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    document.getElementById('location-status').textContent = "Location information is unavailable.";
+                    break;
+                case error.TIMEOUT:
+                    document.getElementById('location-status').textContent = "The request to get user location timed out.";
+                    break;
+                case error.UNKNOWN_ERROR:
+                    document.getElementById('location-status').textContent = "An unknown error occurred.";
+                    break;
+            }
+        }
+
+        window.onload = function() {
+            if (!sessionStorage.getItem('locationDenied')) {
+                getLocation();
+            }
+        }
+
+
+        
+    </script>
 </body>
 </html>

@@ -7,10 +7,14 @@ use App\Notifications\AdminResetPasswordNotification;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use ALajusticia\Logins\Traits\HasLogins;
 
 class Admin extends Authenticatable
 {
-    use Notifiable,SoftDeletes;
+    use HasApiTokens, HasFactory, Notifiable, HasLogins;
     /**
      * The attributes that are mass assignable.
      *
@@ -45,6 +49,14 @@ class Admin extends Authenticatable
     //     }
     //     return false;
     // }
+
+    protected function google2faSecret(): Attribute
+    {
+        return new Attribute(
+            get: fn ($value) =>  decrypt($value),
+            set: fn ($value) =>  encrypt($value),
+        );
+    }
 
 
      public function hasAccess($permissions) :bool

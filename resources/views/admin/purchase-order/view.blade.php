@@ -22,14 +22,7 @@
             <h4 class="mb-sm-0">{{Str::title(str_replace('-', ' ', request()->segment(2)))}}</h4>
 
             <button class="btn-sm btn btn-success assignData">Assign To Planning</button>
-            @can('add_purchase_order')
-            <div class="page-title-right">
-                <a href="{{ route('admin.'.request()->segment(2).'.create') }}"  class="btn-sm btn btn-primary btn-label rounded-pill">
-                    <i class="bx bx-plus label-icon align-middle rounded-pill fs-16 me-2"></i>
-                    Add {{Str::title(str_replace('-', ' ', request()->segment(2)))}}
-                </a>
-            </div>
-            @endcan
+            
 
         </div>
     </div>

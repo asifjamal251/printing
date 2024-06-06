@@ -1,7 +1,12 @@
 @extends('admin.layouts.master')
 @push('links')
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-
+<style>
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
 @endpush
 
 
@@ -47,9 +52,11 @@ $endDate = $todayDate;
 </div>
 </div>
 <!-- end page title -->
-
-
-
+{{-- @foreach($logins as $login)
+<p>{{$login->latitude}}</p>
+@endforeach
+<h3>Your Location: <span id="address"></span></h3>
+ <div id="map"></div> --}}
 
 
 @endsection
@@ -107,6 +114,45 @@ $endDate = $todayDate;
 @push('scripts')
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5zaOBE-YNdQ5vL0RqUv74xzAuMMWXBcs&libraries=places"></script>
+<script>
+        // function initMap() {
+        //     // Replace these with the actual values passed from the backend
+            
+
+            {{--var latitude = {{$login->latitude}};
+             var longitude = {{$login->longitude}}; --}}
+
+        //     var userLocation = { lat: latitude, lng: longitude };
+
+        //     var map = new google.maps.Map(document.getElementById('map'), {
+        //         zoom: 13,
+        //         center: userLocation
+        //     });
+
+        //     var marker = new google.maps.Marker({
+        //         position: userLocation,
+        //         map: map
+        //     });
+
+        //     var geocoder = new google.maps.Geocoder();
+        //     geocoder.geocode({ 'location': userLocation }, function(results, status) {
+        //         if (status === 'OK') {
+        //             if (results[0]) {
+        //                 document.getElementById('address').textContent = results[0].formatted_address;
+        //             } else {
+        //                 document.getElementById('address').textContent = 'No results found';
+        //             }
+        //         } else {
+        //             document.getElementById('address').textContent = 'Geocoder failed due to: ' + status;
+        //         }
+        //     });
+        
+        // }
+
+        // // Initialize map after the window has loaded
+        // window.onload = initMap;
+    </script>
 
 <script type="text/javascript">
 

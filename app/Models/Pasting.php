@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Pasting extends Model
 {
     protected $fillable = [
-	    'id', 'job_card_id','status_id','purchase_order_item_id'
+	    'id', 'job_card_id','status_id','purchase_order_item_id','user_id'
 	];
 
 	public function jobCard(){

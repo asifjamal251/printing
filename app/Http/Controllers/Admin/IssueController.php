@@ -19,7 +19,7 @@ class IssueController extends Controller
     public function index(Request $request){
        
         if ($request->ajax()) {
-            $datas = Issue::orderBy('created_at', 'desc')->with(['issueItems']);
+            $datas = Issue::orderBy('created_at', 'desc')->with(['issueItems', 'user']);
             $totaldata = $datas->count();
 
             $search = $request->search['value'];
@@ -80,6 +80,7 @@ class IssueController extends Controller
                 $item->quantity = $input['quantity'];
                 $item->issue_for = $input['issue_for'];
                 $item->unit = $input['unit'];
+                $item->remarks = $input['remarks'];
                 $item->save();
 
                 $transaction = new Transaction;
@@ -145,9 +146,10 @@ class IssueController extends Controller
                 if($input['item'] != null && $input['item'] != ''){
                     $item = IssueItem::find($input['item']);
                     $item->product_id = $product->id;
-                    $item->requisition_id = $input['issue_for'];
+                    $item->issue_for = $input['issue_for'];
                     $item->unit = $input['unit'];
                     $item->quantity = $input['quantity'];
+                    $item->remarks = $input['remarks'];
                     $item->save();
 
 
@@ -155,7 +157,7 @@ class IssueController extends Controller
                     $changeQuantity = $old_quantity - $input['quantity'];
 
 
-                    $transaction = new ProductTransaction;
+                    $transaction = new Transaction;
                     $transaction->product_id = $product->id;
                     $transaction->type = 'Debit';
                     $transaction->current_quantity = $product->quantity;
@@ -174,14 +176,15 @@ class IssueController extends Controller
                 else{
                     $item = new IssueItem;
                     $item->product_id = $product->id;
-                    $item->requisition_id = $input['issue_for'];
+                    $item->issue_for = $input['issue_for'];
                     $item->unit = $input['unit'];
                     $item->quantity = $input['quantity'];
+                    $item->remarks = $input['remarks'];
                     $item->issue_id = $issue->id;
                     $item->deleted_at = null;
                     $item->save();
 
-                    $transaction = new ProductTransaction;
+                    $transaction = new Transaction;
                     $transaction->product_id = $product->id;
                     $transaction->type = 'Debit';
                     $transaction->current_quantity = $product->quantity;
