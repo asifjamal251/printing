@@ -20,6 +20,7 @@
         "pragmarx/google2fa-laravel": "^2.2",
         "spatie/laravel-activitylog": "^4.7",
         "stevebauman/location": "^7.2",
+        "twilio/sdk": "^8.1",
         "whichbrowser/parser": "^2.1"
     },
     "require-dev": {

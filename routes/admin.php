@@ -109,6 +109,7 @@ Route::middleware(['admin', '2fa'])->name('admin.')->group(function() {
         Route::get('common/carton/dye-detail/list', 'dyeDetails')->name('dye-detail.list');
 
         Route::get('common/carton/name/list', 'cartonName')->name('carton.name.list');
+        Route::get('common/carton/rate/list', 'cartonRate')->name('carton.rate.list');
         Route::get('common/carton/name/signgle/{carton_name}', 'cartonNameSigngle')->name('carton.name.single');
 
         Route::get('common/check/gst/{gst_number}', 'checkGST')->name('check.gst');

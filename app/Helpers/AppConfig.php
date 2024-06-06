@@ -2,6 +2,7 @@
 use App\Models\CartonHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Twilio\Rest\Client;
 
 if (! function_exists('short_description')) {
     function short_description($str) {
@@ -356,5 +357,30 @@ if (!function_exists('numberToWords')) {
 }
 
 
+if (!function_exists('sendOnWhatsapp')) {
+    function sendOnWhatsapp($number, $file) {
+        $twilioSid = env('TWILIO_SID');
+        $twilioToken = env('TWILIO_AUTH_TOKEN');
+        $twilioWhatsAppNumber = env('TWILIO_WHATSAPP_NUMBER');
+        $recipientNumber = 'whatsapp:+91'.$number;
+        $message = "Hello from Programming Experience";
 
+        $twilio = new Client($twilioSid, $twilioToken);
+
+        try {
+            $twilio->messages->create(
+                $recipientNumber,
+                [
+                    "from" => 'whatsapp:'.$twilioWhatsAppNumber,
+                    "body" => $message,
+                    "mediaUrl" => [$file],
+                ]
+            );
+
+            return response()->json(['message' => 'WhatsApp message sent successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+}
 

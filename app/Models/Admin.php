@@ -11,6 +11,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use ALajusticia\Logins\Traits\HasLogins;
+use Illuminate\Support\Facades\Log;
 
 class Admin extends Authenticatable
 {
@@ -50,11 +51,33 @@ class Admin extends Authenticatable
     //     return false;
     // }
 
-    protected function google2faSecret(): Attribute
-    {
+    // protected function google2faSecret(): Attribute
+    // {
+    //     return new Attribute(
+    //         get: fn ($value) =>  decrypt($value),
+    //         set: fn ($value) =>  encrypt($value),
+    //     );
+    // }
+
+
+
+    protected function google2faSecret(): Attribute{
         return new Attribute(
-            get: fn ($value) =>  decrypt($value),
-            set: fn ($value) =>  encrypt($value),
+            get: function ($value) {
+                try {
+                    $decryptedValue = decrypt($value);
+                    Log::info('Decrypted value:', ['value' => $decryptedValue]);
+                    return $decryptedValue;
+                } catch (\Exception $e) {
+                    Log::error('Decryption failed:', ['error' => $e->getMessage()]);
+                    return null;
+                }
+            },
+            set: function ($value) {
+                $encryptedValue = encrypt($value);
+                Log::info('Encrypted value:', ['value' => $encryptedValue]);
+                return $encryptedValue;
+            }
         );
     }
 

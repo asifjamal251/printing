@@ -271,6 +271,38 @@ class MaterialOrderController extends Controller
 
     public function statusChange(Request $request, $id){
         // Fetch the material order with related data
+
+        // $itemsData = $materialData->materialItems;
+        //     $items = $itemsData->toArray();
+        //     $material = $materialData->toArray();
+
+      
+
+
+        //  $pdfContent = PDF::loadView('pdf.order-confirmation', compact('material', 'items'))
+        //     ->setPaper('A4', 'portrait')
+        //     ->setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])
+        //     ->output();
+
+        // // Define the file name
+        // $fileName = '123.pdf';
+        // $mediaRename = '123.pdf';
+
+        // // Store the generated PDF on the specified disk
+        // $filePath = Storage::disk('s3')->put("pdf/{$mediaRename}", $pdfContent);
+
+        // // Create the full URL for the stored file
+        // $fileUrl = 'https://colourimpration.s3.eu-north-1.amazonaws.com/' . $fileName;
+
+        // $whatsapp = sendOnWhatsapp(9315647380, 'https://colourimpration.s3.eu-north-1.amazonaws.com/pdf/123.pdf');
+
+        //  dd($fileUrl);
+        // //dd($whatsapp);
+
+        // dd($fileUrl);
+
+
+        
         $materialData = MaterialOrder::where('id', $id)
             ->with([
                 'madeBy', 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\PurchaseOrder\PurchaseOrderCollection;
 use App\Models\Carton;
+use App\Models\CartonPrice;
 use App\Models\DyeDetails;
 use App\Models\Planning;
 use App\Models\PurchaseOrder;
@@ -117,13 +118,17 @@ class PurchaseOrderController extends Controller
 
                 $carton = Carton::firstorNew(['client_id' => $request->client, 'carton_name' => $item->carton_name, 'carton_size' => $item->carton_size]);
                 $carton->art_work = Str::upper($input['art_work']);
-                $carton->rate = $item->rate;
+                $carton->rate = null;
                 $carton->coating_type_id = $item->coating_type_id;
                 $carton->other_coating_type_id = $item->other_coating_type_id;
                 $carton->embossing_leafing = $item->embossing_leafing;
                 $carton->paper_type_id = $item->paper_type_id;
                 $carton->gsm = $item->gsm;
                 $carton->save();
+
+                $carton_price = CartonPrice::firstorNew(['carton_id' => $carton->id, 'price' => $item->rate, 'quantity' => $item->quantity]);
+                $carton_price->save();
+
             }
             
             return redirect()->route('admin.purchase-order.index')->with(['class'=>'success','message'=>'Paper Inward saved successfully.']);
@@ -250,13 +255,16 @@ class PurchaseOrderController extends Controller
 
                 $carton = Carton::firstorNew(['client_id' => $request->client, 'carton_name' => $item->carton_name, 'carton_size' => $item->carton_size]);
                 $carton->art_work = Str::upper($input['art_work']);
-                $carton->rate = $item->rate;
+                $carton->rate = null;
                 $carton->coating_type_id = $item->coating_type_id;
                 $carton->other_coating_type_id = $item->other_coating_type_id;
                 $carton->embossing_leafing = $item->embossing_leafing;
                 $carton->paper_type_id = $item->paper_type_id;
                 $carton->gsm = $item->gsm;
                 $carton->save();
+
+                $carton_price = CartonPrice::firstorNew(['carton_id' => $carton->id, 'price' => $item->rate, 'quantity' => $item->quantity]);
+                $carton_price->save();
 
             }
         
