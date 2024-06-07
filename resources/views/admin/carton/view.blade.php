@@ -51,11 +51,6 @@
                             </tr>
 
                             <tr>
-                                <th>Rate</th>
-                                <td>₹{{$carton->rate}}</td>
-                            </tr>
-
-                            <tr>
                                 <th>Coating Type</th>
                                 <td>{{$carton->coatingType->type}}</td>
                             </tr>
@@ -63,6 +58,11 @@
                             <tr>
                                 <th>Other Coating Type</th>
                                 <td>{{$carton->otherCoatingType->type}}</td>
+                            </tr>
+
+                            <tr>
+                                <th>Paper Type</th>
+                                <td>{{$carton->paperType->type}}</td>
                             </tr>
 
                             <tr>
@@ -77,6 +77,30 @@
         </div><!--end row-->
 
 
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <table class="datatable table table-bordered nowrap align-middle" style="width:100%">
+                    <tr>
+                        <th style="width:80px;">Si. No.</th>
+                        <th>Quantity</th>
+                        <th>Rate</th>
+                        <th>Created At</th>
+                    </tr>
+                    @foreach($carton->cartonPrice as $rate)
+                    <tr>
+                        <td>{{$loop->index+1}}</td>
+                        <td>{{$rate->quantity}}</td>
+                        <td>₹{{$rate->price}}</td>
+                        <td>{{$rate->created_at->format('d F, Y')}}</td>
+                    </tr>
+                    @endforeach
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
 @endsection
 

@@ -209,7 +209,7 @@
                             </tr>
 
                             <tr>
-                                <th>Carton Remarks/Bath/Other</th>
+                                <th>Carton Remarks/Batch/Other</th>
                                 <td colspan="3">
                                     @php
                                         $POCarton = [];

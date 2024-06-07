@@ -75,19 +75,8 @@
     #kt_docs_repeater_advanced .form-group label {
         font-size: 11px;
     }
-    /*span.select2-container .select2-dropdown {
+    span.select2-container .select2-dropdown {
         min-width: 350px!important;
-    }
-
-    .rate-main span.select2-container .select2-dropdown {
-        min-width:100%!important;
-    }*/
-
-    .rate-main .select2.select2-container {
-        width: 100% !important;
-        max-width: 120px;
-        position: relative;
-        left: 1px;
     }
     #kt_docs_repeater_advanced .form-control-sm{
         font-size:11px!important;
@@ -248,7 +237,7 @@
                                             {!! Form::label('rate', 'Rate') !!}
                                             <div class="input-group input-group-sm">
                                                 <span class="input-group-text">₹</span>
-                                                {!! Form::select('rate', [],old('kt_docs_repeater_advanced.'.$loop->index.'.rate', $item['rate'] ?? ''), ['class' => 'form-control form-control-sm rate', 'placeholder' => 'Rate']) !!}
+                                                {!! Form::text('rate', old('kt_docs_repeater_advanced.'.$loop->index.'.rate', $item['rate'] ?? ''), ['class' => 'form-control form-control-sm rate', 'placeholder' => 'Rate']) !!}
                                             </div>
                                            <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.rate') }}</small>
                                         </div>
@@ -427,31 +416,26 @@ $('body').on('change', '#client', function(){
 });
 
 
-
 $('body').on('change', '.quantity', function(){
-    alert(0);
     var position = $(this).attr('name').split(/\[|\]/)[1];
-    var client_id = $(this).val();
-    $('.rate').select2({
-        minimumInputLength: 2,
-        tags:true,
-        delay : 200,
-        ajax: {
-            url: '{{ route('admin.common.carton.rate.list') }}?client_id='+ client_id,
-            dataType: 'json',
-            cache: true,
-            data: function(params) {
-            return {
-                term: params.term || '',
-                page: params.page || 1
+    var quantity = $(this).val();
+    var id = $('input[name="kt_docs_repeater_advanced[' + position + '][carton_id]"]').val();
+
+    $.ajax({
+        type: "GET",
+        enctype: 'multipart/form-data',
+        url:'{{ route('admin.common.carton.rate.single') }}',
+        data: {'carton_id':id, 'carton_quantity':quantity},
+        success:function(response){
+            if(response.datas != ''){
+                var data = response.datas;
+                $('input[name="kt_docs_repeater_advanced[' + position + '][rate]"]').val(data.price);
+            }else{
+                $('input[name="kt_docs_repeater_advanced[' + position + '][rate]"]').val('');
             }
-            },
         }
     });
 });
-
-
-
 
 
 var rowCounter = 0;

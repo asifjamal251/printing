@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Carton;
+use App\Models\CartonPrice;
 use App\Models\Category;
 use App\Models\Client;
 use App\Models\DyeDetails;
@@ -92,6 +93,47 @@ class CommonController extends Controller{
 
 
 
+    public function cartonRate(Request $request){
+        if ($request->ajax()) {
+            $page = $request->page;
+            $resultCount = 5;
+
+            $offset = ($page - 1) * $resultCount;
+
+            $name = CartonPrice::where('quantity', 'LIKE', '%' . $request->term . '%')
+                    ->where('carton_id', $request->carton_id)
+                    ->orderBy('created_at', 'asc')
+                    ->skip($offset)
+                    ->take($resultCount)
+                    ->selectRaw('id, CONCAT(quantity, " - ₹", price) as text')
+                    ->get();
+
+            $count = CartonPrice::where('quantity', 'LIKE', '%' . $request->term . '%')
+                    ->where('carton_id', $request->carton_id)
+                    ->orderBy('created_at', 'asc')
+                    ->selectRaw('id, CONCAT(quantity, " - ₹", price) as text')
+                    ->count();
+            $endCount = $offset + $resultCount;
+            $morePages = $count > $endCount;
+
+            $results = [
+                "results" => $name,
+                "pagination" => [
+                    "more" => $morePages
+                ]
+            ];
+
+            return response()->json($results);
+        }
+
+        return response()->json('oops');
+    }
+
+
+
+
+
+
     public function dyeDetails(Request $request){
         if ($request->ajax()) {
 
@@ -134,6 +176,18 @@ class CommonController extends Controller{
     public function cartonNameSigngle(Request $request, $id){
         if ($request->ajax()) {
             $results = Carton::where('id', $request->id)->latest()->first(); 
+            if($results != ''){
+                return response()->json(['datas'=>$results, 'error'=>false]);
+            }
+            return response()->json(['datas'=>'', 'error'=>true]);
+        }
+        return response()->json('oops');
+    }
+
+
+    public function cartonRateSigngle(Request $request){
+        if ($request->ajax()) {
+            $results = CartonPrice::where(['carton_id' => $request->carton_id, 'quantity' => $request->carton_quantity])->latest()->first(); 
             if($results != ''){
                 return response()->json(['datas'=>$results, 'error'=>false]);
             }

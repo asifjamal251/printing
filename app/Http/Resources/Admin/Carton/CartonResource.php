@@ -20,6 +20,7 @@ class CartonResource extends JsonResource
             'id'=>$this->id,
             'client'=>$this->client->company_name, 
             'carton'=>$this->carton_name, 
+            'paper_type'=>$this->paperType->type, 
             'size'=>$this->carton_size, 
             'art_wprk'=>$this->art_work, 
             'created_at' => $this->created_at->format('d F, Y'),

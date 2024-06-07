@@ -25,5 +25,14 @@ class Carton extends Model
         return $this->hasOne(OtherCoatingType::class,'id','other_coating_type_id');
     }
 
+    public function paperType(){
+        return $this->hasOne(ProductType::class,'id','paper_type_id');
+    }
+
+
+    public function cartonPrice(){
+        return $this->hasMany(CartonPrice::class,'carton_id','id');
+    }
+
 
 }

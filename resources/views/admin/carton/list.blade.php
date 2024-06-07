@@ -46,6 +46,7 @@
                                 <th>Client</th>
                                 <th>Carton</th>
                                 <th>Size</th>
+                                <th>Paper Type</th>
                                 <th>Art Work</th>
                                 @can(['edit_carton','delete_carton', 'read_carton'])
                                   <th>Action</th>
@@ -136,6 +137,7 @@ $(document).ready(function(){
         { "data": "client" },
         { "data": "carton" },
         { "data": "size" },
+        { "data": "paper_type" },
         { "data": "art_wprk" },
         {
           "data": "action",

@@ -19,7 +19,7 @@ class CartonController extends Controller
     public function index(Request $request){
        
         if ($request->ajax()) {
-            $datas = Carton::orderBy('created_at', 'asc')->with(['client']);
+            $datas = Carton::orderBy('created_at', 'asc')->with(['client', 'paperType']);
             $totaldata = $datas->count();
 
             $search = $request->search['value'];
@@ -44,7 +44,7 @@ class CartonController extends Controller
 
     
     public function show($id){
-        $carton = Carton::find($id);
+        $carton = Carton::where('id',$id)->with(['cartonPrice', 'client', 'paperType'])->first();
         return view('admin.carton.view', compact('carton'));
     }
 
