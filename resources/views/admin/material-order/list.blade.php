@@ -63,7 +63,8 @@
                                 <th>Total</th>
                                 <th>Created At</th>
                                 <th>Status</th>
-                                @can(['edit_material_order','delete_material_order', 'read_material_order'])
+                                <th>Bill No.</th>
+                                @can(['edit_material_order','delete_material_order', 'read_material_order', 'check_material_order'])
                                   <th>Action</th>
                                 @endcan
                             </tr>
@@ -201,7 +202,8 @@ $(document).ready(function(){
         { "data": "total" },
         { "data": "created_at" },
         { "data": "status" },
-        @can(['edit_material_order','delete_material_order', 'read_material_order'])
+        { "data": "bill_no" },
+        @can(['edit_material_order','delete_material_order', 'read_material_order', 'check_material_order'])
         {
             "data": "action",
             render: function(data, type, row) {
@@ -212,6 +214,10 @@ $(document).ready(function(){
 
                     @can('read_material_order')
                         btn += '<li><a class="dropdown-item" href="{{ request()->url() }}/' + row['id'] + '"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li>';
+                    @endcan
+
+                    @can('check_material_order')
+                        btn += '<li><a class="dropdown-item" href="{{ request()->url() }}/check/' + row['id'] + '"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> Check</a></li>';
                     @endcan
 
                     @can('edit_material_order')

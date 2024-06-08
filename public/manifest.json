@@ -1,0 +1,17 @@
+{
+    "name": "Shreya Offset",
+    "short_name": "Shreya Offset",
+    "start_url": "/index.php",
+    "background_color": "#121222",
+    "description": "Shreya Offset Chandigarh",
+    "display": "fullscreen",
+    "theme_color": "#121222",
+    "icons": [
+        {
+            "src": "logo.PNG",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}

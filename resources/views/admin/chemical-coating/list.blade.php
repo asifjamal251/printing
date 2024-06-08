@@ -263,7 +263,7 @@ $(document).ready(function(){
 
                     @can(['edit_chemical_coating','delete_chemical_coating','read_chemical_coating', 'change_status_chemical_coating'])
 
-                    btn += '<li><a class="dropdown-item edit-item-btn" onclick="updateTimer(\'{{ route('admin.job-card.timer.content') }}\',{machine:1, id:'+row['id']+',job_card_id:'+row['job_card_id']+'})" href="javascript:void(0);"><i class="ri-alarm-line align-bottom me-2 text-muted"></i>Timer</a></li>';
+                    btn += '<li><a class="dropdown-item edit-item-btn" onclick="updateTimer(\'{{ route('admin.job-card.timer.content') }}\',{machine:3, id:'+row['id']+',job_card_id:'+row['job_card_id']+'})" href="javascript:void(0);"><i class="ri-alarm-line align-bottom me-2 text-muted"></i>Timer</a></li>';
 
                     @can('change_status_chemical_coating')
                         @can('change_status_cutting')

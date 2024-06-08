@@ -47,16 +47,21 @@ class ProductController extends Controller
                 });
             }
 
-            // if($request->product_type){
+            if($request->product_type){
 
-            //     if($request->product_type == 1 || $request->product_type == '1'){
-            //         $datas->where('type', 1);
-            //     }
+                if($request->product_type == 1 || $request->product_type == '1'){
+                    $datas->where('type', 1);
+                }
 
-            //     if($request->product_type == 0 || $request->product_type == '0'){
-            //         $datas->where('type', 0);
-            //     }
-            // }
+                if($request->product_type == 0 || $request->product_type == '0'){
+                    $datas->where('type', 0);
+                }
+            }
+
+
+            if($request->paper_type){
+                $datas->where('paper_type', $request->paper_type);
+            }
 
             if($request->stock == 1 || $request->stock == '1'){
                 $datas->whereColumn('quantity', '<=', 'in_hand_quantity');
@@ -147,7 +152,7 @@ class ProductController extends Controller
         }
 
         $this->validate($request,[
-            'product_code'=>'required',     
+            'paper_type'=>'required',     
             'category'=>'required',     
             'paper_length'=>'required',     
             'paper_width'=>'required',     
@@ -161,6 +166,7 @@ class ProductController extends Controller
 
         $product = Product::firstOrNew(['id'=>$request->id]);
         $product->name = $product_name;
+        $product->paper_type = $request->paper_type;
         $product->category_id = $request->category;
         $product->code = $request->product_code;
         $product->length = $request->paper_length;

@@ -23,7 +23,10 @@
     <!-- custom Css-->
     <link href="{{asset('admin-assets/css/custom.min.css')}}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-
+    <!-- PWA  -->
+<meta name="theme-color" content="#6777ef"/>
+<link rel="apple-touch-icon" href="{{ asset('logo.png') }}">
+<link rel="manifest" href="{{ asset('/manifest.json') }}">
 </head>
 
 <body>
@@ -115,8 +118,8 @@
 
                                         <div class="mt-4">
                                             <div id="location-status" class="mb-2"></div>
-                                            <button class="btn btn-success w-100 submit-none" type="button" disabled>Sign In</button>
-                                            <button class="btn btn-success w-100 submit" type="submit" style="display:none;" disabled>Sign In</button>
+                                            {{-- <button class="btn btn-success w-100 submit-none" type="button" disabled>Sign In</button> --}}
+                                            <button class="btn btn-success w-100 submit" type="submit" >Sign In</button>
                                         </div>
                                     {!! Form::close() !!}
                                     <button type="button" class="text-center btn btn-success btn-load  w-100 mt-3" style="display:none;">
@@ -172,6 +175,23 @@
     <script src="{{asset('admin-assets/libs/feather-icons/feather.min.js')}}"></script>
     <script src="{{asset('admin-assets/js/pages/plugins/lord-icon-2.1.0.js')}}"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="{{ asset('/sw.js') }}"></script>
+    <script>
+   if ("serviceWorker" in navigator) {
+      // Register a service worker hosted at the root of the
+      // site using the default scope.
+      navigator.serviceWorker.register("/sw.js").then(
+      (registration) => {
+         console.log("Service worker registration succeeded:", registration);
+      },
+      (error) => {
+         console.error(`Service worker registration failed: ${error}`);
+      },
+    );
+  } else {
+     console.error("Service workers are not supported.");
+  }
+</script>
 <script type="text/javascript">
     function setCookie(cname, cvalue, exdays) {
       const d = new Date();
@@ -322,5 +342,7 @@
 
         
     </script>
+
+
 </body>
 </html>

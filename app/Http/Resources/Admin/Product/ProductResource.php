@@ -30,14 +30,29 @@ class ProductResource extends JsonResource
         return $result;
     }
 
+    function paperType($paperType){
+        if($paperType == 1){
+            return 'White';
+        }
+
+        if($paperType == 1){
+            return 'Yellow';
+        }
+
+        if($paperType == ''){
+            return 'N/A';
+        }
+    }
+
     
     public function toArray($request)
     {
         return [
             'sn'=>++$request->start,
             'id'=>$this->id,
-            'product'=>$this->name.' - '.$this->category->name, 
+            'product'=>$this->name, 
             'product_type'=>@$this->productType->type, 
+            'paper_type'=>$this->paperType($this->paper_type), 
             'hsn'=>$this->hsn, 
             'code'=>$this->code, 
             'gsm'=>$this->gsm?'paper':'other', 

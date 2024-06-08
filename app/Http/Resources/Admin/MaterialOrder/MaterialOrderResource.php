@@ -24,6 +24,7 @@ class MaterialOrderResource extends JsonResource
             'subtotal'=>@$this->subtotal, 
             'total_gst'=>@$this->total_gst, 
             'total'=>@$this->total, 
+            'bill_no'=>@$this->bill_no??'N/A', 
             'created_at' => @$this->created_at->format('d F, Y'),
             'status'=> status($this->status_id),
             'status_id'=>$this->status_id,

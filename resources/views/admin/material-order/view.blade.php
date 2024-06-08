@@ -50,7 +50,7 @@ th {
 <!-- end page title -->
 
 
-
+ {!! Form::open(['route'=>['admin.'.request()->segment(2).'.statusChange',$material->id],'method'=>'put', 'files'=>true]) !!}
 
 <div class="row">
     <div class="col-sm-9">
@@ -113,10 +113,15 @@ th {
                             <th style="background:#ddd;">GST</th>
                             <th style="background:#ddd;">Amount</th>
                         </tr>
-                        
+                      
+                      
                         @foreach($material->materialItems as $item)
                         <tr>
-                            <td>{{$loop->index+1}}</td>
+                            <td>
+                                    <label for="material{{$item->id}}">
+                                        {!! Form::checkbox('item['.$item->id.'][material]',  $item->id, $item->receive_status, ['id' => 'material'.$item->id]) !!} {{$loop->index+1}} 
+                                    </label>
+                            </td>
                             <td colspan="2">{{$item->product->name}}</td>
                             <td>{{$item->product->productType->type}}</td>
                             <td>{{$item->quantity}}</td>
@@ -191,30 +196,44 @@ th {
         <div class="col-md-3 col-sm-12">
             <div class="card">
                 <div class="card-body">
-                    {!! Form::open(['route'=>['admin.'.request()->segment(2).'.statusChange',$material->id],'method'=>'put', 'files'=>true]) !!}
-                    <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
-                        {!! Form::label('status', 'Status') !!}
-                        {!! Form::select('status', App\Models\Status::whereIn('id', [2, 3, 5, 6, 26, 8])->pluck('name', 'id'), $material->status_id, ['id' => 'status_id', 'class' => 'form-control', 'placeholder' => 'Chosse Status']) !!}
-                        <small class="text-danger">{{ $errors->first('status') }}</small>
-                    </div>
 
-                    <div class="form-group">
-                        <div class="checkbox{{ $errors->has('send_email') ? ' has-error' : '' }}">
-                            <label for="send_email">
-                                {!! Form::checkbox('send_email', 1, null, ['id' => 'send_email']) !!} Send Email
-                            </label>
+                    @can(['change_status_material_order','check_material_order'])
+                        @can(['change_status_material_order'])
+                       
+                        <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
+                            {!! Form::label('status', 'Status') !!}
+                            {!! Form::select('status', App\Models\Status::whereIn('id', [2, 3, 5, 6, 26, 8])->pluck('name', 'id'), $material->status_id, ['id' => 'status_id', 'class' => 'form-control', 'placeholder' => 'Chosse Status']) !!}
+                            <small class="text-danger">{{ $errors->first('status') }}</small>
                         </div>
-                        <small class="text-danger">{{ $errors->first('send_email') }}</small>
-                    </div>
+
+                        <div class="form-group">
+                            <div class="checkbox{{ $errors->has('send_email') ? ' has-error' : '' }}">
+                                <label for="send_email">
+                                    {!! Form::checkbox('send_email', 1, null, ['id' => 'send_email']) !!} Send Email
+                                </label>
+                            </div>
+                            <small class="text-danger">{{ $errors->first('send_email') }}</small>
+                        </div>
+
+                        @endcan
+
+                        @can(['check_material_order'])
+                            <div class="form-group{{ $errors->has('bill_no') ? ' has-error' : '' }}">
+                                {!! Form::label('bill_no', 'Bill No') !!}
+                                {!! Form::text('bill_no', $material->bill_no, ['class' => 'form-control', 'placeholder' => 'Bill No.']) !!}
+                                <small class="text-danger">{{ $errors->first('bill_no') }}</small>
+                            </div>
+                        @endcan
+                    @endcan
 
                     {!! Form::submit('Change Status', ['class' => 'btn btn-success pull-right']) !!}
-                    {!! Form::close() !!} 
+                    
                 </div>
             </div>
         </div>
     </div>
 
-
+{!! Form::close() !!} 
 
     @endsection
 

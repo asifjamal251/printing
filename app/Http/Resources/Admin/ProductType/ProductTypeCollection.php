@@ -16,9 +16,9 @@ class ProductTypeCollection extends ResourceCollection
     {
         return [
             'data' => ProductTypeResource::collection($this->collection),
-            'recordsTotal' => $this->total(),
-            'recordsFiltered' => $this->total(),
-            'length' => $this->perPage(),
+            'recordsTotal' => $request->recordsTotal,
+            'recordsFiltered' => $request->recordsTotal,
+            'length' => $request->lenght,
         ];
     }
 }

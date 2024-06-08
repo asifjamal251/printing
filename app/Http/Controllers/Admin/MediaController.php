@@ -105,9 +105,13 @@ class MediaController extends Controller
 
             if($media->save()){ 
 
+                $year = date('Y');
+                $month = date('m');
+                $path = 'media/' . $year . '/' . $month;
+        
                 $media_rename = $media->slug.".".$request->file('file')->getClientOriginalExtension();
-                $image = $request->file('file')->storeAs('media', $media_rename);
-                $media->file = 'https://shreyaoffset.s3.eu-north-1.amazonaws.com/'.$image;
+                $image = $request->file('file')->storeAs($path, $media_rename);
+                $media->file = env('AWS_URL').'/'.$image;
                 $media->save();
 
 
@@ -138,12 +142,16 @@ class MediaController extends Controller
     public function update(Request $request, Slider $slider)
     {
         $this->validate($request,[
-                // 'title'=>'required',
-                // 'sub_title'=>'required',
-                // 'button_text'=>'required',
-                // 'button_link'=>'required',
-                'image' => 'nullable|image|mimes:jpeg,png,jpg|max:4000',    
-            ]);
+            // 'title'=>'required',
+            // 'sub_title'=>'required',
+            // 'button_text'=>'required',
+            // 'button_link'=>'required',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:4000',    
+        ]);
+
+        $year = date('Y');
+        $month = date('m');
+        $path = 'media/' . $year . '/' . $month;
           
             $slider->title = $request->title;
             $slider->body = $request->description;

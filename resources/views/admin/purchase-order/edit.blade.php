@@ -219,7 +219,7 @@
                                     <div class="col-width carton-size-main">
                                         <div class="form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.carton_size') ? ' has-error' : '' }}">
                                             {!! Form::label('carton_size', 'Carton Size') !!}
-                                            {!! Form::text('carton_size', $item->carton_size, ['class' => 'form-control form-control-sm', 'required' => 'required', 'placeholder'=>'Carton Size']) !!}
+                                            {!! Form::text('carton_size', $item->carton_size, ['class' => 'form-control form-control-sm cartonSize', 'required' => 'required', 'placeholder'=>'Carton Size']) !!}
                                             <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.carton_size') }}</small>
                                         </div>
                                     </div>
@@ -309,8 +309,17 @@
                                     <div class="col-width paper-type-main">
                                         <div class="form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.paper_type') ? ' has-error' : '' }}">
                                             {!! Form::label('paper_type', 'Paper Type') !!}
-                                            {!! Form::select('paper_type', App\Models\ProductType::where('only_paper', 1)->pluck('type', 'id'), $item->paper_type_id, ['id' => 'paper_type', 'class' => 'form-control form-select-sm', 'required' => 'required', 'placeholder'=>'Choose Paper Type']) !!}
+                                            {!! Form::select('paper_type', App\Models\ProductType::pluck('type', 'id'), $item->paper_type_id, ['id' => 'paper_type', 'class' => 'form-control form-select-sm', 'required' => 'required', 'placeholder'=>'Choose Paper Type']) !!}
                                             <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.paper_type') }}</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-width paper-type-main">
+                                        <div class="form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.dye_details') ? ' has-error' : '' }}">
+                                            {!! Form::label('dye_details', 'Dye Details') !!}
+                                            {!! Form::select('dye_details', App\Models\DyeDetails::selectRaw('id, CONCAT(dye_no, " | ", dye_lock, " | ", ups, " | ", sheet_size, " | ", carton_size) AS text')->where('id', $item->dye_details_id)->pluck('text', 'id'), $item->dye_details_id, ['id' => 'dye_details'.$loop->index, 'class' => 'form-control form-control-sm dyeDetails', 'placeholder' => 'Dye Details']) !!}
+                                            <small class="text-muted">Dye No. | Dye Lock | UPS</small>
+                                            <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.dye_details') }}</small>
                                         </div>
                                     </div>
 
@@ -390,7 +399,7 @@
                                     <div class="col-width carton-size-main">
                                         <div class="form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.carton_size') ? ' has-error' : '' }}">
                                             {!! Form::label('carton_size', 'Carton Size') !!}
-                                            {!! Form::text('carton_size', old('kt_docs_repeater_advanced.'.$loop->index.'.carton_size', $item['carton_size'] ?? ''), ['class' => 'form-control form-control-sm', 'placeholder'=>'Carton Size']) !!}
+                                            {!! Form::text('carton_size', old('kt_docs_repeater_advanced.'.$loop->index.'.carton_size', $item['carton_size'] ?? ''), ['class' => 'form-control form-control-sm cartonSize', 'placeholder'=>'Carton Size']) !!}
                                             <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.carton_size') }}</small>
                                         </div>
                                     </div>
@@ -475,8 +484,18 @@
                                     <div class="col-width paper-type-main">
                                         <div class="form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.paper_type') ? ' has-error' : '' }}">
                                             {!! Form::label('paper_type', 'Paper Type') !!}
-                                            {!! Form::select('paper_type', App\Models\ProductType::where('only_paper', 1)->pluck('type', 'id'), old('kt_docs_repeater_advanced.'.$loop->index.'.paper_type', $item['paper_type'] ?? ''), ['id' => 'paper_type', 'class' => 'form-control form-select-sm', 'placeholder'=>'Choose Paper Type']) !!}
+                                            {!! Form::select('paper_type', App\Models\ProductType::pluck('type', 'id'), old('kt_docs_repeater_advanced.'.$loop->index.'.paper_type', $item['paper_type'] ?? ''), ['id' => 'paper_type', 'class' => 'form-control form-select-sm', 'placeholder'=>'Choose Paper Type']) !!}
                                             <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.paper_type') }}</small>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-width paper-type-main">
+                                        <div class="form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.dye_details') ? ' has-error' : '' }}">
+                                            {!! Form::label('dye_details', 'Dye Details') !!}
+                                            {!! Form::select('dye_details', App\Models\DyeDetails::where('id', old('kt_docs_repeater_advanced.'.$loop->index.'.dye_details', $item['dye_details'] ?? ''))->pluck('type', 'id'), old('kt_docs_repeater_advanced.'.$loop->index.'.dye_details', $item['dye_details'] ?? ''), ['id' => 'dye_details', 'class' => 'form-control form-control-sm dyeDetails', 'placeholder' => 'Dye Details']) !!}
+                                            <small class="text-muted">Dye No. | Dye Lock | UPS</small>
+                                            <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.dye_details') }}</small>
                                         </div>
                                     </div>
 
@@ -703,10 +722,43 @@ $('body').on('change', '.getCartonName', function(){
                 $('select[name="kt_docs_repeater_advanced[' + position + '][paper_type]"]').val(data.paper_type_id);
                 $('input[name="kt_docs_repeater_advanced[' + position + '][gsm]"]').val(data.gsm);
                 $('input[name="kt_docs_repeater_advanced[' + position + '][art_work]"]').val(data.art_work);
-
+                getDyeDetails(position);
             }
         }
     });
 });
+
+$(document).ready(function(){
+    // Get carton size on document ready
+    $('.cartonSize').each(function(){
+        var position = $(this).attr('name').match(/\[(.*?)\]/)[1];
+        getDyeDetails(position);
+    });
+});
+
+$('body').on('change', '.cartonSize', function(){
+    var name = $(this).attr('name');
+    var parts = name.split(/\[|\]/);
+    var position = parts[1];
+    getDyeDetails(position);
+});
+
+function getDyeDetails(position){
+    var carton_size = $('input[name="kt_docs_repeater_advanced[' + position + '][carton_size]"]').val();
+    $('select[name="kt_docs_repeater_advanced[' + position + '][dye_details]"]').select2({
+        delay : 200,
+        ajax: {
+            url: '{{ route('admin.common.dye-detail.list') }}?carton_size='+carton_size,
+            dataType: 'json',
+            cache: true,
+            data: function(params) {
+                return {
+                    term: params.term || '',
+                    page: params.page || 1
+                }
+            },
+        }
+    });
+}
 </script>
 @endpush

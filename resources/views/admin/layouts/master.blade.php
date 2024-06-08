@@ -36,6 +36,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{asset('admin-assets/libs/glightbox/css/glightbox.min.css')}}">
     @stack('links')
+
+    <!-- PWA  -->
+<meta name="theme-color" content="#6777ef"/>
+<link rel="apple-touch-icon" href="{{ asset('logo.png') }}">
+<link rel="manifest" href="{{ asset('/manifest.json') }}">
 </head>
 
 <body>
@@ -107,6 +112,24 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jscroll/2.4.1/jquery.jscroll.min.js"></script>
     <script src="{{asset('admin-assets/libs/glightbox/js/glightbox.min.js')}}"></script>
+
+    <script src="{{ asset('/sw.js') }}"></script>
+<script>
+   if ("serviceWorker" in navigator) {
+      // Register a service worker hosted at the root of the
+      // site using the default scope.
+      navigator.serviceWorker.register("/sw.js").then(
+      (registration) => {
+         console.log("Service worker registration succeeded:", registration);
+      },
+      (error) => {
+         console.error(`Service worker registration failed: ${error}`);
+      },
+    );
+  } else {
+     console.error("Service workers are not supported.");
+  }
+</script>
     @if (Session::has('message'))
         <script type="text/javascript">
             Toastify({
