@@ -13,7 +13,7 @@
         <!-- start page title -->
         <div class="row">
             <div class="col-12">
-                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                <div class="page-title-box d-flex align-items-center justify-content-between">
                     <h4 class="mb-sm-0">{{Str::title(str_replace('-', ' ', request()->segment(2)))}}</h4>
                     @can('add_dye_details')
                     <div class="page-title-right">
@@ -37,7 +37,8 @@
                 <div class="card">
                     
                     <div class="card-body">
-                        <table id="datatable" class="datatable table table-bordered nowrap align-middle" style="width:100%">
+                        <div class="table-responsive">
+                        <table id="datatable" class="datatable table-sm border-secondary table-hover  table-bordered nowrap align-middle" style="width:100%">
                             <thead class="gridjs-thead">
                             <tr>
                                 <th style="width:12px">Si</th>
@@ -53,6 +54,7 @@
                         </thead>
                        
                         </table>
+                    </div>
                     </div>
                 </div>
             </div><!--end col-->

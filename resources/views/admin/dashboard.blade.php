@@ -27,7 +27,7 @@ $endDate = $todayDate;
 
         <div class="offcanvas-body p-0">
         </div>
-        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
             <h4 class="mb-sm-0">Dashboard</h4>
             
             {{-- <button class="btn btn-primary btn-label" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop"><i class="bx bx-slider-alt fs-18"></i></button> --}}
@@ -112,6 +112,7 @@ $endDate = $todayDate;
 
 
 @push('scripts')
+
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5zaOBE-YNdQ5vL0RqUv74xzAuMMWXBcs&libraries=places"></script>
@@ -186,4 +187,5 @@ $endDate = $todayDate;
 
     
 </script>
+
 @endpush

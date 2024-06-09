@@ -455,4 +455,21 @@ div#datatable_wrapper [type="search"] {
 }
 
 
+@media(max-width: 991px){
+div#datatable_wrapper .row:first-child {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+}
 
+div#datatable_wrapper .row:first-child .col-sm-12,
+.dataTables_wrapper  .row:first-child .col-sm-12 {
+     width: 45% !important; 
+}
+div.dataTables_wrapper div.dataTables_length label {
+    font-weight: normal;
+    text-align: left;
+    white-space: nowrap;
+    float: left;
+}
+}
