@@ -379,6 +379,7 @@ div#datatable_wrapper [type="search"] {
     display: block;
     max-width: 100%;
     width: 200px;
+    max-height: 70px;
 }
 
 .card-preloader{
