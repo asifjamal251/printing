@@ -23,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+       // \URL::forceScheme('https');
         Paginator::useBootstrap();
         Schema::defaultStringLength(191);
         Blade::if('can', function ($expression,$type='admin') {

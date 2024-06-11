@@ -136,25 +136,36 @@ class CommonController extends Controller{
 
     public function dyeDetails(Request $request){
         if ($request->ajax()) {
-
             $page = $request->page;
             $resultCount = 5;
-
             $offset = ($page - 1) * $resultCount;
 
-            $name = DyeDetails::where('dye_no', 'LIKE', '%' . $request->term . '%')
-                    ->where('carton_size', $request->carton_size)
-                    ->orderBy('created_at', 'asc')
-                    ->skip($offset)
+            // Check for exact match first
+            $exactMatchQuery = DyeDetails::where('carton_size', $request->carton_size)
+                ->orderBy('created_at', 'asc');
+
+            $exactMatchCount = $exactMatchQuery->count();
+
+            if ($exactMatchCount > 0) {
+                $name = $exactMatchQuery->skip($offset)
                     ->take($resultCount)
-                    ->selectRaw('id, CONCAT(dye_no, " | ", dye_lock, " | ", ups, " | ", sheet_size) AS text')
+                    ->selectRaw('id, CONCAT(dye_no, " | ", dye_lock, " | ", ups, " | ", sheet_size, " | ", carton_size) AS text')
                     ->get();
 
-            $count = DyeDetails::where('dye_no', 'LIKE', '%' . $request->term . '%')
-                    ->where('carton_size', $request->carton_size)
-                    ->orderBy('created_at', 'asc')
-                    ->selectRaw('id, CONCAT(dye_no, " | ", dye_lock, " | ", ups, " | ", sheet_size) AS text')
-                    ->count();
+                $count = $exactMatchCount;
+            } else {
+                // Perform a wildcard search if no exact match
+                $wildcardQuery = DyeDetails::where('carton_size', 'LIKE', '%' . $request->term . '%')
+                    ->orderBy('created_at', 'asc');
+
+                $name = $wildcardQuery->skip($offset)
+                    ->take($resultCount)
+                    ->selectRaw('id, CONCAT(dye_no, " | ", dye_lock, " | ", ups, " | ", sheet_size, " | ", carton_size) AS text')
+                    ->get();
+
+                $count = $wildcardQuery->count();
+            }
+
             $endCount = $offset + $resultCount;
             $morePages = $count > $endCount;
 
@@ -170,6 +181,7 @@ class CommonController extends Controller{
 
         return response()->json('oops');
     }
+
 
 
 

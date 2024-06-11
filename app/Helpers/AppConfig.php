@@ -152,6 +152,19 @@ if (!function_exists('PONO')) {
 }
 
 
+if (!function_exists('PORemarks')) {
+    function PORemarks($items){
+        $PONO = [];
+        foreach ($items as $item) {
+            $PONO[] = '<p class="m-0 carton-list">'.$item->PO->remarks.'</p> ';
+        }
+
+        $uniquePONO = array_unique($PONO);
+        return implode(' ', $uniquePONO);
+    }
+}
+
+
 if (!function_exists('PODate')) {
     function PODate($items){
         $PODate = [];
@@ -196,7 +209,7 @@ if (!function_exists('getCartonNames2')) {
         $cartonElements = [];
         
         foreach ($items as $item) {
-            $cartonElements[] = '<p class="m-0 carton-list">' . $item->POItem->carton_name . '-['. $item->POItem->art_work . '] <b>| Quantity - </b>'.$item->POItem->quantity.' <b>| UPS-</b>' .$item->ups.'</p> ';
+            $cartonElements[] = '<p class="m-0 carton-list">' . $item->POItem->carton_name . '-['. $item->POItem->art_work . '] <b>|</b> '.$item->POItem->carton_size.' <b>| Quantity - </b>'.$item->POItem->quantity.' <b>| UPS-</b>' .$item->ups.'</p> ';
         }
         $uniqueCartonElements = array_unique($cartonElements);
         return implode('', $uniqueCartonElements);

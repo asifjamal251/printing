@@ -13,7 +13,7 @@
         <!-- start page title -->
         <div class="row">
             <div class="col-12">
-                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                <div class="page-title-box d-flex align-items-center justify-content-between">
                     <h4 class="mb-sm-0">{{Str::title(str_replace('-', ' ', request()->segment(2)))}}</h4>
 
                     <button class="btn btn-success btn-label btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
@@ -51,6 +51,7 @@
                 <div class="card">
                     
                     <div class="card-body">
+                        <div class="table-responsive">
                         <table id="datatable" class="datatable table table-bordered nowrap align-middle" style="width:100%">
                             <thead class="gridjs-thead">
                             <tr>
@@ -63,13 +64,15 @@
                                 <th>Total</th>
                                 <th>Created At</th>
                                 <th>Status</th>
-                                @can(['edit_material_order','delete_material_order', 'read_material_order'])
+                                <th>Bill No.</th>
+                                @can(['edit_material_order','delete_material_order', 'read_material_order', 'check_material_order'])
                                   <th>Action</th>
                                 @endcan
                             </tr>
                         </thead>
                        
                         </table>
+                    </div>
                     </div>
                 </div>
             </div><!--end col-->
@@ -201,7 +204,8 @@ $(document).ready(function(){
         { "data": "total" },
         { "data": "created_at" },
         { "data": "status" },
-        @can(['edit_material_order','delete_material_order', 'read_material_order'])
+        { "data": "bill_no" },
+        @can(['edit_material_order','delete_material_order', 'read_material_order', 'check_material_order'])
         {
             "data": "action",
             render: function(data, type, row) {
@@ -213,6 +217,7 @@ $(document).ready(function(){
                     @can('read_material_order')
                         btn += '<li><a class="dropdown-item" href="{{ request()->url() }}/' + row['id'] + '"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li>';
                     @endcan
+
 
                     @can('edit_material_order')
                         if(row['status_id'] == 2){

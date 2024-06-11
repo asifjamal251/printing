@@ -18,7 +18,7 @@
 <!-- start page title -->
 <div class="row">
     <div class="col-12">
-        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
             <h4 class="mb-sm-0">{{Str::title(str_replace('-', ' ', request()->segment(2)))}}</h4>
 
             <button class="btn-sm btn btn-success assignData">Assign To Planning</button>
@@ -36,6 +36,7 @@
                 <div class="card">
                     
                     <div class="card-body">
+                         <div class="table-responsive">
                         <table class="table table-bordered nowrap align-middle" style="width:100%">
                             <thead class="gridjs-thead">
                             <tr>
@@ -61,6 +62,7 @@
                         </tbody>
                        
                         </table>
+                    </div>
                     </div>
                 </div>
             </div><!--end col-->

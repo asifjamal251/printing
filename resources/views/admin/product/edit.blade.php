@@ -38,11 +38,19 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-md-4 col-sm-12">
+                    <div class="form-group col-md-4 col-sm-12" style="display:none">
                         <div class="w-100 form-group{{ $errors->has('category') ? ' has-error' : '' }}">
                             {!! Form::label('category', 'Category') !!}
                             {!! Form::select('category', App\Models\Category::pluck('name', 'id'), $product->category_id,['class' => 'form-control product_category', 'required' => 'required']) !!}
                             <small class="text-danger">{{ $errors->first('category') }}</small>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-4 col-sm-12">
+                        <div class="form-group{{ $errors->has('paper_type') ? ' has-error' : '' }}">
+                            {!! Form::label('paper_type', 'Paper Type') !!}
+                            {!! Form::select('paper_type', [1=>'White', 2=>'Yellow'], $product->paper_type, ['id' => 'paper_type', 'class' => 'form-control', 'placeholder' => 'Choose Paper Type']) !!}
+                            <small class="text-danger">{{ $errors->first('paper_type') }}</small>
                         </div>
                     </div>
 

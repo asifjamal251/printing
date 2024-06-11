@@ -15,7 +15,7 @@
         <!-- start page title -->
         <div class="row">
             <div class="col-12">
-                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                <div class="page-title-box d-flex align-items-center justify-content-between">
                     <h4 class="mb-sm-0">{{Str::title(str_replace('-', ' ', request()->segment(2)))}}</h4>
                     @if(request()->segment(3) == 'add-carton')
                         <button type="button" class="btn btn-secondary btn-sm" id="updateItem">Update Processed item</button>

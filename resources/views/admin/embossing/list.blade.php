@@ -7,13 +7,10 @@
 
 
 @section('main')
-
-
-
         <!-- start page title -->
         <div class="row">
             <div class="col-12">
-                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                <div class="page-title-box d-flex align-items-center justify-content-between">
                     <h4 class="mb-sm-0">{{Str::title(str_replace('-', ' ', request()->segment(2)))}}</h4>
                     <button class="btn btn-success btn-label btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
                         <div class="d-flex">
@@ -47,7 +44,7 @@
                                 <th  style="width:120px">Oprator</th>
                                 <th>Job No.</th>
                                 <th>Set No.</th>
-                                <th>Carton</th>
+                                {{-- <th>Carton</th> --}}
                                 <th>Emb/Leaf</th>
                                 <th>Total Sheets</th>
                                 <th>Emb Counter</th>
@@ -213,7 +210,7 @@ $(document).ready(function(){
         },
         { "data": "job_card_no" },
         { "data": "set_no" },
-        { "data": "carton_name" },
+        // { "data": "carton_name" },
         { "data": "emb_leaf" },
         { "data": "total_sheet" },
         { "data": "embossing_counter",

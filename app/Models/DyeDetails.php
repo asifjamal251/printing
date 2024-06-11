@@ -26,14 +26,14 @@ class DyeDetails extends Model
     }
 
 
-    protected static function boot(){
-        parent::boot();
+    // protected static function boot(){
+    //     parent::boot();
 
-        static::creating(function ($jobCard) {
-            $dyeNo = static::orderBy('id', 'desc')->first();
-            $nextNumber = $dyeNo ? intval($dyeNo->dye_no) + 1 : 1;
-            $nextNumberWithoutZeros = ltrim($nextNumber, '0');
-            $jobCard->dye_no = $nextNumberWithoutZeros;
-        });
-    }
+    //     static::creating(function ($jobCard) {
+    //         $dyeNo = static::orderBy('id', 'desc')->first();
+    //         $nextNumber = $dyeNo ? intval($dyeNo->dye_no) + 1 : 1;
+    //         $nextNumberWithoutZeros = ltrim($nextNumber, '0');
+    //         $jobCard->dye_no = $nextNumberWithoutZeros;
+    //     });
+    // }
 }

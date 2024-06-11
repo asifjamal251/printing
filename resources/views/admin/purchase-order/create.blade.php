@@ -51,7 +51,6 @@
         width:25%;
     }
 
-    
 
 
     .second-row .form-group {
@@ -82,6 +81,21 @@
         font-size:11px!important;
     }
 
+@media(max-width: 991px){
+        .custom-row {
+            gap: 2%;
+            flex-wrap: wrap;
+        }
+        .col-width{
+            min-width: 49%!important;
+            max-width: 49%!important;
+            width: 49%!important;
+        }
+        .second-row .form-group{
+            margin-bottom: 15px !important;
+        }
+    }
+
 </style>
 @endpush
 
@@ -94,7 +108,7 @@
 <!-- start page title -->
 <div class="row">
     <div class="col-12">
-        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
             <h4 class="mb-sm-0">{{Str::title(str_replace('-', ' ', request()->segment(2)))}}</h4>
             @can('add_material_inward')
             <div class="page-title-right">
@@ -516,6 +530,15 @@ $('body').on('change', '.getCartonName', function(){
                 $('input[name="kt_docs_repeater_advanced[' + position + '][gsm]"]').val(data.gsm);
                 $('input[name="kt_docs_repeater_advanced[' + position + '][art_work]"]').val(data.art_work);
                 getDyeDetails(position);
+            }else{
+                $('input[name="kt_docs_repeater_advanced[' + position + '][carton_size]"]').val('');
+                $('input[name="kt_docs_repeater_advanced[' + position + '][rate]"]').val('');
+                $('select[name="kt_docs_repeater_advanced[' + position + '][coating_type]"]').val('');
+                $('select[name="kt_docs_repeater_advanced[' + position + '][other_coating_type]"]').val('');
+                $('select[name="kt_docs_repeater_advanced[' + position + '][embossing_leafing]"]').val('');
+                $('select[name="kt_docs_repeater_advanced[' + position + '][paper_type]"]').val('');
+                $('input[name="kt_docs_repeater_advanced[' + position + '][gsm]"]').val('');
+                $('input[name="kt_docs_repeater_advanced[' + position + '][art_work]"]').val('');
             }
         }
     });

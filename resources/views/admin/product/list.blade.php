@@ -41,7 +41,7 @@
 <!-- start page title -->
 <div class="row">
     <div class="col-12">
-        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
             <h4 class="mb-sm-0">{{Str::title(str_replace('-', ' ', request()->segment(2)))}}</h4>
 
             <button class="btn btn-success btn-label btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
@@ -102,6 +102,7 @@
         <div class="card">
 
             <div class="card-body">
+                 <div class="table-responsive">
                 <table id="datatable" class="datatable table table-bordered nowrap align-middle" style="width:100%">
                     <thead class="gridjs-thead">
                         <tr>
@@ -109,7 +110,7 @@
                             <th>Code</th>
                             <th>Product</th>
                             <th>Product Type</th>
-                            <th>HSN</th>
+                            <th>Paper Type</th>
                             <th>Quantity</th>
                             <th>Unit</th>
                             <th>WT/PC</th>
@@ -121,6 +122,7 @@
                     </thead>
 
                 </table>
+            </div>
             </div>
         </div>
     </div><!--end col-->
@@ -337,7 +339,20 @@
         </div> --}}
 
 
+        <div class="card">
+            <div class="card-header pt-2 pb-2">
+                <h6 class="card-title mb-0">Paper Type</h6>
+            </div>
 
+            <div class="card-body">
+                <div class="form-group{{ $errors->has('paper_type') ? ' has-error' : '' }}">
+                    {!! Form::label('paper_type', 'Product Type') !!}
+                    {!! Form::select('paper_type', [1 => 'White', 2 => 'Yellow'], null, ['id' => 'filter_paper_type', 'class' => 'form-control form-control-sm', 'placeholder'=>'Paper Type']) !!}
+                    <small class="text-danger">{{ $errors->first('paper_type') }}</small>
+                </div>
+            </div>
+
+        </div>
 
         <div class="card">
             <div class="card-header pt-2 pb-2">
@@ -555,6 +570,7 @@
             "ordering": false,
             "processing": true,
             "serverSide": true,
+            "lengthMenu": [100, 150, 200, 500],
             'ajax': {
                 'url': '{{ route('admin.'.request()->segment(2).'.index') }}',
                 'data': function(d) {
@@ -562,6 +578,7 @@
                     d._method = 'PATCH';
                     d.category = $('#category_id').val();
                     d.product_type = $('#filter_product_type').val();
+                    d.paper_type = $('#filter_paper_type').val();
                     d.stock = $('#filter_stock').val();
                 }
 
@@ -571,7 +588,7 @@
                 { "data": "code" },
                 { "data": "product" },
                 { "data": "product_type" },
-                { "data": "hsn" },
+                { "data": "paper_type" },
                 { "data": "quantity" },
                  { "data": "unit" },
                 { "data": "wt_pc" },

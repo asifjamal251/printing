@@ -27,7 +27,7 @@
         <!-- start page title -->
         <div class="row">
             <div class="col-12">
-                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                <div class="page-title-box d-flex align-items-center justify-content-between">
                     <h4 class="mb-sm-0">{{Str::title(str_replace('-', ' ', request()->segment(2)))}}</h4>
 
                     <button class="btn btn-success btn-label btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
@@ -64,6 +64,7 @@
                 <div class="card">
                     
                     <div class="card-body">
+                        <div class="table-responsive">
                         <table id="datatable" class="datatable table border-primary table-hover table-sm table-bordered nowrap align-middle" style="width:100%">
                             <thead class="gridjs-thead">
                             <tr>
@@ -87,6 +88,7 @@
                         </thead>
                        
                         </table>
+                    </div>
                     </div>
                 </div>
             </div><!--end col-->

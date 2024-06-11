@@ -13,7 +13,7 @@
 <!-- start page title -->
 <div class="row">
     <div class="col-12">
-        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
             <h4 class="mb-sm-0">{{Str::title(str_replace('-', ' ', request()->segment(2)))}}</h4>
             <p class="m-0">Job Card No: <b>{{$pasting->jobCard->job_card_no}}</b></p>
             @can('add_dye_details')

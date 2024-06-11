@@ -277,6 +277,7 @@ Route::middleware(['admin', '2fa'])->name('admin.')->group(function() {
         Route::match(['get','patch'],'material-order', 'index')->name('material-order.index')->middleware('can:browse_material_order');
         Route::get('material-order/create', 'create')->name('material-order.create')->middleware('can:add_material_order');
         Route::get('material-order/{material_orders}', 'show')->name('material-order.show')->middleware('can:read_material_order');
+        Route::get('material-order/check/{material_orders}', 'check')->name('material-order.check')->middleware('can:check_material_order');
         Route::get('material-order/{material_orders}/edit', 'edit')->name('material-order.edit')->middleware('can:edit_material_order');
         Route::post('material-order', 'store')->name('material-order.store')->middleware('can:add_material_order');
         Route::put('material-order/{material_orders}', 'update')->name('material-order.update')->middleware('can:edit_material_order');
@@ -391,6 +392,7 @@ Route::middleware(['admin', '2fa'])->name('admin.')->group(function() {
         Route::get('job-card/user/assign/{job_cards}', 'userAssign')->name('job-card.user.assign')->middleware('can:user_job_card');
         Route::post('job-card/user/assign/{job_cards}', 'userAssignUpdate')->name('job-card.user.assign')->middleware('can:user_job_card');
         Route::post('job-card/user/assign/single/{job_cards}', 'userAssignSingle')->name('job-card.user.assign.single')->middleware('can:user_job_card');
+        Route::post('job-card/paper/delete/{job_cards}', 'jobCardPaper')->name('job-card.paper.delete');
 
     });
 

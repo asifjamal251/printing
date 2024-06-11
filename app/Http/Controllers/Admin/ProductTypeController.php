@@ -25,8 +25,8 @@ class ProductTypeController extends Controller
                 $datas->where('type', 'like', '%'.$search.'%');
               
             }
-            $request->request->add(['page'=>(($request->start+$request->length)/$request->length )]);
-            $datas = $datas->paginate($request->length);
+            $request->merge(['recordsTotal' => $datas->count(), 'length' => $request->length]);
+            $datas = $datas->limit($request->length)->offset($request->start)->get();
             return response()->json(new ProductTypeCollection($datas));
            
         }

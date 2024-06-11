@@ -149,6 +149,14 @@ class MaterialOrderController extends Controller
     }
 
 
+    public function check($id){
+        $material =  MaterialOrder::where('id', $id)->with(['madeBy', 'vendor', 'materialItems'=>function($query){
+            $query->with(['product', 'unit']);
+        }])->first();
+        return view('admin.material-order.check', compact('material'));
+    }
+
+
     public function update(Request $request, $id) {
        // return $request->deleted;
         //return $request->all();
@@ -270,6 +278,7 @@ class MaterialOrderController extends Controller
 
 
     public function statusChange(Request $request, $id){
+        //return $request->all();
         // Fetch the material order with related data
 
         // $itemsData = $materialData->materialItems;
@@ -317,11 +326,27 @@ class MaterialOrderController extends Controller
             ])->first();
         
         // Update the status
-        $materialData->status_id = $request->status;
-        if($request->status == 5){
-            $materialData->completed_at = Carbon::now()->format('Y-m-d');
+        if(isset($request->status)){
+            $materialData->status_id = $request->status;
+            if($request->status == 5){
+                $materialData->completed_at = Carbon::now()->format('Y-m-d');
+            }
+        }
+        if(isset($request->bill_no)){
+             $materialData->bill_no = $request->bill_no;
         }
         $materialData->save();
+
+        if($request->input('item')){
+            $inputs = $request->input('item');
+             foreach ($inputs as $input) {
+                $item = MaterialOrderItem::find($input['material']);
+                $item->receive_status = 1;
+                $item->save();
+             }
+        }
+
+
         
         if($request->send_email){
             $itemsData = $materialData->materialItems;

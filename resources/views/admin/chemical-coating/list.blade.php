@@ -13,7 +13,7 @@
         <!-- start page title -->
         <div class="row">
             <div class="col-12">
-                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                <div class="page-title-box d-flex align-items-center justify-content-between">
                     <h4 class="mb-sm-0">{{Str::title(str_replace('-', ' ', request()->segment(2)))}}</h4>
                     <button class="btn btn-success btn-label btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
                         <div class="d-flex">
@@ -47,7 +47,7 @@
                                 <th  style="width:120px">Oprator</th>
                                 <th>Job No.</th>
                                 <th>Set No.</th>
-                                <th>Carton</th>
+                                {{-- <th>Carton</th> --}}
                                 <th>Coating Type</th>
                                 <th>Coating Window Cutting</th>
                                 <th>Sheet Size</th>
@@ -223,7 +223,7 @@ $(document).ready(function(){
         },
         { "data": "job_card_no" },
         { "data": "set_no" },
-        { "data": "carton_name" },
+        // { "data": "carton_name" },
         { "data": "coating_type" },
         { "data": "coating_window" },
         { "data": "sheet_size" },
@@ -263,7 +263,7 @@ $(document).ready(function(){
 
                     @can(['edit_chemical_coating','delete_chemical_coating','read_chemical_coating', 'change_status_chemical_coating'])
 
-                    btn += '<li><a class="dropdown-item edit-item-btn" onclick="updateTimer(\'{{ route('admin.job-card.timer.content') }}\',{machine:1, id:'+row['id']+',job_card_id:'+row['job_card_id']+'})" href="javascript:void(0);"><i class="ri-alarm-line align-bottom me-2 text-muted"></i>Timer</a></li>';
+                    btn += '<li><a class="dropdown-item edit-item-btn" onclick="updateTimer(\'{{ route('admin.job-card.timer.content') }}\',{machine:3, id:'+row['id']+',job_card_id:'+row['job_card_id']+'})" href="javascript:void(0);"><i class="ri-alarm-line align-bottom me-2 text-muted"></i>Timer</a></li>';
 
                     @can('change_status_chemical_coating')
                         @can('change_status_cutting')

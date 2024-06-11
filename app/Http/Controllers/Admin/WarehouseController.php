@@ -92,6 +92,15 @@ class WarehouseController extends Controller
             $warehouse->new_quantity = 0;
             $warehouse->save();
 
+            $po_item = PurchaseOrderItem::where('id', $warehouse->POItem->id)->first();
+            if ($po_item) {
+                if ($po_item->bill_no) {
+                    $po_item->bill_no .= ', ' . $billing->bill_no;
+                } else {
+                    $po_item->bill_no = $billing->bill_no;
+                }
+                $po_item->save();
+            }
 
             return response()->json(['message'=>'Item Added For Billing', 'class'=>'success']);
         }

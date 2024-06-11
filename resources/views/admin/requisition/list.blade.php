@@ -14,16 +14,9 @@
 <!-- start page title -->
 <div class="row">
     <div class="col-12">
-        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
             <h4 class="mb-sm-0">{{Str::title(str_replace('-', ' ', request()->segment(2)))}}</h4>
-            @can('add_admin')
-            <div class="page-title-right">
-                <a href="{{ route('admin.'.request()->segment(2).'.create') }}"  class="btn-sm btn btn-primary btn-label rounded-pill">
-                    <i class="bx bx-plus label-icon align-middle rounded-pill fs-16 me-2"></i>
-                    Add {{Str::title(str_replace('-', ' ', request()->segment(2)))}}
-                </a>
-            </div>
-            @endcan
+            
 
         </div>
     </div>
@@ -34,7 +27,7 @@
 <div class="row my-1">
 
 
-    <div class="col-lg-4 col-4">
+    <div class="col-lg-4 col-sm-12 col-12">
 
         <div class="card">
             <div class="card-content">
@@ -64,12 +57,12 @@
     </div>
 
 
-    <div class="col-lg-8 col-8">
+    <div class="col-lg-8 col-sm-12 col-12">
 
         <div class="card">
             <div class="card-content">
                 <div class="card-body">
-
+<div class="table-responsive">
                     <table id="dataTableAjax" class="display dataTableAjax table table-striped table-bordered dom-jQuery-events" >
                         <thead>
                             <tr>
@@ -84,7 +77,7 @@
                         </thead>
             
                     </table>
-
+</div>
                 </div>
             </div>
         </div>

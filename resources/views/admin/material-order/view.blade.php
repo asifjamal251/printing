@@ -32,7 +32,7 @@ th {
 <!-- start page title -->
 <div class="row">
     <div class="col-12">
-        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+        <div class="page-title-box d-flex align-items-center justify-content-between">
             <h4 class="mb-sm-0">{{Str::title(str_replace('-', ' ', request()->segment(2)))}}</h4>
 
             @can('add_material_inward')
@@ -50,14 +50,15 @@ th {
 <!-- end page title -->
 
 
-
+ {!! Form::open(['route'=>['admin.'.request()->segment(2).'.statusChange',$material->id],'method'=>'put', 'files'=>true]) !!}
 
 <div class="row">
-    <div class="col-sm-9">
+    <div class="col-sm-12">
         <div class="card">
 
             <div class="card-body">
-                <table class="table">
+                <div class="table-responsive">
+                <table class="table" style="with:1024px;">
                     <tr>
                         <td colspan="6">
                             <b>From</b>
@@ -84,13 +85,16 @@ th {
                             <p><b>{{get_app_setting('title')}}</b></p>
                             <p style="margin-bottom:0">{{get_app_setting('contact_no')}}</p>
                             <p style="margin-bottom:0">{{get_app_setting('email')}}</p>
+                            <p style="margin-bottom:0">{{get_app_setting('gst')??''}}</p>
                             <p style="margin-bottom:0">{{get_app_setting('address')}}</p>
                         </td>
                         <td colspan="5">
                             <p><b>{{$material->vendor->name}}</b></p>
                             <p style="margin-bottom:0">{{$material->vendor->phone_no}}</p>
                             <p style="margin-bottom:0">{{$material->vendor->email}}</p>
+                            <p style="margin-bottom:0">{{$material->vendor->gst}}</p>
                             <p style="margin-bottom:0">{{$material->vendor->address}}</p>
+                            
                         </td>
                     </tr>
                       
@@ -102,8 +106,8 @@ th {
                             <td colspan="2">{{$material->created_at->format('d F, Y')}}</td>
                         </tr>
                         <tr>
-                            <th style="background:#ddd;">Si. No.</th>
-                            <th style="background:#ddd;width:120px;" colspan="2">Product Details</th>
+                            <th style="background:#ddd;width:100px!important;">Si. No.</th>
+                            <th style="background:#ddd;width:250px;" colspan="2">Product Details</th>
                             <th style="background:#ddd;">Product Type</th>
                             <th style="background:#ddd;">QTY/PKT/NOs</th>
                             <th style="background:#ddd;">WT/PC</th>
@@ -113,10 +117,15 @@ th {
                             <th style="background:#ddd;">GST</th>
                             <th style="background:#ddd;">Amount</th>
                         </tr>
-                        
+                      
+                      
                         @foreach($material->materialItems as $item)
                         <tr>
-                            <td>{{$loop->index+1}}</td>
+                            <td>
+                                    <label for="material{{$item->id}}">
+                                        {!! Form::checkbox('item['.$item->id.'][material]',  $item->id, $item->receive_status, ['id' => 'material'.$item->id]) !!} {{$loop->index+1}} 
+                                    </label>
+                            </td>
                             <td colspan="2">{{$item->product->name}}</td>
                             <td>{{$item->product->productType->type}}</td>
                             <td>{{$item->quantity}}</td>
@@ -183,38 +192,53 @@ th {
                             <td></td>
                         </tr>
                     </table>
+                    </div>
                 </div>
             </div>
         </div>
 
 
-        <div class="col-md-3 col-sm-12">
+        <div class="col-md-6 col-sm-12">
             <div class="card">
                 <div class="card-body">
-                    {!! Form::open(['route'=>['admin.'.request()->segment(2).'.statusChange',$material->id],'method'=>'put', 'files'=>true]) !!}
-                    <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
-                        {!! Form::label('status', 'Status') !!}
-                        {!! Form::select('status', App\Models\Status::whereIn('id', [2, 3, 5, 6, 26, 8])->pluck('name', 'id'), $material->status_id, ['id' => 'status_id', 'class' => 'form-control', 'placeholder' => 'Chosse Status']) !!}
-                        <small class="text-danger">{{ $errors->first('status') }}</small>
-                    </div>
 
-                    <div class="form-group">
-                        <div class="checkbox{{ $errors->has('send_email') ? ' has-error' : '' }}">
-                            <label for="send_email">
-                                {!! Form::checkbox('send_email', 1, null, ['id' => 'send_email']) !!} Send Email
-                            </label>
+                    @can(['change_status_material_order','check_material_order'])
+                        @can(['change_status_material_order'])
+                       
+                        <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
+                            {!! Form::label('status', 'Status') !!}
+                            {!! Form::select('status', App\Models\Status::whereIn('id', [2, 3, 5, 6, 26, 8])->pluck('name', 'id'), $material->status_id, ['id' => 'status_id', 'class' => 'form-control', 'placeholder' => 'Chosse Status']) !!}
+                            <small class="text-danger">{{ $errors->first('status') }}</small>
                         </div>
-                        <small class="text-danger">{{ $errors->first('send_email') }}</small>
-                    </div>
+
+                        <div class="form-group">
+                            <div class="checkbox{{ $errors->has('send_email') ? ' has-error' : '' }}">
+                                <label for="send_email">
+                                    {!! Form::checkbox('send_email', 1, null, ['id' => 'send_email']) !!} Send Email
+                                </label>
+                            </div>
+                            <small class="text-danger">{{ $errors->first('send_email') }}</small>
+                        </div>
+
+                        @endcan
+
+                        @can(['check_material_order'])
+                            <div class="form-group{{ $errors->has('bill_no') ? ' has-error' : '' }}">
+                                {!! Form::label('bill_no', 'Bill No') !!}
+                                {!! Form::text('bill_no', $material->bill_no, ['class' => 'form-control', 'placeholder' => 'Bill No.']) !!}
+                                <small class="text-danger">{{ $errors->first('bill_no') }}</small>
+                            </div>
+                        @endcan
+                    @endcan
 
                     {!! Form::submit('Change Status', ['class' => 'btn btn-success pull-right']) !!}
-                    {!! Form::close() !!} 
+                    
                 </div>
             </div>
         </div>
     </div>
 
-
+{!! Form::close() !!} 
 
     @endsection
 

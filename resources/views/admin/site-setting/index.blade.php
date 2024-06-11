@@ -104,6 +104,8 @@
             </div>
 
             <div class="card-body">
+                
+                
                 <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                     {!! Form::label('email', 'Email') !!}
                     {!! Form::email('email', @$logo->email, ['class' => 'form-control', 'placeholder' => 'Email']) !!}
@@ -132,6 +134,12 @@
                     {!! Form::label('city', 'City') !!}
                     {!! Form::text('city', @$logo->city, ['class' => 'form-control', 'required' => 'required','placeholder'=>'City']) !!}
                     <small class="text-danger">{{ $errors->first('city') }}</small>
+                </div>
+                
+                <div class="form-group{{ $errors->has('gst') ? ' has-error' : '' }}">
+                    {!! Form::label('gst', 'GST') !!}
+                    {!! Form::text('gst', @$logo->gst, ['class' => 'form-control', 'placeholder' => 'GST']) !!}
+                    <small class="text-danger">{{ $errors->first('gst') }}</small>
                 </div>
 
                 <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">

@@ -25,6 +25,7 @@ class DyeDetailsResource extends JsonResource
             'ups'=>$this->ups, 
             'dye_lock'=>$this->dye_lock, 
             'carton_size'=>$this->carton_size, 
+            'sheet_size'=>$this->sheet_size, 
             'type'=>$this->automatic?'Automatic':'Manual', 
             'created_at' => $this->created_at->format('d F, Y'),
         ];

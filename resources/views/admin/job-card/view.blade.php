@@ -13,7 +13,7 @@
         <!-- start page title -->
         <div class="row">
             <div class="col-12">
-                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                <div class="page-title-box d-flex align-items-center justify-content-between">
                     <h4 class="mb-sm-0">{{Str::title(str_replace('-', ' ', request()->segment(2)))}}</h4>
                     @can('add_job_card')
                     <div class="page-title-right">
@@ -37,7 +37,8 @@
                 <div class="card">
 
                     <div class="card-header">
-                        <h6 class="card-title mb-0 text-center">{{get_app_setting('title')}}</h6>
+                        <h2 class="card-title mb-0 text-center text-dark" style="font-size: 24px;">{{get_app_setting('title')}}</h2>
+                        <p class="text-center mb-0 mt-1 text-dark">{{get_app_setting('address')}}</p>
                     </div>
                     
                     <div class="card-body">
@@ -55,7 +56,7 @@
 
                             <tr>
                                 <th>Job Card Date</th>
-                                <td>{{$job_card->created_at->format('d F, Y')}}</td>
+                                <td>{{$job_card->created_at->format('d F, Y | h:s a')}}</td>
                                 <th>PO No.</th>
                                 <td>{!! PONO($job_card->jobCardItems) !!}</td>
                             </tr>
@@ -72,24 +73,28 @@
                                 <td colspan="3">{!! getCartonNames2($job_card->jobCardItems) !!}</td>
                             </tr>
 
+                            <tr>
+                                <th>Carton Remarks/Batch/Other</th>
+                                <td colspan="3">
+                                    @php
+                                        $POCarton = [];
+                                        
+                                        foreach($job_card->jobCardItems as $item){
+                                            if (!empty($item->POItem->remarks)) {
+                                                $POCarton[] = '<p class="m-0 carton-list">' . $item->POItem->carton_name . ' - ' . $item->POItem->remarks . '</p>';
+                                            } else {
+                                                $POCarton[] = '<p class="m-0 carton-list">' . $item->POItem->carton_name . ' - N/A</p>';
+                                            }
+                                        }
+                                    @endphp
 
-                            <tr class="text-center bg-light" style="background-color: #ddd;">
-                                <th colspan="4">Coating Details</th>
+                                    {!! implode('', $POCarton) !!}
+                                </td>
                             </tr>
 
                             <tr>
-                                <th>Coating Type</th>
-                                <td>{!! coatingType($job_card->jobCardItems) !!}</td>
-                                <th>Roll Used</th>
-                                <td>{{$job_card->roll_used??0}}</td>
-                            </tr>
-
-
-                            <tr>
-                                <th>Window Cutting</th>
-                                <td>{!! $job_card->coating_window_cutting??'none' !!}</td>
-                                <th>Other Coating</th>
-                                <td>{{$job_card->other_coating_machine??''}}</td>
+                                <th>PO Remarks</th>
+                                <td colspan="3">{!! POremarks($job_card->jobCardItems)??'N/A' !!}</td>
                             </tr>
 
 
@@ -98,15 +103,15 @@
                             </tr>
 
                             <tr>
-                                <th>Sheet Size</th>
-                                <td>{{ $job_card->sheet_size }}</td>
+                                <th>Cut Size</th>
+                                <td>{{ $job_card->sheet_size }} - {{$job_card->jobCardPapers->sum('required_sheet')}} Sheets</td>
                                 <th>Paper Used</th>
                                 <td>
                                     @php
                                         $jobCardPaper = [];
                                     
                                         foreach($job_card->jobCardPapers as $paper){
-                                            $jobCardPaper[] = '<p class="m-0 carton-list">' . $paper->product->name .' | '.$paper->product->ProductType->type.'</p>';
+                                            $jobCardPaper[] = '<p class="m-0 carton-list">' .$paper->product->ProductType->type.'</p>';
                                         }
                                     @endphp
                                     {!! implode('', $jobCardPaper) !!}
@@ -115,43 +120,6 @@
 
 
                             <tr>
-                                <th>Paper Divide</th>
-                                <td>
-                                    @php
-                                        $jobCardPaper = [];
-                                    
-                                        foreach($job_card->jobCardPapers as $paper){
-                                            $jobCardPaper[] = '<p class="m-0 carton-list">' . $paper->product->name .' | '.$paper->product->ProductType->type .' - 1/'. $paper->paper_divide .'</p>';
-                                        }
-                                    @endphp
-                                    {!! implode('', $jobCardPaper) !!}
-                                </td>
-                                <th>Sheets Required</th>
-                                <td>
-                                    @php
-                                        $jobCardPaper = [];
-                                    
-                                        foreach($job_card->jobCardPapers as $paper){
-                                            $jobCardPaper[] = '<p class="m-0 carton-list">' . $paper->product->name .' | '.$paper->product->ProductType->type .' - '. $paper->required_sheet .'</p>';
-                                        }
-                                    @endphp
-                                    {!! implode('', $jobCardPaper) !!}
-                                </td>
-                            </tr>
-
-
-                             <tr>
-                                <th>Wastage</th>
-                                <td>
-                                    @php
-                                        $jobCardPaper = [];
-                                    
-                                        foreach($job_card->jobCardPapers as $paper){
-                                            $jobCardPaper[] = '<p class="m-0 carton-list">' . $paper->product->name .' | '.$paper->product->ProductType->type .' - '. $paper->wastage_sheet .'</p>';
-                                        }
-                                    @endphp
-                                    {!! implode('', $jobCardPaper) !!}
-                                </td>
                                 <th>Total Sheets For Cutting</th>
                                 <td>
                                     @php
@@ -163,25 +131,59 @@
                                     @endphp
                                     {!! implode('', $jobCardPaper) !!}
                                 </td>
+
+                                <th>Paper Divide</th>
+                                <td>
+                                    @php
+                                        $jobCardPaper = [];
+                                    
+                                        foreach($job_card->jobCardPapers as $paper){
+                                            $jobCardPaper[] = '<p class="m-0 carton-list">' .$paper->product->ProductType->type .' - 1/'. $paper->paper_divide .'</p>';
+                                        }
+                                    @endphp
+                                    {!! implode('', $jobCardPaper) !!}
+                                </td>
+                                {{-- <th>
+                                    Sheets Required
+                                </th>
+                                 <td>
+                                    @php
+                                        $jobCardPaper = [];
+                                    
+                                        foreach($job_card->jobCardPapers as $paper){
+                                            $jobCardPaper[] = '<p class="m-0 carton-list">' . $paper->product->name .' | '.$paper->product->ProductType->type .' - '. $paper->required_sheet .'</p>';
+                                        }
+                                    @endphp
+                                    {!! implode('', $jobCardPaper) !!} 
+                                </td>--}}
                             </tr>
+
+
+                             <tr>
+                                <th>Wastage</th>
+                                <td>
+                                    {{$job_card->jobCardPapers->sum('wastage_sheet')}}
+                                    {{-- @php
+                                        $jobCardPaper = [];
+                                    
+                                        foreach($job_card->jobCardPapers as $paper){
+                                            $jobCardPaper[] = '<p class="m-0 carton-list">'.$paper->wastage_sheet .'</p>';
+                                        }
+                                    @endphp
+                                    {!! implode('', $jobCardPaper) !!} --}}
+                                </td>
+                                <th>Final Sheets</th>
+                                <td>
+                                   {{$job_card->jobCardPapers->sum('wastage_sheet') + $job_card->jobCardPapers->sum('required_sheet')}} Sheets
+                                </td>
+                            </tr>
+
 
 
                             <tr class="text-center bg-light" style="background-color:#ddd;">
-                                <th colspan="4">Other Details</th>
+                                <th colspan="4">Printing Details</th>
                             </tr>
 
-                            <tr>
-                                <th>Dye Number</th>
-                                <td>
-                                    @if($job_card->dye_details_id)
-                                    <p class="m-0">{{$job_card->deyDetail->dye_no}} | {{$job_card->deyDetail->dye_lock}} | {!! $job_card->dye_machine??'manual' !!}</p>
-                                    @else
-                                        New
-                                    @endif
-                                </td>
-                                <th>Embossing/Leafing</th>
-                                <td>{!! jobItemEmbLeaf($job_card->jobCardItems) !!}</td>
-                            </tr>
 
                             <tr>
                                 <th>Color</th>
@@ -204,25 +206,49 @@
                                 </td>
                             </tr>
 
-                            <tr class="text-center bg-light">
-                                <th colspan="4" style="height:30px;"></th>
+
+
+                            <tr class="text-center bg-light" style="background-color: #ddd;">
+                                <th colspan="4">Coating Details</th>
                             </tr>
 
                             <tr>
-                                <th>Carton Remarks/Batch/Other</th>
-                                <td colspan="3">
-                                    @php
-                                        $POCarton = [];
-                                    
-                                        foreach($job_card->jobCardItems as $item){
-                                            $POCarton[] = '<p class="m-0 carton-list">' .$item->POItem->carton_name .' - '. $item->POItem->remarks .'</p>';
-                                        }
-                                    @endphp
-                                    {!! implode('', $POCarton) !!}
-                                </td>
+                                <th>Coating Type</th>
+                                <td>{!! coatingType($job_card->jobCardItems) !!}</td>
+                                <th>Roll Used</th>
+                                <td>{{$job_card->roll_used??0}}</td>
                             </tr>
 
 
+                            <tr>
+                                <th>Window Cutting</th>
+                                <td>{!! $job_card->coating_window_cutting??'none' !!}</td>
+                                <th>Other Coating</th>
+                                <td>{{$job_card->other_coating_machine??''}}</td>
+                            </tr>
+
+
+                            
+
+
+                            <tr class="text-center bg-light" style="background-color:#ddd;">
+                                <th colspan="4">Other Details</th>
+                            </tr>
+
+                            <tr>
+                                <th>Dye Number</th>
+                                <td>
+                                    @if($job_card->dye_details_id)
+                                    <p class="m-0">{{$job_card->deyDetail->dye_no}} | {{$job_card->deyDetail->dye_lock}} | {!! $job_card->dye_machine??'manual' !!}</p>
+                                    @else
+                                        New
+                                    @endif
+                                </td>
+                                <th>Embossing/Leafing</th>
+                                <td>{!! jobItemEmbLeaf($job_card->jobCardItems) !!}</td>
+                            </tr>
+
+                      
                             <tr class="text-center bg-light">
                                 <th colspan="4" style="height:30px;"></th>
                             </tr>
@@ -232,8 +258,17 @@
                                 <th>Auth. Sign.</th>
                             </tr>
 
-                            <tr class="text-center">
-                                <td colspan="3" style="width:50%; height: 50px;"> </td>
+                            <tr class="text-left">
+                                <td colspan="3" style="width:50%; height: 50px;">
+                                    <ul>
+                                        <li>
+                                            कृपया प्लेट या प्रिंटिंग की पहली शीट अप्रूव्ड आर्टवर्क से जरूर चेक कर लें।
+                                        </li>
+                                        <li>
+                                            कृपया मैटर अप्रूव्ड आर्टवर्क से जरूर चेक कर लें।
+                                        </li>
+                                    </ul>
+                                </td>
                                 <td style="height: 50px;"> </td>
                             </tr>
 
