@@ -174,14 +174,9 @@
     <script src="{{asset('admin-assets/libs/node-waves/waves.min.js')}}"></script>
     <script src="{{asset('admin-assets/libs/feather-icons/feather.min.js')}}"></script>
     <script src="{{asset('admin-assets/js/pages/plugins/lord-icon-2.1.0.js')}}"></script>
-    <script src="{{asset('admin-assets/js/device-uuid.min.js')}}"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     
 
-<script>
-var uuid = new DeviceUUID().get();
-console.log(uuid);
-</script>
 
 <script src="{{ asset('/sw.js') }}"></script>
     <script>

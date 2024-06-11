@@ -103,7 +103,7 @@
                     </div>
 
                   <div class="form-group col-sm-12" style="margin-top:28px;">
-                      {!! Form::submit('Save Client Data', ['class' => 'btn btn-info pull-right']) !!}
+                      {!! Form::submit('Save Dye Details', ['class' => 'btn btn-info pull-right']) !!}
                   </div>
 
                 </div>

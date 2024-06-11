@@ -18,7 +18,6 @@ class MediaController extends Controller
      */
     public function index(Request $request)
     {
-       
         if ($request->ajax()) {
             $datas = Media::orderBy('created_at', 'desc')->select('id','file','type','name','original_name','size');
             $totaldata = $datas->count();
@@ -111,7 +110,7 @@ class MediaController extends Controller
         
                 $media_rename = $media->slug.".".$request->file('file')->getClientOriginalExtension();
                 $image = $request->file('file')->storeAs($path, $media_rename);
-                $media->file = env('AWS_URL').'/'.$image;
+                $media->file = config('printing.media_url').$image;
                 $media->save();
 
 

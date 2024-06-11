@@ -49,7 +49,7 @@
                                 <th>Client</th>
                                 <th>Cartons</th>
                                 <th>Job Type</th>
-                                <th>Designer</th>
+                                <th>Printing</th>
                                 <th>Required Sheet</th>
                                 <th>Wastage Sheet</th>
                                 <th>Total Sheet</th>
@@ -225,7 +225,7 @@ $(document).ready(function(){
         { "data": "client" },
         { "data": "carton_name" },
         { "data": "job_type" },
-        { "data": "designer" },
+        { "data": "printing_user" },
         { "data": "required_sheet" },
         { "data": "wastage_sheet" },
         { "data": "total_sheet" },

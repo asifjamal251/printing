@@ -36,6 +36,7 @@ class SiteSettingController extends Controller
         $logo->state = $request->state;
         $logo->city = $request->city;
         $logo->address = $request->address;
+        $logo->gst = $request->gst;
 
 
         if($request->input('logo')){

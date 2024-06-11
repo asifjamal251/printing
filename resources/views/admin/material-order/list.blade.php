@@ -218,9 +218,6 @@ $(document).ready(function(){
                         btn += '<li><a class="dropdown-item" href="{{ request()->url() }}/' + row['id'] + '"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li>';
                     @endcan
 
-                    @can('check_material_order')
-                        btn += '<li><a class="dropdown-item" href="{{ request()->url() }}/check/' + row['id'] + '"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> Check</a></li>';
-                    @endcan
 
                     @can('edit_material_order')
                         if(row['status_id'] == 2){

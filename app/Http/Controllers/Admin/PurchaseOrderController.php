@@ -63,7 +63,7 @@ class PurchaseOrderController extends Controller
         $user = Auth::guard('admin')->user();
         $this->validate($request, [
             'client' => 'required',
-            'po_no' => 'required',
+            'po_no' => 'required|unique:purchase_orders',
             'po_date' => 'required',
             'kt_docs_repeater_advanced' => 'required|array',
             'kt_docs_repeater_advanced.*.carton_name' => 'required',

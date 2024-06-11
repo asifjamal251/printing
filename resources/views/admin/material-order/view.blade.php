@@ -53,11 +53,12 @@ th {
  {!! Form::open(['route'=>['admin.'.request()->segment(2).'.statusChange',$material->id],'method'=>'put', 'files'=>true]) !!}
 
 <div class="row">
-    <div class="col-sm-9">
+    <div class="col-sm-12">
         <div class="card">
 
             <div class="card-body">
-                <table class="table">
+                <div class="table-responsive">
+                <table class="table" style="with:1024px;">
                     <tr>
                         <td colspan="6">
                             <b>From</b>
@@ -84,13 +85,16 @@ th {
                             <p><b>{{get_app_setting('title')}}</b></p>
                             <p style="margin-bottom:0">{{get_app_setting('contact_no')}}</p>
                             <p style="margin-bottom:0">{{get_app_setting('email')}}</p>
+                            <p style="margin-bottom:0">{{get_app_setting('gst')??''}}</p>
                             <p style="margin-bottom:0">{{get_app_setting('address')}}</p>
                         </td>
                         <td colspan="5">
                             <p><b>{{$material->vendor->name}}</b></p>
                             <p style="margin-bottom:0">{{$material->vendor->phone_no}}</p>
                             <p style="margin-bottom:0">{{$material->vendor->email}}</p>
+                            <p style="margin-bottom:0">{{$material->vendor->gst}}</p>
                             <p style="margin-bottom:0">{{$material->vendor->address}}</p>
+                            
                         </td>
                     </tr>
                       
@@ -102,8 +106,8 @@ th {
                             <td colspan="2">{{$material->created_at->format('d F, Y')}}</td>
                         </tr>
                         <tr>
-                            <th style="background:#ddd;">Si. No.</th>
-                            <th style="background:#ddd;width:120px;" colspan="2">Product Details</th>
+                            <th style="background:#ddd;width:100px!important;">Si. No.</th>
+                            <th style="background:#ddd;width:250px;" colspan="2">Product Details</th>
                             <th style="background:#ddd;">Product Type</th>
                             <th style="background:#ddd;">QTY/PKT/NOs</th>
                             <th style="background:#ddd;">WT/PC</th>
@@ -188,12 +192,13 @@ th {
                             <td></td>
                         </tr>
                     </table>
+                    </div>
                 </div>
             </div>
         </div>
 
 
-        <div class="col-md-3 col-sm-12">
+        <div class="col-md-6 col-sm-12">
             <div class="card">
                 <div class="card-body">
 

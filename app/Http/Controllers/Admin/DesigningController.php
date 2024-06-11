@@ -172,7 +172,7 @@ class DesigningController extends Controller
 
 
     public function changeStatus(Request $request){ 
-        if(JobCard::where('id', $request->job_card_id)->update(['status_id'=>2])){
+        if(JobCard::where('id', $request->job_card_id)->update(['status_id'=>2,  'job_card_created_at' => now()])){
 
             $job_card = JobCard::where('id', $request->job_card_id)->first();
 

@@ -107,7 +107,7 @@
                     <thead class="gridjs-thead">
                         <tr>
                             <th style="width:12px">Si</th>
-                           {{--  <th>Code</th> --}}
+                            <th>Code</th>
                             <th>Product</th>
                             <th>Product Type</th>
                             <th>Paper Type</th>
@@ -570,6 +570,7 @@
             "ordering": false,
             "processing": true,
             "serverSide": true,
+            "lengthMenu": [100, 150, 200, 500],
             'ajax': {
                 'url': '{{ route('admin.'.request()->segment(2).'.index') }}',
                 'data': function(d) {
@@ -584,7 +585,7 @@
             },
             "columns": [
                 { "data": "sn" },
-                // { "data": "code" },
+                { "data": "code" },
                 { "data": "product" },
                 { "data": "product_type" },
                 { "data": "paper_type" },

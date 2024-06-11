@@ -47,7 +47,7 @@
                                 <th  style="width:120px">Oprator</th>
                                 <th>Job No.</th>
                                 <th>Set No.</th>
-                                <th>Carton</th>
+                                {{-- <th>Carton</th> --}}
                                 <th>Coating Type</th>
                                 <th>Sheet Size</th>
                                 <th>Total Sheets</th>
@@ -214,7 +214,7 @@ $(document).ready(function(){
         },
         { "data": "job_card_no" },
         { "data": "set_no" },
-        { "data": "carton_name" },
+        // { "data": "carton_name" },
         { "data": "coating_type" },
         { "data": "sheet_size" },
         { "data": "total_sheet" },

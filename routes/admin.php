@@ -392,6 +392,7 @@ Route::middleware(['admin', '2fa'])->name('admin.')->group(function() {
         Route::get('job-card/user/assign/{job_cards}', 'userAssign')->name('job-card.user.assign')->middleware('can:user_job_card');
         Route::post('job-card/user/assign/{job_cards}', 'userAssignUpdate')->name('job-card.user.assign')->middleware('can:user_job_card');
         Route::post('job-card/user/assign/single/{job_cards}', 'userAssignSingle')->name('job-card.user.assign.single')->middleware('can:user_job_card');
+        Route::post('job-card/paper/delete/{job_cards}', 'jobCardPaper')->name('job-card.paper.delete');
 
     });
 

@@ -97,7 +97,7 @@ class AdminController extends Controller
 
             if($admin->save()){ 
 
-                return redirect()->route('admin.admin.2fa.setup',$admin->id)->with(['class'=>'success','message'=>'Admin Created successfully.']);
+                //return redirect()->route('admin.admin.2fa.setup',$admin->id)->with(['class'=>'success','message'=>'Admin Created successfully.']);
                 return redirect()->route('admin.admin.index')->with(['class'=>'success','message'=>'Admin Created successfully.']);
             }
 

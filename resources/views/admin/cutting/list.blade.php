@@ -49,7 +49,7 @@
                                 <th style="width:12px">Si</th>
                                 <th  style="width:120px">Oprator</th>
                                 <th>Job No.</th>
-                                <th>Carton</th>
+                                {{-- <th>Carton</th> --}}
                                 <th>Set No.</th>
                                 <th>Paper</th>
                                 <th>Required Sheet</th>
@@ -234,7 +234,7 @@ $(document).ready(function() {
                 }
             },
             { "data": "job_card_no" },
-            { "data": "carton_name" },
+            // { "data": "carton_name" },
             { "data": "set_no" },
             { "data": "paper_details" },
             { "data": "required_sheet" },

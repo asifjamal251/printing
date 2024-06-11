@@ -49,7 +49,7 @@
                                 @endcan
                                 <th>Job No.</th>
                                 <th>Set No.</th>
-                                <th>Carton</th>
+                                {{-- <th>Carton</th> --}}
                                 <th>Color</th>
                                 <th>Sheet Size</th>
                                 <th>Total Sheets</th>
@@ -228,7 +228,7 @@ $(document).ready(function(){
         @endcan
         { "data": "job_card_no" },
         { "data": "set_no" },
-        { "data": "carton_name" },
+        // { "data": "carton_name" },
         { "data": "color" },
         { "data": "sheet_size" },
         { "data": "total_sheet" },

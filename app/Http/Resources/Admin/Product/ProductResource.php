@@ -35,8 +35,16 @@ class ProductResource extends JsonResource
             return 'White';
         }
 
-        if($paperType == 1){
+        if($paperType == 2){
             return 'Yellow';
+        }
+
+        if($paperType == 3){
+            return 'White Back';
+        }
+
+        if($paperType == 4){
+            return 'Gray Back';
         }
 
         if($paperType == ''){

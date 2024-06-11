@@ -44,6 +44,7 @@
                                 <th style="width:12px">Si</th>
                                 <th>Dye No.</th>
                                 <th>Carton Size</th>
+                                <th>Sheet Size</th>
                                 <th>UPS</th>
                                 <th>Dye Lock</th>
                                 <th>Type</th>
@@ -85,6 +86,7 @@ $(document).ready(function(){
         { "data": "sn" },
         { "data": "dye_no" },
         { "data": "carton_size" },
+        { "data": "sheet_size" },
         { "data": "ups" },
         { "data": "dye_lock" },
         { "data": "type" },

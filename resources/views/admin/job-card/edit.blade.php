@@ -96,8 +96,8 @@
                 </tr>
 
                 <tr>
-                    <th style="width:160px;">Dye No.</th>
-                    <td>{{ $job_card->dye_details_id?$job_card->deyDetail->dye_no:'NEW' }}</td>
+                    <th style="width:160px;">Dye Details</th>
+                    <td>{{@$job_card->dye_details_id?@$job_card->deyDetail->dye_no.'/'.@$job_card->deyDetail->ups.'-'.@$job_card->deyDetail->dye_lock:'NEW', }}</td>
                 </tr>
 
                 <tr>
@@ -349,15 +349,15 @@
 <hr>
 
 
-<div id="kt_docs_repeater_advanced">
-        <div data-repeater-list="kt_docs_repeater_advanced">
+<div 1 id="kt_docs_repeater_advanced">
+        <div  data-repeater-list="kt_docs_repeater_advanced">
             @if($errors->count() == 0)
             @if($job_card->jobCardPapers->count() > 0)
                     @foreach($job_card->jobCardPapers as $jobCardPaper)
-                        <div data-repeater-item class="row-{{$jobCardPaper->id}}">
+                        <div 3 data-repeater-item class="row-{{$jobCardPaper->id}}">
                             <div class="card" style="position:relative;">
                                 <div class="card-body">
-
+<input type="hidden" name="item_id" class="item-id" value="{{$jobCardPaper->id}}">
                                     <div class="custom-row d-flex gap-3">
 
                                         <div class="w-100 paper-check">
@@ -414,6 +414,14 @@
                                             </div>
                                         </div>
 
+                                        <div class="w-20">
+                                            <div class="form-group remove-item">
+                                                <div class="form-group text-end">
+                                                    <button data-repeater-delete type="button" class="btn-labels btn btn-danger btn-sm" style="margin-top: 26px;"><i class="label-icon ri-delete-bin-fill"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+
 
                                     </div>
 
@@ -424,10 +432,10 @@
 
                     @else
                         @foreach(old('kt_docs_repeater_advanced', [[]]) as $item)
-                           <div data-repeater-item class="row-{{$loop->index}}">
+                           <div 2 data-repeater-item class="row-{{$loop->index}}">
                                 <div class="card" style="position:relative;">
                                     <div class="card-body">
-
+                                        <input type="hidden" name="item_id" class="item-id" value="{{$item['item_id']}}">
                                         
                                         <div class="custom-row d-flex gap-3">
 
@@ -488,6 +496,15 @@
                                                 </div>
                                             </div>
 
+
+                                            <div class="w-20">
+                                                <div class="form-group remove-item">
+                                                    <div class="form-group text-end">
+                                                        <button data-repeater-delete type="button" class="btn-labels btn btn-danger btn-sm" style="margin-top: 26px;"><i class="label-icon ri-delete-bin-fill"></i></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                          </div>
                                     </div>
                                 </div>
@@ -504,7 +521,7 @@
 
 
                     <!--begin::Repeater-->
-                    <div id="kt_docs_repeater_advanced">
+                    <div 2 id="kt_docs_repeater_advanced">
 
                         <div class="form-group">
                             <div data-repeater-list="kt_docs_repeater_advanced">
@@ -513,7 +530,7 @@
                                     <div class="card" style="position:relative;">
                                         <div class="card-body">
 
-                                            
+                                             <input type="hidden" name="item_id" class="item-id" value="{{$item['item_id']}}">
                                             <div class="custom-row d-flex gap-3">
 
                                                 <div class="w-100 paper-check">
@@ -572,6 +589,17 @@
                                                         <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.total_sheets') }}</small>
                                                     </div>
                                                 </div>
+
+
+                                                <div class="w-20">
+                                                    <div class="form-group remove-item">
+                                                        <div class="form-group text-end">
+                                                            <button data-repeater-delete type="button" class="btn-labels btn btn-danger btn-sm" style="margin-top: 26px;"><i class="label-icon ri-delete-bin-fill"></i></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
 
                                              </div>
                                         </div>
@@ -739,6 +767,7 @@ $('.getProduct').select2({
 
  var rowCounter = 0;
 $('#kt_docs_repeater_advanced').repeater({
+    isFirstItemUndeletable: true,
     defaultValues: {
         'text-input': 'foo'
     },

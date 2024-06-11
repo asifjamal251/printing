@@ -40,12 +40,19 @@ class MaterialOrder extends Model
     protected static function boot()
     {
         parent::boot();
-
+    
         static::creating(function ($receiptNo) {
-            $receiptNo->order_no = 'MO' . static::generateSerialNumber();
+            $receiptNo->order_no = 'RM/' . static::generateYearRange() . '/' . static::generateSerialNumber();
         });
     }
-
+    
+    protected static function generateYearRange()
+    {
+        $currentYear = date('y'); // Current year in two digits
+        $nextYear = $currentYear + 1; // Next year in two digits
+        return $currentYear . '-' . $nextYear;
+    }
+    
     protected static function generateSerialNumber()
     {
         return str_pad(static::max('id') + 1, 4, '0', STR_PAD_LEFT);

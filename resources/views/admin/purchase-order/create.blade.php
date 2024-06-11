@@ -530,6 +530,15 @@ $('body').on('change', '.getCartonName', function(){
                 $('input[name="kt_docs_repeater_advanced[' + position + '][gsm]"]').val(data.gsm);
                 $('input[name="kt_docs_repeater_advanced[' + position + '][art_work]"]').val(data.art_work);
                 getDyeDetails(position);
+            }else{
+                $('input[name="kt_docs_repeater_advanced[' + position + '][carton_size]"]').val('');
+                $('input[name="kt_docs_repeater_advanced[' + position + '][rate]"]').val('');
+                $('select[name="kt_docs_repeater_advanced[' + position + '][coating_type]"]').val('');
+                $('select[name="kt_docs_repeater_advanced[' + position + '][other_coating_type]"]').val('');
+                $('select[name="kt_docs_repeater_advanced[' + position + '][embossing_leafing]"]').val('');
+                $('select[name="kt_docs_repeater_advanced[' + position + '][paper_type]"]').val('');
+                $('input[name="kt_docs_repeater_advanced[' + position + '][gsm]"]').val('');
+                $('input[name="kt_docs_repeater_advanced[' + position + '][art_work]"]').val('');
             }
         }
     });

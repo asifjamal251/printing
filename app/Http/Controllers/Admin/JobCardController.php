@@ -189,6 +189,10 @@ class JobCardController extends Controller
                     $product->save();
 
                 }
+
+                if($request->deleted){
+                    JobCardPaper::whereIn('id', $request->deleted)->delete();
+                }
             }
 
             $total_sheets = JobCardPaper::where('job_card_id', $job_card->id)->sum('subtotal_sheet');

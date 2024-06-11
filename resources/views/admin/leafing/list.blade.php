@@ -47,7 +47,7 @@
                                 <th  style="width:120px">Oprator</th>
                                 <th>Job No.</th>
                                 <th>Set No.</th>
-                                <th>Carton</th>
+                                {{-- <th>Carton</th> --}}
                                 <th>Embossing/Leafing</th>
                                 <th>Total Sheets</th>
                                 <th>Counter</th>
@@ -213,7 +213,7 @@ $(document).ready(function(){
         },
         { "data": "job_card_no" },
         { "data": "set_no" },
-        { "data": "carton_name" },
+        // { "data": "carton_name" },
         { "data": "emb_leaf" },
         { "data": "total_sheet" },
         { "data": "leafing_counter",

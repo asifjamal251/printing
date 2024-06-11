@@ -57,29 +57,29 @@
     @else
 
     <div class="col-md-6 col-sm-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6 col-sm-12">
-                            <div class=" m-0 form-group {{$errors->has('item.0.module') ? ' has-error' : '' }}">
-                                {!! Form::label('module', 'Module') !!}
-                                {!! Form::select('item[0][module]', App\Models\Module::where('id', 1)->pluck('name', 'id'), 1, ['class' => 'form-control', 'placeholder' => 'Choose Module']) !!}
-                                <small class="text-danger">{{ $errors->first('item.0.module') }}</small>
-                            </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <div class=" m-0 form-group {{$errors->has('item.0.module') ? ' has-error' : '' }}">
+                            {!! Form::label('module', 'Module') !!}
+                            {!! Form::select('item[0][module]', App\Models\Module::where('id', 1)->pluck('name', 'id'), 1, ['class' => 'form-control', 'placeholder' => 'Choose Module']) !!}
+                            <small class="text-danger">{{ $errors->first('item.0.module') }}</small>
                         </div>
-
-                        <div class="col-md-6 col-sm-12">
-                            <div class=" m-0 form-group {{$errors->has('item.0.module_machine') ? ' has-error' : '' }}">
-                                {!! Form::label('module_machine', 'Module Machine') !!}
-                                {!! Form::select('item[0][module_machine]', App\Models\ModuleUser::where('module_id', 1)->pluck('name', 'id'), null, ['class' => 'form-control', 'placeholder' => 'Choose Module Machine']) !!}
-                                <small class="text-danger">{{ $errors->first('item.0.module_machine') }}</small>
-                            </div>
-                        </div>
-
                     </div>
+
+                    <div class="col-md-6 col-sm-12">
+                        <div class=" m-0 form-group {{$errors->has('item.0.module_machine') ? ' has-error' : '' }}">
+                            {!! Form::label('module_machine', 'Module Machine') !!}
+                            {!! Form::select('item[0][module_machine]', App\Models\ModuleUser::where('module_id', 1)->pluck('name', 'id'), null, ['class' => 'form-control', 'placeholder' => 'Choose Module Machine']) !!}
+                            <small class="text-danger">{{ $errors->first('item.0.module_machine') }}</small>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
+    </div>
 
     <div class="col-md-6 col-sm-12">
         <div class="card">

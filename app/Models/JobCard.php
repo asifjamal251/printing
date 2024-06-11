@@ -16,10 +16,11 @@ class JobCard extends Model
     protected $table = 'job_cards';
     protected $casts = [
         'bill_date' => 'datetime',
+        'job_card_created_at' => 'datetime',
     ];
 
     protected $fillable = [
-        'id', 'required_sheet','status_id','product_id','set_no'
+        'id', 'required_sheet','status_id','product_id','set_no', 'job_card_created_at'
     ];
     
     public function mediaFiles(){
