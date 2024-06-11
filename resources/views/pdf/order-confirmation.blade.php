@@ -59,12 +59,14 @@
             <p><b>{{get_app_setting('title')}}</b></p>
             <p style="margin-bottom: 0;">{{ get_app_setting('contact_no') }}</p>
             <p style="margin-bottom: 0;">{{ get_app_setting('email') }}</p>
+            <p style="margin-bottom:0">{{get_app_setting('gst')??''}}</p>
             <p style="margin-bottom: 0;">{{ get_app_setting('address') }}</p>
         </td>
         <td colspan="5" style="width: 50%;">
             <p><b>{{ $material['vendor']['name'] ?? 'N/A' }}</b></p>
             <p style="margin-bottom: 0;">{{ $material['vendor']['phone_no'] ?? 'N/A' }}</p>
             <p style="margin-bottom: 0;">{{ $material['vendor']['email'] ?? 'N/A' }}</p>
+            <p style="margin-bottom: 0;">{{ $material['vendor']['gst'] ?? 'N/A' }}</p>
             <p style="margin-bottom: 0;">{{ $material['vendor']['address'] ?? 'N/A' }}</p>
         </td>
     </tr>

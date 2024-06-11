@@ -103,11 +103,7 @@ class ClientController extends Controller
             'gst'=>'required',   
             'city'=>'required',   
             'pincode'=>'required',   
-            'company_name'=>'required',   
-            'email' => [
-                'required',
-                Rule::unique('clients')->ignore($id),
-            ], 
+            'company_name'=>'required',    
         ]);
 
         $client = Client::find($id);

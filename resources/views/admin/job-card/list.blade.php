@@ -49,7 +49,7 @@
                                 <th>Client</th>
                                 <th>Cartons</th>
                                 <th>Job Type</th>
-                                <th>Printing</th>
+                                <th style="with:150px;">Printing Machine</th>
                                 <th>Required Sheet</th>
                                 <th>Wastage Sheet</th>
                                 <th>Total Sheet</th>

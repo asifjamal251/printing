@@ -36,7 +36,7 @@ class ExcelController extends Controller
         
         $export = new ProductStockExport($stocks);
         Excel::store(new ProductStockExport($stocks), 'excell-download/product-stock.xlsx');
-        return response()->json(['filename' => 'https://colourimpration.s3.eu-north-1.amazonaws.com/excell-download/product-stock.xlsx']);
+        return response()->json(['filename' => config('printing.media_url').'excell-download/product-stock.xlsx']);
     }
 
     
@@ -52,7 +52,7 @@ class ExcelController extends Controller
 
         $export = new ProductLedgerExport($stocks);
         Excel::store(new ProductLedgerExport($stocks), 'excell-download/product-ledger.xlsx');
-        return response()->json(['filename' => 'https://colourimpration.s3.eu-north-1.amazonaws.com/excell-download/product-ledger.xlsx']);
+        return response()->json(['filename' => config('printing.media_url').'excell-download/product-ledger.xlsx']);
     }
 
     public function cartonPosition(Request $request)
@@ -64,7 +64,7 @@ class ExcelController extends Controller
         }])->get();
         $export = new CartonPositionExport($stocks);
         Excel::store(new CartonPositionExport($stocks), 'excell-download/carton-position.xlsx');
-        return response()->json(['filename' => 'https://colourimpration.s3.eu-north-1.amazonaws.com/excell-download/carton-position.xlsx']);
+        return response()->json(['filename' => config('printing.media_url').'excell-download/carton-position.xlsx']);
     }
 
 
@@ -81,6 +81,6 @@ class ExcelController extends Controller
 
         $export = new CuttingReportExport($cutting);
         Excel::store(new CuttingReportExport($stocks), 'excell-download/cutting-report.xlsx');
-        return response()->json(['filename' => 'https://colourimpration.s3.eu-north-1.amazonaws.com/excell-download/carton-position.xlsx']);
+        return response()->json(['filename' => config('printing.media_url').'excell-download/carton-position.xlsx']);
     }
 }

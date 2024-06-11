@@ -30,6 +30,7 @@ class PurchaseOrderController extends Controller
                 $datas->where('po_no', 'like', '%'.$search.'%');
                 $datas->orWhereHas('POItems', function ($query) use ($search) {
                     $query->where('carton_name', 'like', '%'.$search.'%');
+                    $query->orWhere('art_work', 'like', '%'.$search.'%');
                 });
             }
 
@@ -63,7 +64,7 @@ class PurchaseOrderController extends Controller
         $user = Auth::guard('admin')->user();
         $this->validate($request, [
             'client' => 'required',
-            'po_no' => 'required|unique:purchase_orders',
+            'po_no' => 'required',
             'po_date' => 'required',
             'kt_docs_repeater_advanced' => 'required|array',
             'kt_docs_repeater_advanced.*.carton_name' => 'required',

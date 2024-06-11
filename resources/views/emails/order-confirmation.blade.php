@@ -29,8 +29,12 @@
     </style>
 </head>
 <body>
-<p>Hello,</p>
-<p>Find attachme for order</p>
+<p>Respected Madam/Sir</p>
+<p>Greetings from <b>{{get_app_setting('title')}} !!!</b></p>
+<p>Please find attached purchase order</p>
+<p>for your urgent execution.</p>
+<p>Thankyou</p>
+<p>Purchase Team:- {{get_app_setting('title')}}</p>
 
 </body>
 </html>
