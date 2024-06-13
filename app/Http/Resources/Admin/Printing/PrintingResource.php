@@ -35,9 +35,13 @@ class PrintingResource extends JsonResource{
 
             if($type == 'Default'){
                 if ($timer->status == 1){
-                    $pauseTime = Carbon::parse($timer->resume_at); // Manually create a Carbon instance
+                    if(isset($timer->resume_at)){
+                        $pauseTime = Carbon::parse($timer->resume_at);
+                    }
+                    else{
+                        $pauseTime = Carbon::parse($timer->started_at);
+                    }
                     $now = Carbon::now();
-
                     $diffInSeconds = $pauseTime->diffInSeconds($now);
                     $finalResult = $diffInSeconds + $timer->worked_time;
 
@@ -113,10 +117,9 @@ class PrintingResource extends JsonResource{
             'status_id'=>$this->status_id,
             'job_card_id'=>$this->job_card_id,
             'carton_name'=>$this->job_card_id?getCartonNames(@$this->jobCard->jobCardItems):'',
-            'timer' => $this->timer($this->job_card_id, 'Timer'),
-            'timer_status' => $this->timer($this->job_card_id, 'Status'),
-            'timer' => $this->timer($this->job_card_id, 'Timer'),
-            'timer_status' => $this->timer($this->job_card_id, 'Status'),
+            'timer' => $this->timer(@$this->job_card_id, 'Timer'),
+            'timer_status' => $this->timer(@$this->job_card_id, 'Status'),
+            'timer_default' => $this->timer(@$this->job_card_id, 'Default'),
         ];
 
     }

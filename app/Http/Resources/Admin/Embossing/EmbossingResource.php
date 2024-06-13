@@ -4,6 +4,7 @@ namespace App\Http\Resources\Admin\Embossing;
 use App\Models\JobCardHistory;
 use App\Models\JobCardTimer;
 use App\Models\ModuleUser;
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class EmbossingResource extends JsonResource{
@@ -32,9 +33,13 @@ class EmbossingResource extends JsonResource{
 
             if($type == 'Default'){
                 if ($timer->status == 1){
-                    $pauseTime = Carbon::parse($timer->resume_at); // Manually create a Carbon instance
+                    if(isset($timer->resume_at)){
+                        $pauseTime = Carbon::parse($timer->resume_at);
+                    }
+                    else{
+                        $pauseTime = Carbon::parse($timer->started_at);
+                    }
                     $now = Carbon::now();
-
                     $diffInSeconds = $pauseTime->diffInSeconds($now);
                     $finalResult = $diffInSeconds + $timer->worked_time;
 
@@ -124,9 +129,9 @@ class EmbossingResource extends JsonResource{
             'job_card_id'=>$this->job_card_id,
             'file' => $this->jobCard->mediaFiles->count()>0?"<a class='glightbox' data-gallery='".$this->id."' href='".asset($this->jobCard->mediaFiles[0]['file'])."'> <img class='rounded avatar-sm' src='".asset($this->jobCard->mediaFiles[0]['file'])."'/></a>":"N/A",
             'carton_name'=>$this->job_card_id?getCartonNames(@$this->jobCard->jobCardItems):'',
-            'timer_status' => $this->timer($this->job_card_id, 'Status'),
-            'timer' => $this->timer($this->job_card_id, 'Timer'),
-            'timer_status' => $this->timer($this->job_card_id, 'Status'),
+            'timer' => $this->timer(@$this->job_card_id, 'Timer'),
+            'timer_status' => $this->timer(@$this->job_card_id, 'Status'),
+            'timer_default' => $this->timer(@$this->job_card_id, 'Default'),
         ];
 
     }

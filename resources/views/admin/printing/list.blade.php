@@ -245,17 +245,17 @@ $(document).ready(function(){
         { "data": "file" },
         { "data": "status" },
         { "data": "timer", 
-                render: function(data, type, row) {
-                    if(row['timer_status'] == 1){
-                        return '<span class="timer" data-start-time="'+row['timer']+'">'+formatTime(parseTime(row['timer']))+'</span>';
-                    }
-                    else{
-                        return '<span class="timers" data-start-time="'+row['timer']+'">'+formatTime(parseTime(row['timer']))+'</span>';
-                        //return row['timer'];
-                    }
-                    
+            render: function(data, type, row) {
+                if(row['timer_status'] == 1){
+                    return '<span class="timer" data-start-time="'+row['timer_default']+'">'+formatTime(parseTime(row['timer']))+'</span>';
                 }
-            },
+                else{
+                    return '<span class="timers" data-start-time="'+row['timer']+'">'+formatTime(parseTime(row['timer']))+'</span>';
+                    //return row['timer'];
+                }
+                
+            }
+        },
         {
             "data": "action",
             render: function(data, type, row) {

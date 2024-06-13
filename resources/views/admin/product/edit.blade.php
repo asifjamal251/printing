@@ -9,7 +9,7 @@
                     <div class="form-group col-md-4 col-sm-12">
                         <div class="w-100 form-group{{ $errors->has('paper_length') ? ' has-error' : '' }}">
                             {!! Form::label('paper_length', 'Length') !!}
-                            {!! Form::text('paper_length', $product->length, ['class' => 'form-control', 'placeholder' => 'Length']) !!}
+                            {!! Form::text('paper_length', $product->length, ['class' => 'form-control length', 'placeholder' => 'Length']) !!}
                             <small class="text-danger">{{ $errors->first('paper_length') }}</small>
                         </div>
                     </div>
@@ -17,7 +17,7 @@
                     <div class="form-group col-md-4 col-sm-12">
                         <div class="w-100 form-group{{ $errors->has('paper_width') ? ' has-error' : '' }}">
                             {!! Form::label('paper_width', 'Width') !!}
-                            {!! Form::text('paper_width', $product->width, ['class' => 'form-control', 'placeholder' => 'Width']) !!}
+                            {!! Form::text('paper_width', $product->width, ['class' => 'form-control width', 'placeholder' => 'Width']) !!}
                             <small class="text-danger">{{ $errors->first('paper_width') }}</small>
                         </div>
                     </div>
@@ -25,7 +25,7 @@
                     <div class="form-group col-md-4 col-sm-12">
                         <div class="w-100 form-group{{ $errors->has('paper_gsm') ? ' has-error' : '' }}">
                             {!! Form::label('paper_gsm', 'GSM') !!}
-                            {!! Form::text('paper_gsm', $product->gsm, ['class' => 'form-control', 'placeholder' => 'GSM']) !!}
+                            {!! Form::text('paper_gsm', $product->gsm, ['class' => 'form-control gsm', 'placeholder' => 'GSM']) !!}
                             <small class="text-danger">{{ $errors->first('paper_gsm') }}</small>
                         </div>
                     </div>
@@ -49,7 +49,7 @@
                     <div class="form-group col-md-4 col-sm-12">
                         <div class="form-group{{ $errors->has('paper_type') ? ' has-error' : '' }}">
                             {!! Form::label('paper_type', 'Paper Type') !!}
-                            {!! Form::select('paper_type', [1=>'White', 2=>'Yellow'], $product->paper_type, ['id' => 'paper_type', 'class' => 'form-control', 'placeholder' => 'Choose Paper Type']) !!}
+                            {!! Form::select('paper_type', [1=>'White', 2=>'Yellow', 3=>'White Back', 4=>'Gray Back' , 5 => 'ART Paper', 6 => 'Maplitho'], $product->paper_type, ['id' => 'paper_type', 'class' => 'form-control', 'placeholder' => 'Choose Paper Type']) !!}
                             <small class="text-danger">{{ $errors->first('paper_type') }}</small>
                         </div>
                     </div>

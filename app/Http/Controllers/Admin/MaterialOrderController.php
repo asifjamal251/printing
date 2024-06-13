@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\MaterialOrder\MaterialOrderCollection;
 use App\Mail\MaterialOrderConfirmation;
+use App\Models\Admin;
 use App\Models\MaterialOrder;
 use App\Models\MaterialOrderItem;
 use App\Models\MaterialOrderPlate;
@@ -14,6 +15,7 @@ use App\Models\PaperType;
 use App\Models\Product;
 use App\Models\Transaction;
 use App\Models\vendor;
+use App\Notifications\MaterialOrderNotification;
 use Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
@@ -127,6 +129,10 @@ class MaterialOrderController extends Controller
             $material_order->total_gst = $total_gst;
             $material_order->total = $total;
             $material_order->save();
+            $users = Admin::where('role_id', 2)->get();
+            foreach($users as $user){
+                $user->notify(new MaterialOrderNotification($material_order));
+            }
             
             return redirect()->route('admin.material-order.index')->with(['class'=>'success','message'=>'Paper Inward saved successfully.']);
         }
@@ -145,6 +151,16 @@ class MaterialOrderController extends Controller
         $material =  MaterialOrder::where('id', $id)->with(['madeBy', 'vendor', 'materialItems'=>function($query){
             $query->with(['product', 'unit']);
         }])->first();
+
+        $notification = auth('admin')->user()->notifications()
+            ->where('type', 'App\Notifications\MaterialOrderNotification')
+            ->where('data->order_id', $id)
+            ->first();
+        
+        if ($notification) {
+            $notification->markAsRead();
+        }
+
         return view('admin.material-order.view', compact('material'));
     }
 
@@ -349,6 +365,7 @@ class MaterialOrderController extends Controller
 
         
         if($request->send_email){
+            $user = Admin::find(1);
             $itemsData = $materialData->materialItems;
             $items = $itemsData->toArray();
             $material = $materialData->toArray();

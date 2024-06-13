@@ -39,7 +39,7 @@
                      <div class="form-group col-md-4 col-sm-12">
                         <div class="form-group{{ $errors->has('paper_type') ? ' has-error' : '' }}">
                             {!! Form::label('paper_type', 'Paper Type') !!}
-                            {!! Form::select('paper_type', [1=>'White', 2=>'Yellow'], null, ['id' => 'paper_type', 'class' => 'form-control', 'placeholder' => 'Choose Paper Type']) !!}
+                            {!! Form::select('paper_type', [1=>'White', 2=>'Yellow', 3=>'White Back', 4=>'Gray Back' , 5 => 'ART Paper', 6 => 'Maplitho'], null, ['id' => 'paper_type', 'class' => 'form-control', 'placeholder' => 'Choose Paper Type']) !!}
                             <small class="text-danger">{{ $errors->first('paper_type') }}</small>
                         </div>
                     </div>
@@ -104,6 +104,15 @@
                             <small class="text-danger">{{ $errors->first('paper_unit') }}</small>
                         </div>
                     </div>
+
+                    <div class="form-group col-md-4 col-sm-12">
+                        <div class="form-group{{ $errors->has('quantity') ? ' has-error' : '' }}">
+                            {!! Form::label('quantity', 'Quantity') !!}
+                            {!! Form::text('quantity', null, ['class' => 'form-control', 'placeholder' => 'Quantity']) !!}
+                            <small class="text-danger">{{ $errors->first('quantity') }}</small>
+                        </div>
+                    </div>
+
 
                     <div class="form-group col-md-4 col-sm-12">
                         <div class="form-group{{ $errors->has('in_hand_quantity') ? ' has-error' : '' }}">
@@ -187,6 +196,23 @@
                             {!! Form::label('unit', 'Unit') !!}
                             {!! Form::select('unit', \App\Models\Unit::select(\DB::raw('CONCAT(name, " (", code, ") ") as unit'), 'id')->pluck('unit', 'id'), null, ['id' => 'unit', 'class' => 'form-control', 'placeholder' => 'Choose an option']) !!}
                             <small class="text-danger">{{ $errors->first('unit') }}</small>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-4 col-sm-12">
+                        <div class="form-group{{ $errors->has('quantity') ? ' has-error' : '' }}">
+                            {!! Form::label('quantity', 'Quantity') !!}
+                            {!! Form::text('quantity', null, ['class' => 'form-control', 'placeholder' => 'Quantity']) !!}
+                            <small class="text-danger">{{ $errors->first('quantity') }}</small>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group col-md-4 col-sm-12">
+                        <div class="form-group{{ $errors->has('in_hand_quantity') ? ' has-error' : '' }}">
+                            {!! Form::label('in_hand_quantity', 'In Hand Quantity') !!}
+                            {!! Form::text('in_hand_quantity', null, ['class' => 'form-control', 'placeholder' => 'In Hand Quantity']) !!}
+                            <small class="text-danger">{{ $errors->first('in_hand_quantity') }}</small>
                         </div>
                     </div>
 

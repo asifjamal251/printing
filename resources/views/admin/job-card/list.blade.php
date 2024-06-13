@@ -40,6 +40,11 @@
                     
                     <div class="card-body">
                         <div class="table-responsive">
+
+                             <button id="scrollLeft" class="btn btn-primary" style="position: absolute; left: 0; top: 50%; transform: translateY(-50%); z-index: 10;width: 16px !important;height: 30px;line-height: 0px; font-size: 13px;min-width: 1px;padding: 0px;">&lt;</button>
+                            <button id="scrollRight" class="btn btn-primary" style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); z-index: 10;width: 16px !important;height: 30px;line-height: 0px;font-size: 13px;min-width: 1px; padding: 0px;">&gt;</button>
+
+
                         <table id="datatable" class="datatable table table-bordered border-secondary table-sm nowrap table-hover align-middle" style="width:100%">
                             <thead class="gridjs-thead">
                             <tr>
@@ -203,6 +208,13 @@ $(document).ready(function(){
     var table2 = $('#datatable').DataTable({
     "drawCallback": function( settings ) {
         lightbox.reload();
+
+        $('#datatable tbody').on('click', 'td:nth-child(1), td:nth-child(2)', function() {
+            var $row = $(this).closest('tr');
+            $('#datatable tbody tr').removeClass('table-primary');
+            $row.addClass('table-primary');
+        });
+
     },
      "ordering": false,
      "processing": true,
@@ -276,6 +288,20 @@ $(document).ready(function(){
     }]
 
 });
+
+ $('#scrollLeft').on('click', function() {
+        var container = $('.table-responsive');
+        container.animate({
+            scrollLeft: container.scrollLeft() - 200
+        }, 500);
+    });
+
+    $('#scrollRight').on('click', function() {
+        var container = $('.table-responsive');
+        container.animate({
+            scrollLeft: container.scrollLeft() + 200
+        }, 500);
+    });
 
 
     $('body').on('click', '.filters', function(){

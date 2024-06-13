@@ -38,9 +38,16 @@ class CuttingResource extends JsonResource{
 
             if($type == 'Default'){
                 if ($timer->status == 1){
-                    $pauseTime = Carbon::parse($timer->resume_at); // Manually create a Carbon instance
+                    if(isset($timer->resume_at)){
+                        $pauseTime = Carbon::parse($timer->resume_at);
+                    }
+                    else{
+                        $pauseTime = Carbon::parse($timer->started_at);
+                    }
                     $now = Carbon::now();
-
+                    if(!isset($pauseTime)){
+                        $pauseTime = Carbon::parse($timer->started_at);
+                    }
                     $diffInSeconds = $pauseTime->diffInSeconds($now);
                     $finalResult = $diffInSeconds + $timer->worked_time;
 

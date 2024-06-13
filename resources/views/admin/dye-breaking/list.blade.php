@@ -55,6 +55,7 @@
                                 <th>File</th>
                                 <th>Status</th>
                                 <th>Timer</th>
+                                <th>Remarks</th>
                                 @can(['edit_dye_breaking','delete_dye_breaking', 'read_dye_breaking', 'change_status_dye_breaking'])
                                   <th>Action</th>
                                 @endcan
@@ -252,7 +253,7 @@ $(document).ready(function(){
                 
             }
         },
-
+        { "data": "remarks" },
         {
             "data": "action",
             render: function(data, type, row) {

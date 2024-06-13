@@ -34,9 +34,13 @@ class DyeCuttingResource extends JsonResource{
 
             if($type == 'Default'){
                 if ($timer->status == 1){
-                    $pauseTime = Carbon::parse($timer->resume_at); // Manually create a Carbon instance
+                    if(isset($timer->resume_at)){
+                        $pauseTime = Carbon::parse($timer->resume_at);
+                    }
+                    else{
+                        $pauseTime = Carbon::parse($timer->started_at);
+                    }
                     $now = Carbon::now();
-
                     $diffInSeconds = $pauseTime->diffInSeconds($now);
                     $finalResult = $diffInSeconds + $timer->worked_time;
 
@@ -46,7 +50,6 @@ class DyeCuttingResource extends JsonResource{
         } else{
             return '0:0:0';
         }
-
     }
 
     private function moduleUser($user, $id, $jobCardId){

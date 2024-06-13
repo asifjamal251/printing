@@ -50,6 +50,7 @@
                                 <th>Carton</th>
                                 <th>Client</th>
                                 <th>PO Quantity</th>
+                                <th>Dye No/Lock Type</th>
                                 <th>Dye Breaking Quantity</th>
                                 <th>Pasted Quantity</th>
                                 <th>Ready Quantity</th>
@@ -57,6 +58,7 @@
                                 <th>File</th>
                                 <th>Status</th>
                                 <th>Timer</th>
+                                <th>Remarks</th>
                                 @can(['edit_pasting','delete_pasting', 'read_pasting', 'change_status_pasting'])
                                   <th>Action</th>
                                 @endcan
@@ -223,6 +225,7 @@ $(document).ready(function(){
         { "data": "carton_name" },
         { "data": "client" },
         { "data": "po_quantity" },
+        { "data": "dye_no" },
         { "data": "dye_breaking" },
         { "data": "ready_quantity" },
         { "data": "add_quantity",
@@ -270,6 +273,7 @@ $(document).ready(function(){
                 
             }
         },
+        { "data": "remarks" },
         {
             "data": "action",
             render: function(data, type, row) {

@@ -357,7 +357,7 @@
                         <div 3 data-repeater-item class="row-{{$jobCardPaper->id}}">
                             <div class="card" style="position:relative;">
                                 <div class="card-body">
-<input type="hidden" name="item_id" class="item-id" value="{{$jobCardPaper->id}}">
+<input type="hidden" name="item_id" class="item-id" value="{{@$jobCardPaper->id}}">
                                     <div class="custom-row d-flex gap-3">
 
                                         <div class="w-100 paper-check">
@@ -435,7 +435,7 @@
                            <div 2 data-repeater-item class="row-{{$loop->index}}">
                                 <div class="card" style="position:relative;">
                                     <div class="card-body">
-                                        <input type="hidden" name="item_id" class="item-id" value="{{$item['item_id']}}">
+                                        <input type="hidden" name="item_id" class="item-id" value="{{@$item['item_id']}}">
                                         
                                         <div class="custom-row d-flex gap-3">
 
@@ -530,7 +530,7 @@
                                     <div class="card" style="position:relative;">
                                         <div class="card-body">
 
-                                             <input type="hidden" name="item_id" class="item-id" value="{{$item['item_id']}}">
+                                             <input type="hidden" name="item_id" class="item-id" value="{{@$item['item_id']}}">
                                             <div class="custom-row d-flex gap-3">
 
                                                 <div class="w-100 paper-check">
