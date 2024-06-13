@@ -23,7 +23,7 @@ class ProductController extends Controller
         if ($request->ajax()) {
 
             if ($request->type === 'category') {
-                $categories = Category::orderBy('name','asc')->get();
+                $categories = Category::orderBy('ordering','asc')->get();
                 $cat = array();
                 foreach ($categories as $cat2) {
                     $cat[]=['id'=>$cat2->id,'text'=>$cat2->name,'a_attr'=>['href'=>adminRoute('index','category='.$cat2->id)],'parent'=>($cat2->parent)?$cat2->parent:'#'];
@@ -42,9 +42,19 @@ class ProductController extends Controller
             }
 
             if($request->category != ''){
-                $datas->when($request->category != '', function ($query) use ($request) {
-                    $query->where('category_id', $request->category);
-                });
+                $catCount = Category::where(['id'=>$request->category, 'parent' => null])->get();
+                if($catCount->count() > 0){
+                    $cat_ids = Category::where(['parent'=>$request->category])->pluck('id');
+                    $datas->when($request->category != '', function ($query) use ($request, $cat_ids) {
+                        $query->whereIn('category_id', $cat_ids);
+                    }); 
+                }
+                else{
+                    $datas->when($request->category != '', function ($query) use ($request) {
+                        $query->where('category_id', $request->category);
+                    });  
+                }
+                
             }
 
             if($request->product_type){
@@ -116,7 +126,10 @@ class ProductController extends Controller
         $product->category_id = $request->category;
         $product->hsn = $request->hsn;
         $product->weight_per_piece = $request->weight_per_piece;
-        $product->quantity = $request->quantity??0;
+        if($request->quantity){
+            $product->quantity = $request->quantity;
+        }
+        $product->in_hand_quantity = $request->in_hand_quantity;
         $product->product_type_id = $request->product_type;
         $product->item_per_packet = 1;
        
@@ -141,6 +154,7 @@ class ProductController extends Controller
 
 
     public function storePaper(Request $request) {
+        //return $request->all();
         $user = Auth::guard('admin')->user();
 
         $product_name = $this->makeProductName($request->paper_length, $request->paper_width, $request->paper_gsm);
@@ -178,6 +192,9 @@ class ProductController extends Controller
         $product->weight_per_piece = $request->weight_per_sheet;
         $product->unit_id = $request->paper_unit;
         $product->hsn = $request->paper_hsn;
+        if($request->quantity){
+            $product->quantity = $request->quantity;
+        }
         $product->in_hand_quantity = $request->in_hand_quantity;
         $product->type = 1;
        
@@ -189,8 +206,8 @@ class ProductController extends Controller
             $transaction->product_id = $product->id;
             $transaction->type = 'Opening Balance';
             $transaction->current_quantity = 0;
-            $transaction->new_quantity = $product->quantity??0;
-            $transaction->total_quantity = $product->quantity??0;
+            $transaction->new_quantity = $product->quantity;
+            $transaction->total_quantity = $product->quantity;
             $transaction->remarks = 'New Paper Added';
             $transaction->trancation_by = $user->id;
             $transaction->save();

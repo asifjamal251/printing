@@ -161,6 +161,7 @@ class PurchaseOrderController extends Controller
                     'sn'=>++$request->start, 
                     'id'=>$data->id,
                     'po_id'=>$id,
+                    'remarks'=>$data->remarks??'N/A', 
                     'carton_name'=>$data->carton_name, 
                     'art_work'=>$data->art_work, 
                     'carton_size'=>$data->carton_size,

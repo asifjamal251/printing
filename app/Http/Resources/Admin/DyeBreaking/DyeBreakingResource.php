@@ -122,6 +122,7 @@ class DyeBreakingResource extends JsonResource{
             'job_card_no'=>'<a class="text-danger" target="_blank" href="/admin/job-card/'.$this->jobCard->id.'">'.$this->jobCard->job_card_no."</a>",
             'set_no' => $this->jobCard->set_no,
             'carton_name' => @$this->POItem->carton_name,
+            'remarks' => @$this->POItem->remarks,
             'po_quantity' => @$this->POItem->quantity,
             'client' => $this->PO->client->company_name, 
             'ready_quantity' => $this->ready_quantity??'', 

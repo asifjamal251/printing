@@ -61,25 +61,25 @@ class Admin extends Authenticatable
 
 
 
-    protected function google2faSecret(): Attribute{
-        return new Attribute(
-            get: function ($value) {
-                try {
-                    $decryptedValue = decrypt($value);
-                    Log::info('Decrypted value:', ['value' => $decryptedValue]);
-                    return $decryptedValue;
-                } catch (\Exception $e) {
-                    Log::error('Decryption failed:', ['error' => $e->getMessage()]);
-                    return null;
-                }
-            },
-            set: function ($value) {
-                $encryptedValue = encrypt($value);
-                Log::info('Encrypted value:', ['value' => $encryptedValue]);
-                return $encryptedValue;
-            }
-        );
-    }
+    // protected function google2faSecret(): Attribute{
+    //     return new Attribute(
+    //         get: function ($value) {
+    //             try {
+    //                 $decryptedValue = decrypt($value);
+    //                 Log::info('Decrypted value:', ['value' => $decryptedValue]);
+    //                 return $decryptedValue;
+    //             } catch (\Exception $e) {
+    //                 Log::error('Decryption failed:', ['error' => $e->getMessage()]);
+    //                 return null;
+    //             }
+    //         },
+    //         set: function ($value) {
+    //             $encryptedValue = encrypt($value);
+    //             Log::info('Encrypted value:', ['value' => $encryptedValue]);
+    //             return $encryptedValue;
+    //         }
+    //     );
+    // }
 
 
      public function hasAccess($permissions) :bool

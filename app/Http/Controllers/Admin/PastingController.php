@@ -33,7 +33,7 @@ class PastingController extends Controller
                 ELSE 0
             END")->orderBy('created_at', 'desc')->whereNotIn('status_id', [99])
             ->with(['user', 'PO', 'POItem', 'jobCard'=>function($query){
-                $query->with(['paper', 'jobCardItems', 'jobCardUser']);
+                $query->with(['paper', 'jobCardItems', 'jobCardUser', 'deyDetail']);
             }])->has('jobCard');
 
 

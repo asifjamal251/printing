@@ -107,7 +107,7 @@
                     <thead class="gridjs-thead">
                         <tr>
                             <th style="width:12px">Si</th>
-                            <th>Code</th>
+                            {{-- <th>Code</th> --}}
                             <th>Product</th>
                             <th>Product Type</th>
                             <th>Paper Type</th>
@@ -585,7 +585,7 @@
             },
             "columns": [
                 { "data": "sn" },
-                { "data": "code" },
+                // { "data": "code" },
                 { "data": "product" },
                 { "data": "product_type" },
                 { "data": "paper_type" },
@@ -1192,6 +1192,7 @@ function downloadLedger(element, id){
 
 
 function packetWeight() {
+
     var length = $('#productSaveFormPaper .length').val();
     var width = $('#productSaveFormPaper .width').val();
     var gsm = $('#productSaveFormPaper .gsm').val();
@@ -1208,9 +1209,9 @@ function packetWeight() {
     if (!isNaN(length) && !isNaN(width) && !isNaN(gsm) && !isNaN(sheet)) {
         var packet_weight = (length * width * gsm * sheet) / 15500;
         var new_packet_weight = packet_weight / 100;
-        $('#productSaveFormPaper .packet_weight').val(new_packet_weight.toFixed(2));
+        $('#productSaveFormPaper .packet_weight').val(new_packet_weight.toFixed(4));
         var weight_per_sheet = new_packet_weight / sheet;
-        $('[name="weight_per_sheet"]').val(weight_per_sheet.toFixed(3));
+        $('[name="weight_per_sheet"]').val(weight_per_sheet.toFixed(4));
     }
 }
 

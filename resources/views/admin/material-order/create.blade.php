@@ -91,7 +91,6 @@
 <div class="row">
     <div class="col-lg-12">
 
-
         {!! Form::open(['route'=>'admin.'.request()->segment(2).'.store', 'files'=>true]) !!}
 
         <div class="card">
@@ -202,10 +201,10 @@
                                     </div>
 
                                     <div class="form-group col-unit">
-                                        <div class="form-group{{ $errors->has('unit') ? ' has-error' : '' }}">
+                                        <div class="form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.unit') ? ' has-error' : '' }}">
                                             {!! Form::label('unit', 'Unit') !!}
                                             {!! Form::select('unit', App\Models\Unit::pluck('name', 'id'), old('kt_docs_repeater_advanced.'.$loop->index.'.unit', $item['unit'] ?? ''), ['id' => 'unit', 'class' => 'form-control form-control-sm', 'placeholder' => 'Unit']) !!}
-                                            <small class="text-danger">{{ $errors->first('unit') }}</small>
+                                            <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.unit') }}</small>
                                         </div>
                                     </div>
 

@@ -52,6 +52,7 @@
                                 <td>{{$po->client->company_name}}</td>
                                 <td>{{$po->po_no}}</td>
                                 <td>{{$po->created_at->format('d F, Y')}}</td>
+                                <td>{!! status($po->status_id) !!}</td>
                                 <td>
                                     <div class="form-group{{ $errors->has('remarks') ? ' has-error' : '' }}">
                                         {!! Form::text('remarks', null, ['class' => 'form-control', 'placeholder' => 'Remarks']) !!}
@@ -109,6 +110,7 @@
                                 <th scope="col">Other Coating Type</th> 
                                 <th scope="col">Embossing/Leafing</th> 
                                 <th scope="col">Paper Type</th> 
+                                <th scope="col">Remarks</th> 
                                 <th scope="col">Status</th> 
                             </tr>
                         </thead>
@@ -186,6 +188,7 @@ $(document).ready(function(){
             { "data": "other_coating_type" },
             { "data": "embossing_leafing" },
             { "data": "paper_type" },
+            { "data": "remarks" },
             { "data": "status" },
            
             

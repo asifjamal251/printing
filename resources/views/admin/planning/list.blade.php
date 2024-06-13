@@ -76,6 +76,7 @@
                                 <th>Embos/Leaf</th>
                                 <th>Paper Type</th>
                                 <th style="width:50px;">UPS</th>
+                                <th>Remarks</th>
                                 <th>Action</th>
                                 
                             </tr>
@@ -232,6 +233,7 @@ $(document).ready(function(){
                     
                 }
             },
+            { "data": "remarks" },
 
             { "data": "remove",
                 render: function(data, type, row) {

@@ -236,17 +236,17 @@ $(document).ready(function(){
         { "data": "file" },
         { "data": "status" },
         { "data": "timer", 
-                render: function(data, type, row) {
-                    if(row['timer_status'] == 1){
-                        return '<span class="timer" data-start-time="'+row['timer_default']+'">'+formatTime(parseTime(row['timer']))+'</span>';
-                    }
-                    else{
-                        return '<span class="timers" data-start-time="'+row['timer']+'">'+formatTime(parseTime(row['timer']))+'</span>';
-                        //return row['timer'];
-                    }
-                    
+            render: function(data, type, row) {
+                if(row['timer_status'] == 1){
+                    return '<span class="timer" data-start-time="'+row['timer_default']+'">'+formatTime(parseTime(row['timer']))+'</span>';
                 }
-            },
+                else{
+                    return '<span class="timers" data-start-time="'+row['timer']+'">'+formatTime(parseTime(row['timer']))+'</span>';
+                    //return row['timer'];
+                }
+                
+            }
+        },
         {
             "data": "action",
             render: function(data, type, row) {
@@ -258,10 +258,12 @@ $(document).ready(function(){
                     btn+='<li><a class="dropdown-item edit-item-btn" onclick="updateTimer(\'{{ route('admin.job-card.timer.content') }}\',{machine:4, id:'+row['id']+',job_card_id:'+row['job_card_id']+'})" href="javascript:void(0);"><i class="ri-alarm-line align-bottom me-2 text-muted"></i> Timer</a></li>';
 
                     @can('change_status_lamination')
-                        if(row['status_id'] == 2){
-                            btn+='<li><a onclick="updateData(\'{{ route('admin.lamination.changeStatus') }}\',{status:1,id:'+row['id']+',job_card_id:'+row['job_card_id']+'})" class="dropdown-item edit-item-btn" href="javascript:void(0);"><i class="ri-check-double-line align-bottom me-2 text-muted"></i> Completed</a></li>';
-                        }else{
-                            btn+='<li><a onclick="updateData(\'{{ route('admin.lamination.changeStatus') }}\',{status:2,id:'+row['id']+',job_card_id:'+row['job_card_id']+'})" class="dropdown-item edit-item-btn" href="javascript:void(0);"><i class="bx bx-x align-bottom me-2 fs-24 text-muted"></i> Cancel</a></li>';
+                        if (row['timer_status'] == 2) {
+                            if(row['status_id'] == 2){
+                                btn+='<li><a onclick="updateData(\'{{ route('admin.lamination.changeStatus') }}\',{status:1,id:'+row['id']+',job_card_id:'+row['job_card_id']+'})" class="dropdown-item edit-item-btn" href="javascript:void(0);"><i class="ri-check-double-line align-bottom me-2 text-muted"></i> Completed</a></li>';
+                            }else{
+                                btn+='<li><a onclick="updateData(\'{{ route('admin.lamination.changeStatus') }}\',{status:2,id:'+row['id']+',job_card_id:'+row['job_card_id']+'})" class="dropdown-item edit-item-btn" href="javascript:void(0);"><i class="bx bx-x align-bottom me-2 fs-24 text-muted"></i> Cancel</a></li>';
+                            }
                         }
                     @endcan
 
