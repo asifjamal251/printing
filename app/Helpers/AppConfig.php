@@ -209,7 +209,7 @@ if (!function_exists('getCartonNames2')) {
         $cartonElements = [];
         
         foreach ($items as $item) {
-            $cartonElements[] = '<p class="m-0 carton-list">' . $item->POItem->carton_name . '-['. $item->POItem->art_work . '] <b>|</b> '.$item->POItem->carton_size.' <b>| Quantity - </b>'.$item->POItem->quantity.' <b>| UPS-</b>' .$item->ups.'</p> ';
+            $cartonElements[] = '<p class="m-0 carton-list">' . $item->POItem->carton_name . '-['. $item->POItem->art_work . '] <b>|</b> '.$item->POItem->carton_size.' <b>| Quantity - </b>'.$item->POItem->quantity.' <b>| UPS-</b>' .$item->ups.'<b> | Paper - </b>'. $item->POItem->paperType->type . '['. $item->POItem->gsm.']' .'</p> ';
         }
         $uniqueCartonElements = array_unique($cartonElements);
         return implode('', $uniqueCartonElements);

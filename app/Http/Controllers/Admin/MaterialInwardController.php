@@ -151,6 +151,14 @@ class MaterialInwardController extends Controller
     }
 
 
+    public function show($id){
+        $material =  MaterialInward::where('id', $id)->with(['vendor', 'materialItems'=>function($query){
+            $query->with(['product', 'unit']);
+        }])->first();
+        return view('admin.material-inward.view', compact('material'));
+    }
+
+
     public function update(Request $request, $id) {
        // return $request->deleted;
         //return $request->all();

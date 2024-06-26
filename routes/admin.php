@@ -93,6 +93,7 @@ Route::middleware(['admin', '2fa'])->name('admin.')->group(function() {
     //PDF Download
     Route::controller(PDFController::class)->prefix('download-pdf')->name('pdf-download.')->group(function(){
         Route::get('billing/{billings}', 'billing')->name('billing');  
+        Route::get('material-inward/{id}', 'materialInward')->name('material-inward');  
     });
 
 

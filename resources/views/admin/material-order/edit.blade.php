@@ -146,7 +146,7 @@
                                             <label class="form-label">Choose Product</label>
                                             <select name="product" class="form-select form-select-sm getProduct" data-kt-repeater="select2" data-placeholder="Select an option">
 
-                                                <option selected="selected" value="{{$item->product_id}}">{{$product->name.'('.$product->code.''.$product->productType->type .')-'.$product->category->name}}</option>
+                                                <option selected="selected" value="{{$item->product_id}}">{{$product->name.'('.$product->code.' '.$product->productType->type .')-'.$product->category->name}}</option>
                                                
                                             </select>
                                             <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.product') }}</small>

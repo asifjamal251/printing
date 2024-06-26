@@ -198,16 +198,17 @@ class ProductController extends Controller
        
 
         if($product->save()){ 
-
-            $transaction = new Transaction;
-            $transaction->product_id = $product->id;
-            $transaction->type = 'Opening Balance';
-            $transaction->current_quantity = 0;
-            $transaction->new_quantity = $product->quantity;
-            $transaction->total_quantity = $product->quantity;
-            $transaction->remarks = 'New Paper Added';
-            $transaction->trancation_by = $user->id;
-            $transaction->save();
+            if($request->quantity){
+                $transaction = new Transaction;
+                $transaction->product_id = $product->id;
+                $transaction->type = 'Opening Balance';
+                $transaction->current_quantity = 0;
+                $transaction->new_quantity = $product->quantity;
+                $transaction->total_quantity = $product->quantity;
+                $transaction->remarks = 'New Paper Added';
+                $transaction->trancation_by = $user->id;
+                $transaction->save();
+            }
             return response()->json(['message'=>'Paper Save Successfully.', 'class'=>'success', 'error'=>false]);
         }
 

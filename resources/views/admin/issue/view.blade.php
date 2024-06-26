@@ -93,7 +93,7 @@ th {
         @foreach($material->issueItems as $item)
             <tr>
                 <td>{{$loop->index+1}}.</td>
-                <td>{{$item->product->name}}</td>
+                <td>{{@$item->product->name}} - {{@$item->product->productType->type}}</td>
                 <td>{{$item->product->hsn}}</td>
                 <td>{{$item->issueFor->name}}</td>
                 <td>{{$item->quantity}}</td>

@@ -215,7 +215,7 @@ $(document).ready(function(){
                     @can(['edit_material_inward','delete_material_inward','read_material_inward'])
 
                     @can('read_material_inward')
-                    //btn += '<li><a class="dropdown-item" href="{{ request()->url() }}/' + row['id'] + '"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li>';
+                    btn += '<li><a class="dropdown-item" href="{{ request()->url() }}/' + row['id'] + '"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li>';
                     @endcan
 
                     @can('edit_material_inward')
