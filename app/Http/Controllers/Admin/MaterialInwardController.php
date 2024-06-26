@@ -198,7 +198,7 @@ class MaterialInwardController extends Controller
                     $old_total_item = $input['old_total_item'];
                     $changeQuantity =  $input['quantity'] - $old_quantity;
                     $changeTotalItem =  $input['total_item'] - $old_total_item;
-                    $item->quantity += $changeTotalItem;
+                    $item->quantity = $input['quantity'];
                     $item->total_item += $changeTotalItem;
 
                     if($changeTotalItem != 0){

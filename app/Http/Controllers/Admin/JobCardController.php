@@ -302,10 +302,10 @@ class JobCardController extends Controller
 
     public function userAssign(Request $request, $id)
     {
-        $job_card = JobCard::where('id', $id)->with(['jobCardUser'=>function($query){
-            $query->with(['module', 'moduleUser', 'jobCardItems' => function($query){
+        $job_card = JobCard::where('id', $id)->with(['jobCardItems' => function($query){
                 $query->with(['POItem']);
-            }]);
+            }, 'jobCardUser'=>function($query){
+            $query->with(['module', 'moduleUser']);
         }])->first();
         $user = Admin::orderBy('name', 'asc')->get();
         return view('admin.job-card.user', compact('job_card', 'user'));

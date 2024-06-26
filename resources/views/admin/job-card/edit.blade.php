@@ -354,6 +354,10 @@
             @if($errors->count() == 0)
             @if($job_card->jobCardPapers->count() > 0)
                     @foreach($job_card->jobCardPapers as $jobCardPaper)
+                    @php
+                        $product = App\Models\Product::where('id', $jobCardPaper->product_id)->with(['productType', 'category'])->first();
+                    @endphp
+
                         <div 3 data-repeater-item class="row-{{$jobCardPaper->id}}">
                             <div class="card" style="position:relative;">
                                 <div class="card-body">
@@ -365,7 +369,7 @@
                                                 <label class="form-label">Choose Product <span name="my_stock" class="badge bg-success"></span></label>
                                                 <select name="product" class="form-select form-select-sm getProduct" data-kt-repeater="select2" data-placeholder="Select an option">
 
-                                                    <option selected="selected" value="{{$jobCardPaper->product_id}}">{{App\Models\Product::where('id', $jobCardPaper->product_id)->value('name')}}</option>
+                                                    <option selected="selected" value="{{$jobCardPaper->product_id}}">{{$product->name.'('.$product->code.' '.$product->productType->type .')-'.$product->category->name}}</option>
                                                    
                                                 </select>
                                                 <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.product') }}</small>
@@ -767,7 +771,7 @@ $('.getProduct').select2({
 
  var rowCounter = 0;
 $('#kt_docs_repeater_advanced').repeater({
-    isFirstItemUndeletable: true,
+    //isFirstItemUndeletable: true,
     defaultValues: {
         'text-input': 'foo'
     },

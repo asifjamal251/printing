@@ -64,17 +64,17 @@ th {
                         <table class="border-secondary table-hover table table-bordered nowrap align-middle text-dark ">
     <tbody>
         <tr class="text-center">
-            <th colspan="8">Material Issue Slip</th>
+            <th colspan="9">Material Issue Slip</th>
         </tr>
         <tr>
             <th colspan="3">{{get_app_setting('title')}}</th>
             <td rowspan="2"></td>
-            <th colspan="2">Issue Slip No.</th>
+            <th colspan="3">Issue Slip No.</th>
             <td colspan="2">{{$material->issue_no}}</td>
         </tr>
         <tr>
             <td colspan="3">{!! get_app_setting('address') !!}</td>
-            <th colspan="2">Issue Date</th>
+            <th colspan="3">Issue Date</th>
             <td colspan="2">{{$material->created_at->format('d F, Y')}}</td>
         </tr>
 
@@ -86,6 +86,7 @@ th {
             <th>Quantity</th>
             <th>Unit</th>
             <th>Wt/Pc</th>
+            <th>Remarks</th>
             <th>Total Quantity</th>
         </tr>
 
@@ -98,13 +99,14 @@ th {
                 <td>{{$item->quantity}}</td>
                 <td>{{$item->unit}}</td>
                 <td>{{$item->product->weight_per_piece}}</td>
+                <td>{{$item->remarks ??'N/A'}}</td>
                 <td>{{$item->quantity * $item->product->weight_per_piece}}</td>
             </tr>
         @endforeach
  
 
         <tr style="border-top:2px solid #3577f1;">
-            <th colspan="2">Issue By</th>
+            <th colspan="3">Issue By</th>
             <td colspan="6">{{$material->user->name}}</td>
             
         </tr>

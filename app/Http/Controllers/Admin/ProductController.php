@@ -19,7 +19,8 @@ class ProductController extends Controller
 {
    
     public function index(Request $request){
-       //return Product::orderBy('created_at', 'desc')->with(['unit', 'productType'])->get();
+
+        //$product = Product::orderBy('created_at', 'desc')->with(['unit', 'productType'])->get();
         if ($request->ajax()) {
 
             if ($request->type === 'category') {
@@ -42,19 +43,9 @@ class ProductController extends Controller
             }
 
             if($request->category != ''){
-                $catCount = Category::where(['id'=>$request->category, 'parent' => null])->get();
-                if($catCount->count() > 0){
-                    $cat_ids = Category::where(['parent'=>$request->category])->pluck('id');
-                    $datas->when($request->category != '', function ($query) use ($request, $cat_ids) {
-                        $query->whereIn('category_id', $cat_ids);
-                    }); 
-                }
-                else{
-                    $datas->when($request->category != '', function ($query) use ($request) {
-                        $query->where('category_id', $request->category);
-                    });  
-                }
-                
+                $datas->when($request->category != '', function ($query) use ($request) {
+                    $query->where('category_id', $request->category);
+                });  
             }
 
             if($request->product_type){
@@ -158,9 +149,10 @@ class ProductController extends Controller
         $user = Auth::guard('admin')->user();
 
         $product_name = $this->makeProductName($request->paper_length, $request->paper_width, $request->paper_gsm);
+        $product_name_cm = $this->makeProductName($request->paper_length_cm, $request->paper_width_cm, $request->paper_gsm);
 
         if($request->id == ''){
-            if(Product::where(['name'=>$product_name, 'category_id'=>$request->category])->count() > 0){
+            if(Product::where(['name'=>$product_name, 'product_type_id'=>$request->product_type])->count() > 0){
                 return response()->json(['message'=>'This paper type is already exist', 'class'=>'error', 'error'=>true]);
             }
         }
@@ -169,7 +161,9 @@ class ProductController extends Controller
             'paper_type'=>'required',     
             'category'=>'required',     
             'paper_length'=>'required',     
+            'paper_length_cm'=>'required',     
             'paper_width'=>'required',     
+            'paper_width_cm'=>'required',     
             'paper_gsm'=>'required',     
             'product_type'=>'required',     
             'paper_packet_weight'=>'required',     
@@ -180,11 +174,14 @@ class ProductController extends Controller
 
         $product = Product::firstOrNew(['id'=>$request->id]);
         $product->name = $product_name;
+        $product->name_cm = $product_name_cm;
         $product->paper_type = $request->paper_type;
         $product->category_id = $request->category;
         $product->code = $request->product_code;
         $product->length = $request->paper_length;
+        $product->length_cm = $request->paper_length_cm;
         $product->width = $request->paper_width;
+        $product->width_cm = $request->paper_width_cm;
         $product->gsm = $request->paper_gsm;
         $product->product_type_id = $request->product_type;
         $product->packet_weight = $request->paper_packet_weight;
@@ -291,19 +288,28 @@ class ProductController extends Controller
         if (is_float($length) || (is_string($length) && preg_match('/\.\d*[1-9]/', $length))) {
             $formattedLength = $length;
         } else {
-            $formattedLength = (int)$length;
+            $formattedLength1 = (int)$length;
+            $formattedLength = $this->removeTrailingZeros($formattedLength1);
         }
 
         if (is_float($width) || (is_string($width) && preg_match('/\.\d*[1-9]/', $width))) {
             $formattedWidth = $width;
         } else {
-            $formattedWidth = (int)$width;
+            $formattedWidth1 = (int)$width;
+            $formattedWidth = $this->removeTrailingZeros($formattedWidth1);
         }
 
         $formattedGSM = $gsm;
         $result = $formattedLength . 'X' . $formattedWidth . '-' .$formattedGSM;
 
         return $result;
+    }
+
+    function removeTrailingZeros($number){
+        if (strpos($number, '.') !== false) {
+            $number = rtrim(rtrim($number, '0'), '.');
+        }
+        return $number;
     }
 
     public function ledger(Request $request, $id)

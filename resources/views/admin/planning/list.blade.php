@@ -276,15 +276,15 @@ $('body').on('change', '.select-checkbox', function(){
 });
 
 
-$('body').on('change', '.ups-input', function(){
-    var defaultUPS = $(this).attr('data-ups');
-    var inputUPS = $(this).val();
+// $('body').on('change', '.ups-input', function(){
+//     var defaultUPS = $(this).attr('data-ups');
+//     var inputUPS = $(this).val();
 
-    if(defaultUPS.length > 0 && inputUPS > defaultUPS){
-        alert('You Can Not Set Larger UPS');
-        $(this).val(defaultUPS)
-    }
-});
+//     if(defaultUPS.length > 0 && inputUPS > defaultUPS){
+//         alert('You Can Not Set Larger UPS');
+//         $(this).val(defaultUPS)
+//     }
+// });
 
 
 $('#getCheckedDataBtn').on('click', function () {

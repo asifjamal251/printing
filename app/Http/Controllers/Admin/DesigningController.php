@@ -172,6 +172,10 @@ class DesigningController extends Controller
 
 
     public function changeStatus(Request $request){ 
+        $job_card = JobCard::where('id', $request->job_card_id)->first();
+        if($job_card->color == '' || $job_card->color == null){
+            return response()->json(['message'=>'Color is required', 'class'=>'error', 'error'=>true]); 
+        }
         if(JobCard::where('id', $request->job_card_id)->update(['status_id'=>2,  'job_card_created_at' => now()])){
 
             $job_card = JobCard::where('id', $request->job_card_id)->first();

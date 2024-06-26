@@ -59,6 +59,7 @@ class ProductResource extends JsonResource
             'sn'=>++$request->start,
             'id'=>$this->id,
             'product'=>$this->name, 
+            'product_cm'=>$this->name_cm, 
             'product_type'=>@$this->productType->type, 
             'paper_type'=>$this->paperType($this->paper_type), 
             'hsn'=>$this->hsn, 

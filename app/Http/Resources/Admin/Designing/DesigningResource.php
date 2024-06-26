@@ -50,9 +50,9 @@ class DesigningResource extends JsonResource
         $eachCartonUPS = [];
         foreach ($items as $item) {
             if($status == 5){
-                 $eachCartonUPS[] = '<input type="number" data-id="'.$item->POItem->id.'" readonly="readonly" class="form-control text-center form-control-sm ups-input" name="ups" value="'. $item->ups .'" placeholder="UPS" style="max-width:40px;margin-bottom:3px;">';
+                 $eachCartonUPS[] = '<input type="number" data-id="'.@$item->POItem->id.'" readonly="readonly" class="form-control text-center form-control-sm ups-input" name="ups" value="'. $item->ups .'" placeholder="UPS" style="max-width:40px;margin-bottom:3px;">';
             }else{
-                 $eachCartonUPS[] = '<input type="number" data-id="'.$item->POItem->id.'"  class="form-control text-center form-control-sm ups-input" name="ups" value="'. $item->ups .'" placeholder="UPS" style="max-width:40px;margin-bottom:3px;">';
+                 $eachCartonUPS[] = '<input type="number" data-id="'.@$item->POItem->id.'"  class="form-control text-center form-control-sm ups-input" name="ups" value="'. $item->ups .'" placeholder="UPS" style="max-width:40px;margin-bottom:3px;">';
             }
            
         }
@@ -73,7 +73,7 @@ class DesigningResource extends JsonResource
             'dye_details'=>$this->job_card_id?$this->jobCard->dye_details??'NEW':'',
             'total_sheet'=>$this->job_card_id?$this->jobCard->required_sheet??'':'',
             'sheets_size'=>$this->job_card_id?$this->jobCard->sheet_size??'':'',
-            'paper_type'=>$this->job_card_id?$this->jobCard->jobCardItems[0]->POItem->paperType->type:'',
+            'paper_type'=>@$this->job_card_id?@$this->jobCard->jobCardItems[0]->POItem->paperType->type:'',
             'color'=>$this->job_card_id?$this->jobCard->color??'':'',
             'set_no'=>$this->set_no??'',
             'status'=> status($this->status_id),

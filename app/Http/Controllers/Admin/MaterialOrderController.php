@@ -32,7 +32,16 @@ class MaterialOrderController extends Controller
     public function index(Request $request){
        
         if ($request->ajax()) {
-            $datas = MaterialOrder::orderBy('created_at', 'desc')->with(['vendor']);
+            $datas = MaterialOrder::orderByRaw("CASE
+                    WHEN status_id = 2 THEN 1
+                    WHEN status_id = 1 THEN 2
+                    WHEN status_id = 6 THEN 3
+                    WHEN status_id = 8 THEN 4
+                    WHEN status_id = 26 THEN 5
+                    WHEN status_id = 5 THEN 6
+                    WHEN status_id = 3 THEN 7
+                    ELSE 8
+                    END")->with(['vendor']);
             $totaldata = $datas->count();
 
             $search = $request->search['value'];
@@ -174,16 +183,15 @@ class MaterialOrderController extends Controller
 
 
     public function update(Request $request, $id) {
-       // return $request->deleted;
+
         //return $request->all();
         $user = Auth::guard('admin')->user();
         $this->validate($request, [
             'vendor' => 'required',
-            'bill_no' => 'required',
-            'bill_date' => 'required',
+            'mo_date' => 'required',
             'kt_docs_repeater_advanced' => 'required|array',
-            'kt_docs_repeater_advanced.*.unit' => 'required',
             'kt_docs_repeater_advanced.*.product' => 'required',
+            'kt_docs_repeater_advanced.*.unit' => 'required',
             'kt_docs_repeater_advanced.*.quantity' => 'required', 
             'kt_docs_repeater_advanced.*.item_per_packet' => 'required', 
             'kt_docs_repeater_advanced.*.total_item' => 'required', 
@@ -201,10 +209,11 @@ class MaterialOrderController extends Controller
         ]);
 
         $material_order = MaterialOrder::find($id);
+        $material_order->admin_id = $user->id;
         $material_order->vendor_id = $request->vendor;
-        $material_order->bill_no = $request->bill_no;
-        $material_order->bill_date = Carbon::parse($request->job_card_date)->format('Y-m-d');
+        $material_order->mo_date = Carbon::parse($request->mo_date)->format('Y-m-d');
 
+        MaterialOrderItem::where('material_order_id', $id)->delete();
         $subtotal = 0; 
         $total_gst = 0; 
         $total = 0;
@@ -213,37 +222,16 @@ class MaterialOrderController extends Controller
             $inputs = $request->input('kt_docs_repeater_advanced');
             foreach ($inputs as $input) {
                 $product = Product::find($input['product']);
-
-                if($input['item'] != null && $input['item'] != ''){
-                    $item = MaterialOrderItem::find($input['item']);
-                    $old_quantity = $input['old_quantity'];
-                    $old_total_item = $input['old_total_item'];
-                    $changeQuantity =  $input['quantity'] - $old_quantity;
-                    $changeTotalItem =  $input['total_item'] - $old_total_item;
-                    $item->quantity += $changeTotalItem;
-                    $item->total_item += $changeTotalItem;
-
-                }
-                else{
-                    $item = new MaterialOrderItem;
-                    $item->quantity = $input['quantity'];
-                    $item->total_item = $input['total_item'];
-                }
-
-               
-
+                $item = new MaterialOrderItem;
                 $item->material_order_id = $material_order->id;
                 $item->category_id = $product->category_id;
                 $item->product_id = $product->id;
                 $item->item_name = $product->name;
                 $item->hsn = $product->hsn;
-
-                
-
+                $item->quantity = $input['quantity'];
                 $item->item_per_packet = $input['item_per_packet'];
                 $item->weight_per_piece = $input['weight_per_piece'];
-
-                $item->weight_per_piece = $input['weight_per_piece'];
+                $item->total_item = $input['total_item'];
                 $item->total_weight = $input['total_weight'];
                 $item->unit_id = $input['unit'];
                 $item->rate_on = $input['rate_on'];
@@ -257,20 +245,16 @@ class MaterialOrderController extends Controller
                 $total_gst += $input['rate']*$input['gst']/100;
                 $total += $input['rate'] + $input['rate']*$input['gst']/100;
 
-
+                
             }
             $material_order->subtotal = $subtotal;
             $material_order->total_gst = $total_gst;
             $material_order->total = $total;
             $material_order->save();
-            if($request->deleted){
-                foreach($request->deleted as $id){
-                    $deleted_item = MaterialOrderItem::find($id);
-
-                }
-                MaterialOrderItem::whereIn('id', $request->deleted)->delete();
+            $users = Admin::where('role_id', 2)->get();
+            foreach($users as $user){
+                $user->notify(new MaterialOrderNotification($material_order));
             }
-            
             
             return redirect()->route('admin.material-order.index')->with(['class'=>'success','message'=>'Paper Inward saved successfully.']);
         }

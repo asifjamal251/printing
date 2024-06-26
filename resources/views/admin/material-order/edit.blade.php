@@ -133,9 +133,6 @@
 
   @if($errors->count() == 0)
                     @foreach($material->materialItems as $item)
-                        @php
-                            $product = App\Models\Product::where('id', $item->product_id)->first();
-                        @endphp
                        <div data-repeater-item class="row-{{$item->id}}">
                         <input type="hidden" name="item" class="item-id" value="{{$item->id}}">
                         <div class="card" style="position:relative;">

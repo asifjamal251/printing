@@ -95,8 +95,20 @@
                                     <td>{{$transaction->created_at->format('d F, Y')}}</td>
                                     <td>{{docSlip($transaction->issueItem, $transaction->materialInward)}}</td>
                                     <td>{{particular($transaction->issueItem, $transaction->materialInward)}}</td>
-                                    <td>{{$transaction->new_quantity}}</td>
-                                    <td>{{$transaction->new_quantity}}</td>
+                                    <td> 
+                                        @if($transaction->type == 'Credit')
+                                         {{$transaction->new_quantity}}
+                                         @else
+                                         --
+                                         @endif
+                                    </td>
+                                    <td> 
+                                        @if($transaction->type == 'Debit')
+                                         {{$transaction->new_quantity}}
+                                         @else
+                                         --
+                                         @endif
+                                    </td>
                                     <td>{{$transaction->total_quantity}}</td>
                                 </tr>
                                 @endif

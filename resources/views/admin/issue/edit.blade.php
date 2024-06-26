@@ -110,7 +110,7 @@
   @if($errors->count() == 0)
                     @foreach($material->issueItems as $item)
                         @php
-                            $product = App\Models\Product::where('id', $item->product_id)->first();
+                            $product = App\Models\Product::where('id', $item->product_id)->with(['productType', 'category'])->first();
                         @endphp
                        <div data-repeater-item class="row-{{$item->id}}">
                         <input type="hidden" name="item" class="item-id" value="{{$item->id}}">
@@ -132,7 +132,7 @@
                                             <label class="form-label">Choose Product</label>
                                             <select name="product" class="form-select form-select-sm getProduct" data-kt-repeater="select2" data-placeholder="Select an option">
 
-                                                <option selected="selected" value="{{$item->product_id}}">{{App\Models\Product::where('id', $item->product_id)->value('name')}}</option>
+                                                <option selected="selected" value="{{$item->product_id}}">{{$product->name.'('.$product->code.', '.$product->productType->type .')-'.$product->category->name}}</option>
                                                
                                             </select>
 

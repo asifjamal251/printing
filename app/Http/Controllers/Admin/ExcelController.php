@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Exports\CartonPosition\CartonPositionExport;
 use App\Exports\ProductLedger\ProductLedgerExport;
+use App\Exports\ProductStock\OtherProductStockExport;
 use App\Exports\ProductStock\ProductStockExport;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
@@ -17,26 +18,29 @@ class ExcelController extends Controller
 {
     public function productStock(Request $request)
     {
-        if($request->product_type == 0 || $request->product_type == '0'){
-            if($request->stock == 1 || $request->stock == '1'){
-                $stocks = Product::where('product_type_id', '!=', null)->whereColumn('quantity', '<=', 'in_hand_quantity')->with(['transaction', 'category'])->get();
-            }
-            else{
-                $stocks = Product::where('product_type_id', '!=', null)->with(['transaction', 'category'])->get();
-            }
-        }
-        else{
-            if($request->stock == 1 || $request->stock == '1'){
-                $stocks = Product::where('product_type_id', '=', null)->whereColumn('quantity', '<=', 'in_hand_quantity')->with(['transaction', 'category'])->get();
-            }
-            else{
-                $stocks = Product::where('product_type_id', '=', null)->with(['transaction', 'category'])->get();
-            }
-        }
         
-        $export = new ProductStockExport($stocks);
-        Excel::store(new ProductStockExport($stocks), 'excell-download/product-stock.xlsx');
-        return response()->json(['filename' => config('printing.media_url').'excell-download/product-stock.xlsx']);
+        $this->validate($request, [
+            'product_type' => 'required',
+        ]);
+
+        if ($request->product_type == 1) {
+            if ($request->has('paper_type') && $request->paper_type != null) {
+                $query = Product::where('paper_type', $request->paper_type)->with(['category']);
+            } else{
+                $query = Product::where('type', 1)->with(['category']);
+            }
+            $stocks = $query->get();
+            $export = new ProductStockExport($stocks);
+        } else {
+            $query = Product::with(['category']);
+            $stocks = $query->get();
+            $export = new OtherProductStockExport($stocks);
+        }
+
+        Excel::store($export, 'excell-download/product-stock.xlsx');
+        return response()->json(['filename' => config('printing.media_url') . 'excell-download/product-stock.xlsx']);
+
+
     }
 
     

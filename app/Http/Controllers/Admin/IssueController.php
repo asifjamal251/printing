@@ -87,8 +87,8 @@ class IssueController extends Controller
                 $transaction->product_id = $product->id;
                 $transaction->type = 'Debit';
                 $transaction->current_quantity = $product->quantity;
-                $transaction->new_quantity = $request->quantity;
-                $transaction->total_quantity = $product->quantity - $request->quantity;
+                $transaction->new_quantity = $input['quantity'];
+                $transaction->total_quantity = $product->quantity - $input['quantity'];
                 $transaction->remarks = 'Manual Issued Item';
                 $transaction->trancation_by = $user->id;
                 $transaction->issue_item_id = $item->id;

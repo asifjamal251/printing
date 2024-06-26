@@ -22,6 +22,24 @@
                         </div>
                     </div>
 
+
+                    <div class="form-group col-md-4 col-sm-12">
+                        <div class="w-100 form-group{{ $errors->has('paper_length_cm') ? ' has-error' : '' }}">
+                            {!! Form::label('paper_length_cm', 'Length CM') !!}
+                            {!! Form::text('paper_length_cm', $product->length_cm, ['class' => 'form-control length', 'placeholder' => 'Length CM']) !!}
+                            <small class="text-danger">{{ $errors->first('paper_length_cm') }}</small>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-4 col-sm-12">
+                        <div class="w-100 form-group{{ $errors->has('paper_width_cm') ? ' has-error' : '' }}">
+                            {!! Form::label('paper_width_cm', 'Width CM') !!}
+                            {!! Form::text('paper_width_cm', $product->width_cm, ['class' => 'form-control width', 'placeholder' => 'Width CM']) !!}
+                            <small class="text-danger">{{ $errors->first('paper_width_cm') }}</small>
+                        </div>
+                    </div>
+
+
                     <div class="form-group col-md-4 col-sm-12">
                         <div class="w-100 form-group{{ $errors->has('paper_gsm') ? ' has-error' : '' }}">
                             {!! Form::label('paper_gsm', 'GSM') !!}
@@ -38,7 +56,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-md-4 col-sm-12" style="display:none">
+                    <div class="form-group col-md-4 col-sm-12">
                         <div class="w-100 form-group{{ $errors->has('category') ? ' has-error' : '' }}">
                             {!! Form::label('category', 'Category') !!}
                             {!! Form::select('category', App\Models\Category::pluck('name', 'id'), $product->category_id,['class' => 'form-control product_category', 'required' => 'required']) !!}
@@ -92,7 +110,7 @@
                     <div class="form-group col-md-4 col-sm-12">
                         <div class="form-group{{ $errors->has('weight_per_sheet') ? ' has-error' : '' }}">
                             {!! Form::label('weight_per_sheet', 'Weight Per Sheet') !!}
-                            {!! Form::text('weight_per_sheet', $product->weight_per_piece, ['class' => 'form-control', 'placeholder' => 'Weight Per Sheet', 'readonly']) !!}
+                            {!! Form::text('weight_per_sheet', $product->weight_per_piece, ['class' => 'form-control', 'placeholder' => 'Weight Per Sheet']) !!}
                             <small class="text-danger">{{ $errors->first('weight_per_sheet') }}</small>
                         </div>
                     </div>
@@ -159,7 +177,7 @@
 
                     <div class="form-group col-md-4 col-sm-12">
                         <div class="form-group{{ $errors->has('product_type') ? ' has-error' : '' }}">
-                            {!! Form::label('product_type', 'Paper Type') !!}
+                            {!! Form::label('product_type', 'Product Type') !!}
                             {!! Form::select('product_type', App\Models\ProductType::pluck('type', 'id'), $product->product_type_id, ['id' => 'product_type', 'class' => 'form-control', 'required' => 'required', 'placeholder'=>'Choose an option']) !!}
                             <small class="text-danger">{{ $errors->first('product_type') }}</small>
                         </div>

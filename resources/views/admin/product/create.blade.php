@@ -20,6 +20,25 @@
                         </div>
                     </div>
 
+
+                    <div class="form-group col-md-4 col-sm-12">
+                        <div class="w-100 form-group{{ $errors->has('paper_length_cm') ? ' has-error' : '' }}">
+                            {!! Form::label('paper_length_cm', 'Length CM') !!}
+                            {!! Form::text('paper_length_cm', null, ['class' => 'form-control length', 'placeholder' => 'Length CM']) !!}
+                            <small class="text-danger">{{ $errors->first('paper_length_cm') }}</small>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-4 col-sm-12">
+                        <div class="w-100 form-group{{ $errors->has('paper_width_cm') ? ' has-error' : '' }}">
+                            {!! Form::label('paper_width_cm', 'Width CM') !!}
+                            {!! Form::text('paper_width_cm', null, ['class' => 'form-control width', 'placeholder' => 'Width CM']) !!}
+                            <small class="text-danger">{{ $errors->first('paper_width_cm') }}</small>
+                        </div>
+                    </div>
+
+
+
                     <div class="form-group col-md-4 col-sm-12">
                         <div class="w-100 form-group{{ $errors->has('paper_gsm') ? ' has-error' : '' }}">
                             {!! Form::label('paper_gsm', 'GSM') !!}

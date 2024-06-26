@@ -109,6 +109,7 @@
                             <th style="width:12px">Si</th>
                             {{-- <th>Code</th> --}}
                             <th>Product</th>
+                            <th>Product CM</th>
                             <th>Product Type</th>
                             <th>Paper Type</th>
                             <th>Quantity</th>
@@ -346,8 +347,8 @@
 
             <div class="card-body">
                 <div class="form-group{{ $errors->has('paper_type') ? ' has-error' : '' }}">
-                    {!! Form::label('paper_type', 'Product Type') !!}
-                    {!! Form::select('paper_type', [1 => 'White', 2 => 'Yellow'], null, ['id' => 'filter_paper_type', 'class' => 'form-control form-control-sm', 'placeholder'=>'Paper Type']) !!}
+                    {!! Form::label('paper_type', 'Paper Type') !!}
+                    {!! Form::select('paper_type', [1 => 'White', 2 => 'Yellow', 3 => 'White Back', 4 => 'Gray Back'], null, ['id' => 'filter_paper_type', 'class' => 'form-control form-control-sm', 'placeholder'=>'Paper Type']) !!}
                     <small class="text-danger">{{ $errors->first('paper_type') }}</small>
                 </div>
             </div>
@@ -587,6 +588,7 @@
                 { "data": "sn" },
                 // { "data": "code" },
                 { "data": "product" },
+                { "data": "product_cm" },
                 { "data": "product_type" },
                 { "data": "paper_type" },
                 { "data": "quantity" },
@@ -705,6 +707,7 @@ $('body').on('click', '.editProduct', function(){
                 $('#other-form').html(response);
                 $('#prductCreateModelOther').modal("show");
             }
+            //jsTreeLoad();
 
             // $('#edit-form').html(response);
             // $('#prductCreateModelPaper').modal("show");
@@ -715,6 +718,15 @@ $('body').on('click', '.editProduct', function(){
 
 
 
+function jsTreeLoad(){
+        $('#category').jstree({
+           'core' : {
+               'data' : {
+                   'url' : '{{ route('admin.'.request()->segment(2).'.index')}}?type=category',
+                } 
+           }, 
+        }); 
+    } 
 
 
 
@@ -1104,6 +1116,7 @@ function parentCategory(element){
 
 function downloadExcel(element){
     var product_type = $('#filter_product_type').val();
+    var paper_type = $('#filter_paper_type').val();
     var button = new Button(element);
     button.process();
     clearErrors();
@@ -1113,7 +1126,7 @@ function downloadExcel(element){
         type: "POST",
         enctype: 'multipart/form-data',
         url:'{{ route('admin.excell-download.product-stock') }}',
-        data: {'product_type':product_type, 'stock':$('#filter_stock').val(), '_method': 'POST', '_token': '{{ csrf_token() }}' },
+        data: {'product_type':product_type, 'paper_type':paper_type, 'stock':$('#filter_stock').val(), '_method': 'POST', '_token': '{{ csrf_token() }}' },
         success:function(response){
            // $('#offcanvasTop').offcanvas('hide')
             Toastify({
@@ -1209,7 +1222,7 @@ function packetWeight() {
     if (!isNaN(length) && !isNaN(width) && !isNaN(gsm) && !isNaN(sheet)) {
         var packet_weight = (length * width * gsm * sheet) / 15500;
         var new_packet_weight = packet_weight / 100;
-        $('#productSaveFormPaper .packet_weight').val(new_packet_weight.toFixed(4));
+        $('#productSaveFormPaper .packet_weight').val(new_packet_weight.toFixed(2));
         var weight_per_sheet = new_packet_weight / sheet;
         $('[name="weight_per_sheet"]').val(weight_per_sheet.toFixed(4));
     }

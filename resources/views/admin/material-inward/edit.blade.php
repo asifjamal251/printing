@@ -99,7 +99,7 @@
             <div class="card-body">
                 <div class="row">
 
-                    <div class="form-group col-md-4 col-sm-12">
+                    <div class="form-group col-md-3 col-sm-12">
                         <div class="form-group{{ $errors->has('vendor') ? ' has-error' : '' }}">
                             {!! Form::label('vendor', 'Vendor') !!}
                             {!! Form::select('vendor', App\Models\Vendor::pluck('name', 'id'), $material->vendor_id, ['id' => 'vendor', 'class' => 'form-control select2', 'placeholder' => 'Choose Vendor']) !!}
@@ -108,22 +108,31 @@
                     </div>
 
 
-                    <div class="form-group col-md-4 col-sm-12">
+                    <div class="form-group col-md-3 col-sm-12">
                         <div class="form-group{{ $errors->has('bill_no') ? ' has-error' : '' }}">
                             {!! Form::label('bill_no', 'Bill No.') !!}
-                            {!! Form::text('bill_no', $material->bill_no, ['class' => 'form-control', 'placeholder' => 'Enter Bill Number']) !!}
+                            {!! Form::text('bill_no', $material->bill_no, ['class' => 'form-control form-control-sm', 'placeholder' => 'Enter Bill Number']) !!}
                             <small class="text-danger">{{ $errors->first('bill_no') }}</small>
                         </div>
                     </div>
 
 
-                    <div class="form-group col-md-4 col-sm-12">
+                    <div class="form-group col-md-3 col-sm-12">
                         <div class="form-group{{ $errors->has('bill_date') ? ' has-error' : '' }}">
                             {!! Form::label('bill_date', 'Bill Date') !!}
-                            {!! Form::text('bill_date', $material->bill_date->format('d F, Y'), ['class' => 'form-control dateSelector', 'placeholder' => 'Enter Bill Date']) !!}
+                            {!! Form::text('bill_date', $material->bill_date->format('d F, Y'), ['class' => 'form-control form-control-sm dateSelector', 'placeholder' => 'Enter Bill Date']) !!}
                             <small class="text-danger">{{ $errors->first('bill_date') }}</small>
                         </div>
                     </div>
+
+                    <div class="form-group col-md-3 col-sm-12">
+                        <div class="form-group{{ $errors->has('material_order_no') ? ' has-error' : '' }}">
+                            {!! Form::label('material_order_no', 'Material Order No') !!}
+                            {!! Form::text('material_order_no', $material->material_order_no, ['class' => 'form-control form-control-sm', 'placeholder' => 'Material Order No']) !!}
+                            <small class="text-danger">{{ $errors->first('material_order_no') }}</small>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -142,7 +151,7 @@
   @if($errors->count() == 0)
                     @foreach($material->materialItems as $item)
                         @php
-                            $product = App\Models\Product::where('id', $item->product_id)->first();
+                            $product = App\Models\Product::where('id', $item->product_id)->with(['productType', 'category'])->first();
                         @endphp
                        <div data-repeater-item class="row-{{$item->id}}">
                         <input type="hidden" name="item" class="item-id" value="{{$item->id}}">
@@ -155,7 +164,7 @@
                                             <label class="form-label">Choose Product</label>
                                             <select name="product" class="form-select form-select-sm getProduct" data-kt-repeater="select2" data-placeholder="Select an option">
 
-                                                <option selected="selected" value="{{$item->product_id}}">{{App\Models\Product::where('id', $item->product_id)->value('name')}}</option>
+                                                <option selected="selected" value="{{$item->product_id}}">{{$product->name.'('.$product->code.', '.$product->productType->type .')-'.$product->category->name}}</option>
                                                
                                             </select>
                                             <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.product') }}</small>
