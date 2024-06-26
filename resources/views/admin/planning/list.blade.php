@@ -75,6 +75,7 @@
                                 <th>Other Coating</th>
                                 <th>Embos/Leaf</th>
                                 <th>Paper Type</th>
+                                <th>GSM</th>
                                 <th style="width:50px;">UPS</th>
                                 <th>Remarks</th>
                                 <th>Action</th>
@@ -223,6 +224,7 @@ $(document).ready(function(){
             { "data": "other_coating" },
             { "data": "emb_leaf" },
             { "data": "paper" },
+            { "data": "gsm" },
             { "data": "ups",
                 render: function(data, type, row) {
                     if(row['status_id'] == 2){

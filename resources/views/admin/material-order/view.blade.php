@@ -60,19 +60,29 @@ th {
                 <div class="table-responsive">
                 <table class="table" style="with:1024px;">
                     <tr>
-                        <td colspan="6">
+                        <td colspan="4">
                             <b>From</b>
                         </td>
-                        <td colspan="5">
+
+                        <td colspan="4">
+                            <b>Ship To</b>
+                        </td>
+
+                        <td colspan="4">
                             <b>To</b>
                         </td>
                     </tr>
 
                     <tr>
-                        <td colspan="6">
+                        <td colspan="4">
                             <img src="{{asset(get_app_setting('logo'))}}" alt="" style="max-width:160px;max-height: 80px;">
                         </td>
-                        <td colspan="5">
+
+                        <td colspan="4">
+                            <img src="{{asset(get_app_setting('logo'))}}" alt="" style="max-width:160px;max-height: 80px;">
+                        </td>
+
+                        <td colspan="4">
                             @if($material->vendor->media)
                             <img class="d-block img-thumbnail" style="max-width:160px;max-height: 80px;" src="{{asset($material->vendor->media->file)}}" alt="{{$material->vendor->media->name}}">
                             @else
@@ -81,14 +91,23 @@ th {
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="6">
+                        <td colspan="4">
                             <p><b>{{get_app_setting('title')}}</b></p>
-                            <p style="margin-bottom:0">{{get_app_setting('contact_no')}}</p>
-                            <p style="margin-bottom:0">{{get_app_setting('email')}}</p>
-                            <p style="margin-bottom:0">{{get_app_setting('gst')??''}}</p>
-                            <p style="margin-bottom:0">{{get_app_setting('address')}}</p>
+                            <p style="margin-bottom: 0;"><b>Email: </b>{{ get_app_setting('email') }}</p>
+                            <p style="margin-bottom: 0;"><b>Mobile No.: </b> {{ get_app_setting('contact_no') }}</p>
+                            <p style="margin-bottom: 0;"><b>GST: </b> {{ get_app_setting('gst') }}</p>
+                            <p style="margin-bottom:0"><b>Address: </b>{!! get_app_setting('address')??'' !!}</p>
                         </td>
-                        <td colspan="5">
+
+                        <td colspan="4">
+                            <p><b>{{get_app_setting('title')}}</b></p>
+                            <p style="margin-bottom: 0;"><b>Email: </b>{{ get_app_setting('email') }}</p>
+                            <p style="margin-bottom: 0;"><b>Mobile No.: </b> {{ get_app_setting('contact_no') }}</p>
+                            <p style="margin-bottom: 0;"><b>GST: </b> {{ get_app_setting('gst') }}</p>
+                            <p style="margin-bottom:0"><b>Address: </b>{!! get_app_setting('address')??'' !!}</p>
+                        </td>
+
+                        <td colspan="4">
                             <p><b>{{$material->vendor->name}}</b></p>
                             <p style="margin-bottom:0">{{$material->vendor->phone_no}}</p>
                             <p style="margin-bottom:0">{{$material->vendor->email}}</p>
@@ -101,13 +120,13 @@ th {
                         <tr>
                             <th colspan="2">Order No.</th>
                             <td colspan="2">{{$material->order_no}}</td>
-                            <td colspan="3"></td>
+                            <td colspan="4"></td>
                             <th colspan="2">Order Date</th>
                             <td colspan="2">{{$material->created_at->format('d F, Y')}}</td>
                         </tr>
                         <tr>
                             <th style="background:#ddd;width:100px!important;">Si. No.</th>
-                            <th style="background:#ddd;width:250px;" colspan="2">Product Details</th>
+                            <th style="background:#ddd;width:250px;" colspan="3">Product Details</th>
                             <th style="background:#ddd;">Product Type</th>
                             <th style="background:#ddd;">QTY/PKT/NOs</th>
                             <th style="background:#ddd;">WT/PC</th>
@@ -126,7 +145,7 @@ th {
                                         {!! Form::checkbox('item['.$item->id.'][material]',  $item->id, $item->receive_status, ['id' => 'material'.$item->id]) !!} {{$loop->index+1}} 
                                     </label>
                             </td>
-                            <td colspan="2">{{$item->product->name}}</td>
+                            <td colspan="3">{{$item->product->name}}</td>
                             <td>{{$item->product->productType->type}}</td>
                             <td>{{$item->quantity}}</td>
                             <td>{{$item->weight_per_piece}}</td>
@@ -138,28 +157,28 @@ th {
                         </tr>
                         @endforeach
                         <tr>
-                            <th colspan="9"></th>
+                            <th colspan="10"></th>
                             <th>Subtotal</th>
                             <td>{{$material->subtotal}}</td>
                         </tr>
                         <tr>
-                            <th colspan="9"></th>
+                            <th colspan="10"></th>
                             <th>GST</th>
                             <td>{{$material->total_gst}}</td>
                         </tr>
                         <tr>
-                            <th colspan="9" style="text-align:left;">{{numberToWords($material->total)}}</th>
+                            <th colspan="10" style="text-align:left;">{{numberToWords($material->total)}}</th>
                             <th>Total</th>
                             <td>{{$material->total}}</td>
                         </tr>
                         <tr>
                             <td colspan="6" rowspan="2" style="vertical-align: top;height: 100px;">Comment or Special Instructions</td>
-                            <td colspan="5" rowspan="2"></td>
+                            <td colspan="6" rowspan="2"></td>
                         </tr>
                         <tr>
                         </tr>
                         <tr>
-                            <td colspan="11">
+                            <td colspan="12">
                                 <small><b>
                                     Terms & Conditions  
                                 </b>
@@ -190,6 +209,7 @@ th {
                             <td></td>
                             <td></td>
                             <td></td>
+                            <td></td>
                         </tr>
                     </table>
                     </div>
@@ -207,7 +227,7 @@ th {
                        
                         <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
                             {!! Form::label('status', 'Status') !!}
-                            {!! Form::select('status', App\Models\Status::whereIn('id', [2, 3, 5, 6, 26, 8])->pluck('name', 'id'), $material->status_id, ['id' => 'status_id', 'class' => 'form-control', 'placeholder' => 'Chosse Status']) !!}
+                            {!! Form::select('status', App\Models\Status::whereIn('id', [2, 3, 5, 6, 26, 8])->pluck('name', 'id'), $material->status_id, ['id' => 'status_id', 'class' => 'form-control', 'placeholder' => 'Choose Status']) !!}
                             <small class="text-danger">{{ $errors->first('status') }}</small>
                         </div>
 

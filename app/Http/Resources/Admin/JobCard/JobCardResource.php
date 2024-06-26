@@ -72,8 +72,8 @@ class JobCardResource extends JsonResource
             'status' => status($this->status_id),
             'status_id' => $this->status_id,
             'required_sheet' => $this->required_sheet,
-            'wastage_sheet' => $this->wastage_sheet??0,
-            'total_sheet' => $this->required_sheet + $this->wastage_sheet??0,
+            'wastage_sheet' => $this->jobCardPapers->sum('wastage_sheet'),
+            'total_sheet' => $this->required_sheet + $this->jobCardPapers->sum('wastage_sheet')??0,
             'carton_name'=>$this->id?'<div class="carton-container">'.getCartonNames(@$this->jobCardItems).'</div>':'',
             
         ];

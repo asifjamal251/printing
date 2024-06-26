@@ -31,6 +31,7 @@ class PlanningResource extends JsonResource
             'dye_no'=>@$this->dyeDetails?@$this->dyeDetails->dye_no.'/'.@$this->dyeDetails->ups.'-'.@$this->dyeDetails->dye_lock:'NEW',
             'sheet_size'=>@$this->dyeDetails?@$this->dyeDetails->sheet_size:'N/A',
             'paper'=>@$this->POItems->paperType->type,
+            'gsm'=>@$this->POItems->gsm,
             'ups'=>@$this->ups??'',
             'status_id'=>@$this->status_id,
             'created_at' => @$this->created_at->format('d F, Y'),

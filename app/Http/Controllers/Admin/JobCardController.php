@@ -140,7 +140,7 @@ class JobCardController extends Controller
         if($job_card->save()){
             $job_card->mediaFiles()->sync($request->file); 
             
-
+            JobCardPaper::where(['job_card_id' => $job_card->id])->delete();
             $inputs = $request->input('kt_docs_repeater_advanced');
             foreach ($inputs as $input) {
                 $product = Product::find($input['product']);

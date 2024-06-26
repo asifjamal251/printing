@@ -85,7 +85,7 @@
                 </tr>
 
                 <tr>
-                    <th style="width:160px;">Sheet Size</th>
+                    <th style="width:160px;">Cut Size</th>
                     <td>{{ $job_card->sheet_size }}</td>
                 </tr>
 
@@ -366,7 +366,7 @@
 
                                         <div class="w-100 paper-check">
                                             <div class="m-0 form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.product') ? ' has-error' : '' }}">
-                                                <label class="form-label">Choose Product <span name="my_stock" class="badge bg-success"></span></label>
+                                                <label class="form-label">Choose Paper <span name="my_stock" class="badge bg-success"></span></label>
                                                 <select name="product" class="form-select form-select-sm getProduct" data-kt-repeater="select2" data-placeholder="Select an option">
 
                                                     <option selected="selected" value="{{$jobCardPaper->product_id}}">{{$product->name.'('.$product->code.' '.$product->productType->type .')-'.$product->category->name}}</option>
@@ -379,7 +379,7 @@
 
                                         <div class="w-100">
                                             <div class="m-0 form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.sheet_size') ? ' has-error' : '' }}">
-                                                {!! Form::label('sheet_size', 'Sheet Size') !!}
+                                                {!! Form::label('sheet_size', 'Cut Size') !!}
                                                 {!! Form::text('sheet_size', $jobCardPaper->sheet_size, ['class' => 'sheetSize form-control form-control-sm', 'Placeholder' => 'Sheet Size', 'readonly']) !!}
                                                 <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.sheet_size') }}</small>
                                             </div>
@@ -445,7 +445,7 @@
 
                                             <div class="w-100 paper-check">
                                                 <div class="m-0 form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.product') ? ' has-error' : '' }}">
-                                                    <label class="form-label">Choose Product <span name="my_stock" class="badge bg-success"></span></label></label>
+                                                    <label class="form-label">Choose Paper <span name="my_stock" class="badge bg-success"></span></label></label>
                                                     <select name="product" class="form-select form-select-sm getProduct" data-kt-repeater="select2" data-placeholder="Select an option">
 
                                                         @if(old('kt_docs_repeater_advanced.'.$loop->index.'.product'))
@@ -461,7 +461,7 @@
 
                                             <div class="w-100">
                                                 <div class="m-0 form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.sheet_size') ? ' has-error' : '' }}">
-                                                    {!! Form::label('sheet_size', 'Sheet Size') !!}
+                                                    {!! Form::label('sheet_size', 'Cut Size') !!}
                                                     {!! Form::text('sheet_size', old('kt_docs_repeater_advanced.'.$loop->index.'.sheet_size', $item['sheet_size'] ?? $job_card->sheet_size), ['class' => 'sheetSize form-control form-control-sm', 'Placeholder' => 'Sheet Size', 'readonly']) !!}
                                                     <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.sheet_size') }}</small>
                                                 </div>
@@ -539,7 +539,7 @@
 
                                                 <div class="w-100 paper-check">
                                                     <div class="m-0 form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.product') ? ' has-error' : '' }}">
-                                                            <label class="form-label">Choose Product <span name="my_stock" class="badge bg-success"></span></label></label>
+                                                            <label class="form-label">Choose Paper <span name="my_stock" class="badge bg-success"></span></label></label>
                                                             <select name="product" class="form-select form-select-sm getProduct" data-kt-repeater="select2" data-placeholder="Select an option">
 
                                                                 @if(old('kt_docs_repeater_advanced.'.$loop->index.'.product'))
@@ -555,7 +555,7 @@
 
                                                 <div class="w-100">
                                                     <div class="m-0 form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.sheet_size') ? ' has-error' : '' }}">
-                                                        {!! Form::label('sheet_size', 'Sheet Size') !!}
+                                                        {!! Form::label('sheet_size', 'Cut Size') !!}
                                                         {!! Form::text('sheet_size', old('kt_docs_repeater_advanced.'.$loop->index.'.sheet_size', $item['sheet_size'] ?? ''), ['class' => 'sheetSize form-control form-control-sm', 'Placeholder' => 'Sheet Size', 'readonly']) !!}
                                                         <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.sheet_size') }}</small>
                                                     </div>

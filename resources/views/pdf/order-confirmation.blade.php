@@ -57,17 +57,18 @@
     <tr>
         <td colspan="6" style="width: 50%;">
             <p><b>{{get_app_setting('title')}}</b></p>
-            <p style="margin-bottom: 0;">{{ get_app_setting('contact_no') }}</p>
-            <p style="margin-bottom: 0;">{{ get_app_setting('email') }}</p>
-            <p style="margin-bottom:0">{{get_app_setting('gst')??''}}</p>
-            <p style="margin-bottom: 0;">{{ get_app_setting('address') }}</p>
+            <p style="margin-bottom: 0;"><b>Email: </b>{{ get_app_setting('email') }}</p>
+            <p style="margin-bottom: 0;"><b>Mobile No.: </b> {{ get_app_setting('contact_no') }}</p>
+            <p style="margin-bottom: 0;"><b>GST: </b> {{ get_app_setting('gst') }}</p>
+            <p style="margin-bottom:0"><b>Address: </b>{{get_app_setting('address')??''}}</p>
+           
         </td>
         <td colspan="5" style="width: 50%;">
             <p><b>{{ $material['vendor']['name'] ?? 'N/A' }}</b></p>
-            <p style="margin-bottom: 0;">{{ $material['vendor']['phone_no'] ?? 'N/A' }}</p>
-            <p style="margin-bottom: 0;">{{ $material['vendor']['email'] ?? 'N/A' }}</p>
-            <p style="margin-bottom: 0;">{{ $material['vendor']['gst'] ?? 'N/A' }}</p>
-            <p style="margin-bottom: 0;">{{ $material['vendor']['address'] ?? 'N/A' }}</p>
+            <p style="margin-bottom: 0;"><b>Email: </b>{{ $material['vendor']['email'] ?? 'N/A' }}</p>
+            <p style="margin-bottom: 0;"><b>Mobile: </b>{{ $material['vendor']['phone_no'] ?? 'N/A' }}</p>
+            <p style="margin-bottom: 0;"><b>GST: </b> {{ $material['vendor']['gst'] ?? 'N/A' }}</p>
+            <p style="margin-bottom: 0;"><b>Address: </b> {!! $material['vendor']['address'] ?? 'N/A' !!}</p>
         </td>
     </tr>
     <tr>

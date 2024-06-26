@@ -94,6 +94,7 @@ p.carton-list {
                                     <th  style="width:80px;">Sheet Size</th>
                                     <th>Total Sheet</th>
                                     <th>Paper Type</th>
+                                    <th>GSM</th>
                                     <th>Status</th>
                                     @can(['edit_designing','delete_designing', 'read_designing'])
                                       <th style="width:40px;">Action</th>
@@ -219,6 +220,7 @@ $(document).ready(function(){
             }
         },
         { "data": "paper_type" },
+        { "data": "gsm" },
         { "data": "status" },
         {
             "data": "action",
