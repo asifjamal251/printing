@@ -38,7 +38,7 @@
                     
                     <div class="card-body">
                         <div class="table-responsive">
-                        <table id="datatable" class="datatable table table-bordered nowrap align-middle" style="width:100%">
+                        <table id="datatable" class="datatable table-sm border-secondary table table-bordered nowrap align-middle" style="width:100%">
                             <thead>
                             <tr>
                                 <th>Id</th>

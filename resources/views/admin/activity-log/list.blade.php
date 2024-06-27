@@ -56,7 +56,7 @@ $endDate = $todayDate;
                 <div class="card">
                     
                     <div class="card-body">
-                        <table id="datatable" class="datatable table table-bordered nowrap align-middle" style="width:100%">
+                        <table id="datatable" class="datatable table-sm border-secondary table table-bordered nowrap align-middle" style="width:100%">
                             <thead class="gridjs-thead">
                             <tr>
                                 <th style="width:12px">Si</th>

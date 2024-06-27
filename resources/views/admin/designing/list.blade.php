@@ -41,6 +41,7 @@ p.carton-list {
     display: flex;
     gap: 8px;
 }
+
 </style>
 @endpush
 
@@ -79,7 +80,7 @@ p.carton-list {
                     
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table id="datatable" class="datatable table table-bordered table-hover border-secondary nowrap align-middle  table-sm" style="width:100%">
+                            <table id="datatable" class="datatable table-sm border-secondary table table-bordered table-hover border-secondary nowrap align-middle  table-sm" style="width:100%">
                                 <thead class="gridjs-thead">
                                 <tr>
                                     <th style="width:12px">Si</th>
@@ -89,7 +90,7 @@ p.carton-list {
                                     <th>Carton Name</th>
                                     <th>Quantity</th>
                                     <th>UPS</th>
-                                    <th style="max-width:150px;">Color</th>
+                                    <th>Color</th>
                                     <th style="width:70px;">Dye Details/UPS</th>
                                     <th  style="width:80px;">Sheet Size</th>
                                     <th>Total Sheet</th>
@@ -180,9 +181,9 @@ $(document).ready(function(){
          { "data": "set_no",
             render: function(data, type, row) {
                 if (row['status_id'] == 5) {
-                    return '<input readonly="readonly" type="text" data-id="'+row['job_card_id']+'" class="form-control form-control-sm set-no-input" name="set_no" value="'+row['set_no']+'" placeholder="Set No." style="max-width:150px;">';
+                    return '<input readonly="readonly" type="text" data-id="'+row['job_card_id']+'" class="form-control form-control-sm set-no-input" name="set_no" value="'+row['set_no']+'" placeholder="Set No." style="width:70px;">';
                 } else{
-                    return '<input type="text" data-id="'+row['job_card_id']+'" class="form-control form-control-sm set-no-input" name="set_no" value="'+row['set_no']+'" placeholder="Set No." style="max-width:150px;">';
+                    return '<input type="text" data-id="'+row['job_card_id']+'" class="form-control form-control-sm set-no-input" name="set_no" value="'+row['set_no']+'" placeholder="Set No." style="width:70px;">';
                 }
             }
         },
@@ -193,9 +194,9 @@ $(document).ready(function(){
         { "data": "color",
             render: function(data, type, row) {
                 if (row['status_id'] == 5) {
-                    return '<input readonly="readonly" type="text" data-id="'+row['job_card_id']+'" class="form-control form-control-sm color-input" name="color" value="'+row['color']+'" placeholder="Color" style="max-width:150px;">';
+                    return '<input readonly="readonly" type="text" data-id="'+row['job_card_id']+'" class="form-control form-control-sm color-input" name="color" value="'+row['color']+'" placeholder="Color" style="width:100px;">';
                 }else{
-                    return '<input type="text" data-id="'+row['job_card_id']+'" class="form-control form-control-sm color-input" name="color" value="'+row['color']+'" placeholder="Color" style="max-width:150px;">';
+                    return '<input type="text" data-id="'+row['job_card_id']+'" class="form-control form-control-sm color-input" name="color" value="'+row['color']+'" placeholder="Color" style="width:100px;">';
                 }
             }
         },
@@ -203,9 +204,9 @@ $(document).ready(function(){
         { "data": "sheets_size",
             render: function(data, type, row) {
                 if (row['status_id'] == 5) {
-                     return '<input readonly="readonly" type="text" data-job="'+row['job_card_id']+'" class="form-control form-control-sm sheets-size-input" name="sheet_size" value="'+row['sheets_size']+'" placeholder="Sheet Size" style="max-width:80px;">';
+                     return '<input readonly="readonly" type="text" data-job="'+row['job_card_id']+'" class="form-control form-control-sm sheets-size-input" name="sheet_size" value="'+row['sheets_size']+'" placeholder="Sheet Size" style="width:90px;">';
                 } else{
-                    return '<input type="text" data-job="'+row['job_card_id']+'" class="form-control form-control-sm sheets-size-input" name="sheet_size" value="'+row['sheets_size']+'" placeholder="Sheet Size" style="max-width:80px;">';
+                    return '<input type="text" data-job="'+row['job_card_id']+'" class="form-control form-control-sm sheets-size-input" name="sheet_size" value="'+row['sheets_size']+'" placeholder="Sheet Size" style="width:90px;">';
                 }
             }
         },

@@ -67,7 +67,7 @@
             <div class="card-content">
                 <div class="card-body">
 <div class="table-responsive">
-                    <table id="dataTableAjax" class="display dataTableAjax table table-striped table-bordered dom-jQuery-events" >
+                    <table id="dataTableAjax" class="display table-sm border-secondary dataTableAjax table table-striped table-bordered dom-jQuery-events" >
                         <thead>
                             <tr>
                                 <th>Si</th>

@@ -35,9 +35,9 @@ th {
         <div class="page-title-box d-flex align-items-center justify-content-between">
             <h4 class="mb-sm-0">{{Str::title(str_replace('-', ' ', request()->segment(2)))}}</h4>
 
-            @can('add_material_inward')
+            @can('read_material_inward')
             <div class="page-title-right">
-                <a href="{{route('admin.pdf-download.billing',$material->id)}}"  class="btn-sm btn btn-primary btn-label rounded-pill">
+                <a href="{{route('admin.pdf-download.material-inward',$material->id)}}"  class="btn-sm btn btn-secondary btn-label rounded-pill">
                     <i class="bx bx-download label-icon align-middle rounded-pill fs-16 me-2"></i>
                     Download Receipt
                 </a>

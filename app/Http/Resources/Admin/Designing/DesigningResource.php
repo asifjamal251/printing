@@ -13,11 +13,16 @@ class DesigningResource extends JsonResource
      * @return array
      */
 
-    private function getCartonNames($items){
+    private function getCartonNames($items, $status){
         $cartonElements = [];
         
         foreach ($items as $item) {
-            $cartonElements[] = '<p class="carton-list"> <span data-id="' . @$item->POItem->id . '" class="remove-planning"><i class="ri-close-line fs-15"></i></span>' . @$item->POItem->carton_name . '-['. @$item->POItem->art_work .']</p>';
+            if($status == 5){
+                $cartonElements[] = '<p class="carton-list">' . @$item->POItem->carton_name . '-['. @$item->POItem->art_work .']</p>';
+            }
+            else{
+                $cartonElements[] = '<p class="carton-list"> <span data-id="' . @$item->POItem->id . '" class="remove-planning"><i class="ri-close-line fs-15"></i></span>' . @$item->POItem->carton_name . '-['. @$item->POItem->art_work .']</p>';
+            }
         }
 
         return implode('', $cartonElements);
@@ -50,9 +55,9 @@ class DesigningResource extends JsonResource
         $eachCartonUPS = [];
         foreach ($items as $item) {
             if($status == 5){
-                 $eachCartonUPS[] = '<input type="number" data-id="'.@$item->POItem->id.'" readonly="readonly" class="form-control text-center form-control-sm ups-input" name="ups" value="'. $item->ups .'" placeholder="UPS" style="max-width:40px;margin-bottom:3px;">';
+                 $eachCartonUPS[] = '<input type="number" data-id="'.@$item->POItem->id.'" readonly="readonly" class="form-control text-center form-control-sm ups-input" name="ups" value="'. $item->ups .'" placeholder="UPS" style="width:40px;margin-bottom:3px;">';
             }else{
-                 $eachCartonUPS[] = '<input type="number" data-id="'.@$item->POItem->id.'"  class="form-control text-center form-control-sm ups-input" name="ups" value="'. $item->ups .'" placeholder="UPS" style="max-width:40px;margin-bottom:3px;">';
+                 $eachCartonUPS[] = '<input type="number" data-id="'.@$item->POItem->id.'"  class="form-control text-center form-control-sm ups-input" name="ups" value="'. $item->ups .'" placeholder="UPS" style="width:40px;margin-bottom:3px;">';
             }
            
         }
@@ -65,7 +70,7 @@ class DesigningResource extends JsonResource
             'sn'=>++$request->start,
             'id'=>$this->id,
             'job_card_id'=>$this->job_card_id,
-            'carton_name'=>$this->job_card_id?$this->getCartonNames(@$this->jobCard->jobCardItems):'',
+            'carton_name'=>$this->job_card_id?$this->getCartonNames(@$this->jobCard->jobCardItems, $this->status_id):'',
             'quantity'=>$this->job_card_id?$this->getCartonQuantity($this->jobCard->jobCardItems):'',
             'job_card_no'=>$this->job_card_id?$this->jobCard->mix?$this->jobCard->job_card_no:$this->jobCard->job_card_no.' (Mix)':'',
             'client'=>$this->job_card_id?$this->getClientName($this->jobCard->jobCardItems):'',
