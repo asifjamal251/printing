@@ -205,7 +205,7 @@ class CuttingResource extends JsonResource{
             'paper_details' => $this->paperDetails($this->jobCard->jobCardPapers),
             'paper_devide' => $this->paperDevide($this->jobCard->jobCardPapers),
             'required_sheet' => $this->paperRequiredSheet($this->jobCard->jobCardPapers),
-            'paper' => @$this->jobCard->paper->name . ' &nbsp;&nbsp;&nbsp;' .  @$this->jobCard->paper->category->name .$this->coating(otherCoatingTypeList(@$this->jobCard->jobCardItems)),
+            'paper' => @$this->jobCard->paper->name,
             'sheet_size' => $this->sheetSize($this->jobCard->sheet_size, $this->jobCard->warehouse_paper),
             'total_sheet' => $this->jobCard->total_sheet,
             'divide' => $this->paperDivide($this->jobCard->paper_divide, $this->jobCard->warehouse_type),

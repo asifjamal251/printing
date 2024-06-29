@@ -380,7 +380,7 @@
                                         <div class="w-100">
                                             <div class="m-0 form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.sheet_size') ? ' has-error' : '' }}">
                                                 {!! Form::label('sheet_size', 'Cut Size') !!}
-                                                {!! Form::text('sheet_size', $jobCardPaper->sheet_size, ['class' => 'sheetSize form-control form-control-sm', 'Placeholder' => 'Sheet Size', 'readonly']) !!}
+                                                {!! Form::text('sheet_size', $jobCardPaper->sheet_size, ['class' => 'sheetSize form-control form-control-sm', 'Placeholder' => 'Sheet Size']) !!}
                                                 <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.sheet_size') }}</small>
                                             </div>
                                         </div>
@@ -556,7 +556,7 @@
                                                 <div class="w-100">
                                                     <div class="m-0 form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.sheet_size') ? ' has-error' : '' }}">
                                                         {!! Form::label('sheet_size', 'Cut Size') !!}
-                                                        {!! Form::text('sheet_size', old('kt_docs_repeater_advanced.'.$loop->index.'.sheet_size', $item['sheet_size'] ?? ''), ['class' => 'sheetSize form-control form-control-sm', 'Placeholder' => 'Sheet Size', 'readonly']) !!}
+                                                        {!! Form::text('sheet_size', old('kt_docs_repeater_advanced.'.$loop->index.'.sheet_size', $item['sheet_size'] ?? ''), ['class' => 'sheetSize form-control form-control-sm', 'Placeholder' => 'Sheet Size']) !!}
                                                         <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.sheet_size') }}</small>
                                                     </div>
                                                 </div>

@@ -82,7 +82,7 @@
                                     <div class="simplebar-content-wrapper" tabindex="0" role="region" aria-label="scrollable content" style="height: auto; overflow: hidden scroll;">
                                         <div class="simplebar-content">
 
-                                            @foreach(auth('admin')->user()->notifications()->paginate(10) as $notification)
+                                            @foreach(auth('admin')->user()->unreadNotifications()->paginate(10) as $notification)
                                             <div class="@if($notification->read_at === null)bg-light-subtle @else @endif text-reset notification-item d-block dropdown-item position-relative">
                                                 <div class="d-flex">
                                                     <div class="avatar-xs me-3 flex-shrink-0">

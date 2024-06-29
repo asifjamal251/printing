@@ -266,7 +266,7 @@ $(document).ready(function(){
                     btn += '<li><a class="dropdown-item edit-item-btn" onclick="updateTimer(\'{{ route('admin.job-card.timer.content') }}\',{machine:3, id:'+row['id']+',job_card_id:'+row['job_card_id']+'})" href="javascript:void(0);"><i class="ri-alarm-line align-bottom me-2 text-muted"></i>Timer</a></li>';
 
                     @can('change_status_chemical_coating')
-                        @can('change_status_cutting')
+                        
                             if (row['timer_status'] == 2) {
                                 if (row['status_id'] == 2) {
                                     btn += '<li><a onclick="updateData(\'{{ route('admin.chemical-coating.changeStatus') }}\',{status:1, id:'+row['id']+',job_card_id:'+row['job_card_id']+'})" class="dropdown-item edit-item-btn" href="javascript:void(0);"><i class="ri-check-double-line align-bottom me-2 text-muted"></i> Completed</a></li>';
@@ -274,7 +274,6 @@ $(document).ready(function(){
                                     btn += '<li><a onclick="updateData(\'{{ route('admin.chemical-coating.changeStatus') }}\',{status:2, id:'+row['id']+',job_card_id:'+row['job_card_id']+'})" class="dropdown-item edit-item-btn" href="javascript:void(0);"><i class="bx bx-x align-bottom me-2 fs-24 text-muted"></i> Cancel</a></li>';
                                 }
                             }
-                        @endcan
                     @endcan
 
 

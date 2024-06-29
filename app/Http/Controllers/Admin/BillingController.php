@@ -133,24 +133,24 @@ class BillingController extends Controller
     }
 
     public function cao(Request $request, $id){
-        // Fetch the BillingItem with related data
         $billing = BillingItem::with(['PO', 'POItem'=>function($query){
             $query->with('paperType');
         }])->findOrFail($id);
-         $job_card = JobCardItem::where('purchase_order_item_id', $billing->POItem->id)->with(['jobCard'=>function($query){
+
+        $job_card = JobCardItem::where('purchase_order_item_id', $billing->POItem->id)->with(['jobCard'=>function($query){
             $query->with('paper');
         }])->first();
-
-        $gsm = Str::of($job_card->jobCard->paper->name)->explode('-')->last();
-
-        // Check if a Coa record exists for the BillingItem
-        $coa = Coa::firstOrNew(['billing_item_id' => $billing->id]);
+        $gsm = $billing->POItem->gsm;
+        $coa_check = Coa::where(['billing_item_id' => $billing->id])->get();
+        
 
         // If the Coa record doesn't exist, populate and save it
-        if (!$coa->exists) {
-            $coa->title = 'COLOUR IMPRESSIONS';
-            $coa->address = 'KALKA LINK ROAD, SHAMDO, CHANDIGARH ROAD, RAJPURA';
-            $coa->manufacturing_date = $billing->created_at;
+        if ($coa_check->count() > 0){
+
+        }
+        else{
+            $coa = Coa::firstOrNew(['billing_item_id' => $billing->id]);
+            $coa->mfg_date = $billing->created_at;
             $coa->product_code = $billing->POItem->art_code;
             $coa->product = $billing->POItem->carton_name;
             $coa->client = $billing->PO->client->company_name;
@@ -158,14 +158,24 @@ class BillingController extends Controller
 
             // Define CoaItem data and save each CoaItem
             $coaItemsData = [
-                ['parameter' => 'SUBSTRACT', 'specification' => $billing->POItem->paperType->type, 'result' => $gsm.' GSM ( +-5%)'],
+                ['parameter' => 'SUBSTRACT', 'specification' => $billing->POItem->paperType->type, 'result' => 'OK'],
+                ['parameter' => 'GSM', 'specification' => $gsm, 'result' => 'OK'],
+                ['parameter' => 'GRAIN', 'specification' => '', 'result' => ''],
+                ['parameter' => 'BURSTING STRENGTH', 'specification' => 'AS PER BURST TEST', 'result' => 'OK'],
+                ['parameter' => 'MOISTURE IN BOARD/PAPER', 'specification' => 'AS PER OVEN TEST', 'result' => 'OK'],
+                ['parameter' => 'CRUSH TEST', 'specification' => 'GOOD FIBER TEAR', 'result' => 'OK'],
+                ['parameter' => 'TEXT MATTER & DESIGN', 'specification' => $billing->POItem->carton_size, 'result' => 'OK'],
+                ['parameter' => 'CARTON SIZE', 'specification' => 'AS PER PRINT PROOF', 'result' => 'OK'],
+                ['parameter' => 'CARTON TYPE', 'specification' => '', 'result' => ''],
                 ['parameter' => 'COLOUR', 'specification' => $job_card->jobCard->color, 'result' => 'OK'],
-                ['parameter' => 'SIZE', 'specification' => $billing->POItem->carton_size.' MM', 'result' => '+-1MM'],
+                ['parameter' => 'SPOT', 'specification' => 'AS PER QUALITY CHECK', 'result' => 'OK'],
                 ['parameter' => 'COATING', 'specification' => $billing->POItem->coatingType->type, 'result' => 'OK'],
-                ['parameter' => 'STYLE', 'specification' => 'RTF', 'result' => 'OK'],
-                ['parameter' => 'EMBOSS', 'specification' => 'NA', 'result' => 'OK'],
-                ['parameter' => 'SCUFF TEST', 'specification' => '--', 'result' => 'OK'],
-                ['parameter' => 'PRODUCT TEST', 'specification' => '--', 'result' => 'OK'],
+                ['parameter' => 'SCUFF TEST', 'specification' => '500 SCUFF', 'result' => 'OK'],
+                ['parameter' => 'EMBOSSING', 'specification' => 'N/A', 'result' => 'OK'],
+                ['parameter' => 'LEAFING', 'specification' => 'N/A', 'result' => 'OK'],
+                ['parameter' => 'SPOT UV', 'specification' => 'AS PER ARTWORK', 'result' => 'OK'],
+                ['parameter' => 'LAMINATION TEST/GLOSS/MATT/METALLIC', 'specification' => '', 'result' => 'OK'],
+                ['parameter' => 'PACKING/BUNDLING-RUBBER <br> BEND OR CRAFT PAPER', 'specification' => 'AS PER INSTRUCTION', 'result' => 'OK'],
             ];
 
             foreach ($coaItemsData as $coaItemData) {
@@ -184,6 +194,7 @@ class BillingController extends Controller
     }
 
      public function caoUpdate(Request $request, $id){
+        return $request->all();
         $coa = Coa::find($id);
         $coa->expiry_date = Carbon::parse($request->expiry_date)->format('Y-m-d');
         $coa->manufacturing_date = Carbon::parse($request->manufacturing_date)->format('Y-m-d');

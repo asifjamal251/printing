@@ -133,6 +133,9 @@ class ChemicalCoatingController extends Controller
      */
     public function update(Request $request, $id) {
         $coating = ChemicalCoating::find($id);
+        if($coating->user_id == ''){
+            return response()->json(['message'=>'Coating user is required.', 'class'=>'error']);
+        }
         $coating->coated_sheets = $request->coated_sheets;
         if($coating->save()){
             JobCard::where('id', $coating->job_card_id)->update(['coated_sheets'=>$coating->coated_sheets]);

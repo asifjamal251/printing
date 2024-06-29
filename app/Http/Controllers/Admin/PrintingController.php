@@ -108,6 +108,9 @@ class PrintingController extends Controller
 
     public function update(Request $request, $id) {
         $printing = Printing::find($id);
+        if($printing->user_id == ''){
+            return response()->json(['message'=>'Printing user is required.', 'class'=>'error']);
+        }
         $printing->printed_sheet = $request->printed_sheet;
         if($printing->save()){
             JobCard::where('id', $printing->job_card_id)->update(['printed_sheets'=>$printing->printed_sheet]);
@@ -365,9 +368,12 @@ class PrintingController extends Controller
 
     public function oprator(Request $request)
     {
+        //return $request->all();
         $module = Printing::find($request->id);
         if($request->user_id != ''){
-            JobCardUser::where(['module_id' => 10, 'job_card_id' => $request->job_card_id])->update(['module_user_id' => $request->user_id]);
+            $module_user = JobCardUser::firstorNew(['module_id' => 10, 'job_card_id' => $request->job_card_id]);
+            $module_user->module_user_id = $request->user_id;
+            $module_user->save();
             $module->user_id = $request->user_id;
         }else{
             $module->user_id = null;

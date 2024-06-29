@@ -29,7 +29,11 @@ class CuttingController extends Controller
         
         if ($request->wantsJson()) {
             
-            $datas = Cutting::orderBy('id','desc')
+            $datas = Cutting::orderByRaw("CASE
+                WHEN status_id = 2 THEN 1
+                WHEN status_id = 5 THEN 2
+                ELSE 3
+            END")
             ->with(['user', 'jobCard'=>function($query){
                 $query->with(['jobCardPapers'=>function($query){
                     $query->with(['product']);

@@ -10,6 +10,6 @@ class CoaItem extends Model
     use HasFactory;
 
     protected $fillable = [
-	    'id', 'parameter', 'specification', 'result'
+	    'id', 'parameter', 'specification', 'result', 'coa_id'
 	];
 }

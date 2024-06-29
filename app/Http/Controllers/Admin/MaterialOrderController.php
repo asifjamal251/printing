@@ -251,11 +251,7 @@ class MaterialOrderController extends Controller
             $material_order->total_gst = $total_gst;
             $material_order->total = $total;
             $material_order->save();
-            $users = Admin::where('role_id', 2)->get();
-            foreach($users as $user){
-                $user->notify(new MaterialOrderNotification($material_order));
-            }
-            
+        
             return redirect()->route('admin.material-order.index')->with(['class'=>'success','message'=>'Paper Inward saved successfully.']);
         }
 
@@ -370,8 +366,8 @@ class MaterialOrderController extends Controller
 
             // Check if there are valid email addresses to send to
             if (!empty($toAddresses)) {
-                // Send the email
-                Mail::send(new MaterialOrderConfirmation($pdf, $toAddresses, $ccAddresses, $material, $items));
+                $subjectLine = 'Material Order Order No. '.$materialData->order_no;
+                Mail::send(new MaterialOrderConfirmation($pdf, $toAddresses, $ccAddresses, $material, $items, $subjectLine));
                 return redirect()->route('admin.material-order.index')->with(['class'=>'success','message'=>'Status Changed and email sent.']);
             } else {
                return redirect()->back()->with(['class'=>'success','message'=>'Save has changed']);
