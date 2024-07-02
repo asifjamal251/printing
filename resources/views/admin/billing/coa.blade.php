@@ -26,6 +26,8 @@
     .text-center{
         text-align: center;
     }
+    .col-25 { width: 25%; }
+    .col-50 { width: 50%; }
 </style>
 @endpush
 
@@ -58,21 +60,21 @@
 
                     <table class="table table-bordered border-secondary table-nowrap">
                         <colgroup>
-                            <col style="width: 25%;">
-                            <col style="width: 25%;">
-                            <col style="width: 25%;">
-                            <col style="width: 25%;">
+                            <col class="col-25">
+                            <col class="col-25">
+                            <col class="col-25">
+                            <col class="col-25">
                         </colgroup>
-                        <tr>
+                         <tr>
                             <th colspan="4" style="text-align: center;">CERTIFICATE OF ANALYSIS</th>
                         </tr>
                         <tr>
-                            <th style="width:50%;" colspan="2">FROM</th>
-                            <th style="width:50%;" colspan="2">CLIENT NAME</th>
+                            <th colspan="2" class="col-50">FROM</th>
+                            <th colspan="2" class="col-50">CLIENT NAME</th>
                         </tr>
                         <tr>
-                            <td style="width:50%;" colspan="2">{{get_app_setting('title')}}</td>
-                            <td style="width:50%;" colspan="2">{{$billing->PO->client->company_name}}</td>
+                            <td colspan="2" class="col-50">{{get_app_setting('title')}}</td>
+                            <td colspan="2" class="col-50">{{$billing->PO->client->company_name}}</td>
                         </tr>
                         <tr>
                             <td style="width: 50%;" colspan="2">{!! get_app_setting('address') !!}</td>
@@ -92,16 +94,21 @@
 
                         <tr>
                             <th style="width: 25%;">COA NO</th>
-                            <td style="width: 25%;">1</td>
+                            <td style="width: 25%;">{{$coa->coa_no}}</td>
                             <th style="width: 25%;">PRODUCT NAME</th>
-                            <td style="width: 25%;">Hello World</td>
+                            <td style="width: 25%;">{{$coa->product}}</td>
                         </tr>
 
                         <tr>
                             <th style="width: 25%;">INVOICE NO.</th>
-                            <td style="width: 25%;">1</td>
+                            <td style="width: 25%;">
+                                <div class="m-0 form-group{{ $errors->has('invoice_no') ? ' has-error' : '' }}">
+                                    {!! Form::text('invoice_no', null, ['class' => 'form-control form-control-sm', 'placeholder' => 'INVOICE NO.']) !!}
+                                    <small class="text-danger">{{ $errors->first('invoice_no') }}</small>
+                                </div>
+                            </td>
                             <th style="width: 25%;">QUANTITY</th>
-                            <td style="width: 25%;">200</td>
+                            <td style="width: 25%;">{{$coa->quantity}}</td>
                         </tr>
 
                         <tr>
@@ -117,6 +124,23 @@
                             <th style="width: 25%;">BATCH NO.</th>
                             <td style="width: 25%;">200</td>
                         </tr>
+
+                        <tr style="visibility:collapse;">
+                            <td style="width:25%;"></td>
+                            <td style="width:25%;"></td>
+                            <td style="width:25%;"></td>
+                            <td style="width:25%;"></td>
+                        </tr>
+                    </table>
+
+                    <table class="table table-bordered border-secondary table-nowrap">
+                        <colgroup>
+                            <col class="col-25">
+                            <col class="col-25">
+                            <col class="col-25">
+                            <col class="col-25">
+                        </colgroup>
+
                         <tr>
                             <th colspan="4" style="text-align: center;">ATTRIBUTE PARAMETERS (VISUAL INSPECTION)</th>
                         </tr>
@@ -166,26 +190,33 @@
                                 $count++;
                             @endphp
                         @endforeach
+                    </table>
+                    <table class="table table-bordered border-secondary table-nowrap">
+                        <colgroup>
+                            <col class="col-25">
+                            <col class="col-25">
+                            <col class="col-25">
+                            <col class="col-25">
+                        </colgroup>
                         <tr>
                             <th>Remarks</th>
-                            <td colspan="3">
+                            <td colspan="2">
                                 <div class="m-0 form-group{{ $errors->has('remarks') ? ' has-error' : '' }}">
                                     {!! Form::text('remarks', $billing->COA->remarks, ['class' => 'form-control form-control-sm', 'placeholder' => 'Remarks']) !!}
                                     <small class="text-danger">{{ $errors->first('remarks') }}</small>
                                 </div>
                             </td>
+                            <td  rowspan="2" style="height:70px;vertical-align: text-top;">AUTH. SIG.</td>
                         </tr>
 
                         <tr>
                             <th>PREPARED BY</th>
-                            <td colspan="3"><div class="m-0 form-group{{ $errors->has('prepared_by') ? ' has-error' : '' }}">
-                                {!! Form::text('prepared_by', $billing->COA->prepared_by, ['class' => 'form-control form-control-sm', 'placeholder' => 'Prepared By']) !!}
-                                <small class="text-danger">{{ $errors->first('prepared_by') }}</small>
-                            </div></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td colspan="3" style="height:70px;vertical-align: text-top;">AUTH. SIG.</td>
+                            <td colspan="2">
+                                <div class="m-0 form-group{{ $errors->has('prepared_by') ? ' has-error' : '' }}">
+                                    {!! Form::text('prepared_by', $billing->COA->prepared_by, ['class' => 'form-control form-control-sm', 'placeholder' => 'Prepared By']) !!}
+                                    <small class="text-danger">{{ $errors->first('prepared_by') }}</small>
+                                </div>
+                            </td>
                         </tr>
                             
                     </table>

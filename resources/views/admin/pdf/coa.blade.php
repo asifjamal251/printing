@@ -57,92 +57,159 @@
             height: 25px;
         }
         th {
-            background: #f0e6cc;
+            background: #fff;
         }
-        .even {
-            background: #fbf8f0;
-        }
-        .odd {
-            background: #fefcf9;
-        }
-        .text-center{
-            text-align: center;
-        }
+        
+         .col-25 { width: 25%; }
+    .col-50 { width: 50%; }
+    .col-75 { width: 75%; }
     </style>
 </head>
 <body>
 
 
-    <table>
-    <tbody>
-        <tr class="text-center">
-            <td colspan="4">
-                <h4 class="anta-regular">{{$coa->title}}</h4>
-                <p>{{$coa->address}}</p>
-            </td>
-        </tr>
-        <tr class="text-center">
-            <td colspan="4">Company Description</td>
-        </tr>
-        <tr class="text-center">
-            <td colspan="4">Certificate of Analysis</td>
-        </tr>
-        <tr>
-            <td colspan="4"><b>Name of the customer: </b> {{$coa->client}}</td>
-        </tr>
-        <tr>
-            <td colspan="4"><b>Product Name: </b></b> {{$coa->product}}</td>
-        </tr>
-        <tr>
-            <td colspan="2"><b>Product Code: </b> {{$coa->product_code}}</td>
-            <td colspan="2"><b>Manufacturing Date: </b>{{$coa->manufacturing_date->format('d F, Y')}}</td>
-        </tr>
+   <table class="table table-bordered border-secondary table-nowrap">
+    <colgroup>
+        <col class="col-25">
+        <col class="col-25">
+        <col class="col-25">
+        <col class="col-25">
+    </colgroup>
+    <tr>
+        <th colspan="4" style="text-align: center;">CERTIFICATE OF ANALYSIS</th>
+    </tr>
+    <tr>
+        <th colspan="2" class="col-50">FROM</th>
+        <th colspan="2" class="col-50">CLIENT NAME</th>
+    </tr>
+    <tr>
+        <td colspan="2" class="col-50">{{get_app_setting('title')}}</td>
+        <td colspan="2" class="col-50">{{$billing->PO->client->company_name}}</td>
+    </tr>
+    <tr>
+        <td style="width: 50%;" colspan="2">{!! get_app_setting('address') !!}</td>
+        <td style="width: 50%;" colspan="2">{!! $billing->PO->client->address !!}</td>
+    </tr>
+    <tr>
+        <td style="width:50%;" colspan="2">{{get_app_setting('city')}}</td>
+        <td style="width:50%;" colspan="2"> {{$billing->PO->client->city}}</td>
+    </tr>
 
-        <tr>
-            <td colspan="2"><b>Batch No: </b>{{$coa->batch}}</td>
-            <td colspan="2"><b>Expiry Date: </b>{{$coa->expiry_date->format('d F, Y')}}</td>
-        </tr>
-       <tr>
-            <th>Sr. No</th>
-            <th>Parameters</th>
-            <th>Specification</th>
-            <th>Results</th>
-        </tr>
-        @php
-            $count = 1;
-        @endphp
-        @foreach($coa->coaItems as $item)
-            <tr>
-                <td>{{$loop->index+1}}</td>
-                <td>{{$item->parameter}}</td>
-                <td>{{$item->specification}}</td>
-                <td>{{$item->result}}</td>
-            </tr>
-            @php
-                $count++;
-            @endphp
-        @endforeach
-        <tr>
-            <td>{{$count}}</td>
-            <td>TEXT</td>
-            <td>AS PER APPROVAL</td>
-            <td>AS PER APPROVAL</td>
-        </tr>
+    <tr style="visibility:collapse;" style="display:none;">
+        <td style="width:25%;"></td>
+        <td style="width:25%;"></td>
+        <td style="width:25%;"></td>
+        <td style="width:25%;"></td>
+    </tr>
 
-        
 
-    </tbody>
+    <tr>
+        <td style="width: 25%;"><b>COA NO</b></td>
+        <td style="width: 25%;">1</td>
+        <td style="width: 25%;"><b>PRODUCT NAME</b></td>
+        <td style="width: 25%;">Hello World</td>
+    </tr>
+
+    <tr>
+        <td style="width: 25%;"><b>INVOICE NO.</b></th>
+        <td style="width: 25%;">1</td>
+        <td style="width: 25%;"><b>QUANTITY</td>
+        <td style="width: 25%;">200</td>
+    </tr>
+
+    <tr>
+        <td style="width: 25%;"><b>MFG DATE</b></td>
+        <td style="width: 25%;">1</td>
+        <td style="width: 25%;"><b>EXP DATE</b></td>
+        <td style="width: 25%;">200</td>
+    </tr>
+
+    <tr>
+        <td style="width: 25%;"><b>PRODUCT CODE</b></td>
+        <td style="width: 25%;">1</td>
+        <td style="width: 25%;"><b>BATCH NO.</b></td>
+        <td style="width: 25%;">200</td>
+    </tr>
+
+    <tr style="visibility:collapse;" style="display:none;">
+        <td style="width:25%;"></td>
+        <td style="width:25%;"></td>
+        <td style="width:25%;"></td>
+        <td style="width:25%;"></td>
+    </tr>
 </table>
 
-<table style="margin-top: 40px;border: none;">
-    <tr style="border: none;">
-        <td style="padding-bottom: 20px;border:none;" colspan="2">PREPARED BY<br></td>
-        <td style="padding-bottom: 20px;border:none;text-align:right" colspan="2">For COLOUR IMPRESSIONS</td>
+<table class="table table-bordered border-secondary table-nowrap">
+    <colgroup>
+        <col class="col-25">
+        <col class="col-25">
+        <col class="col-25">
+        <col class="col-25">
+    </colgroup>
+    <tr>
+        <th colspan="4" style="text-align: center;">ATTRIBUTE PARAMETERS (VISUAL INSPECTION)</th>
     </tr>
-    <tr style="border: none;">
-        <td style="padding-bottom: 20px;border:none;" colspan="2"><br></td>
-        <td style="padding-bottom: 20px;border:none;text-align:right" colspan="2">Auth  sign. </td>
+
+    <tr style="visibility:collapse;" style="display:none;">
+        <td style="width:25%;"></td>
+        <td style="width:25%;"></td>
+        <td style="width:25%;"></td>
+        <td style="width:25%;"></td>
     </tr>
+
+    <tr>
+        <th style="width: 10%;">SR. NO.</th>
+        <th style="width: 30%;">PARAMETER</th>
+        <th style="width: 30%;">SPECIFICATION</th>
+        <th style="width: 30%;">RESULT</th>
+    </tr>
+
+    @php
+    $count = 1;
+    @endphp
+    @foreach($coa->coaItems as $item)
+    <tr>
+        <td style="width: 10%;">
+            {!! $loop->index+1 !!}.
+        </td>
+        <td style="width: 30%;">
+            {!! $item->parameter !!}
+        </td>
+        <td style="width: 30%;">
+            {!! $item->specification !!}
+        </td>
+        <td style="width: 30%;">
+            {!! $item->result !!}
+        </td>
+    </tr>
+    @php
+    $count++;
+    @endphp
+    @endforeach
+</table>
+
+<table class="table table-bordered border-secondary table-nowrap">
+    <colgroup>
+        <col class="col-25">
+        <col class="col-25">
+        <col class="col-25">
+        <col class="col-25">
+    </colgroup>
+    <tr>
+        <th class="col-25" style="text-align: left;">REMARKS</th>
+        <td colspan="2" class="col-50">
+            {{$coa->remarks}}
+        </td>
+        <td class="col-25"  rowspan="2" style="height:70px;vertical-align: text-top;with:20%;">AUTH. SIG.</td>
+    </tr>
+
+    <tr>
+        <th class="col-25" style="text-align: left;">PREPARED BY</th>
+        <td colspan="2" class="col-50">
+            {{$coa->prepared_by}}
+        </td>
+    </tr>
+
 </table>
 
 </body>

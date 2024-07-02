@@ -22,4 +22,14 @@ class Coa extends Model
     {
         return $this->hasMany(CoaItem::class);
     }
+
+    protected static function boot(){
+        parent::boot();
+
+        static::creating(function ($coaNo) {
+            $coa = static::orderBy('id', 'desc')->first();
+            $nextNumber = $coa ? intval($coa->coa_no) + 1 : 1;
+            $coaNo->coa_no = str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
+        });
+    }
 }

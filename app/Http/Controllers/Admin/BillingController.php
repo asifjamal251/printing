@@ -151,9 +151,10 @@ class BillingController extends Controller
         else{
             $coa = Coa::firstOrNew(['billing_item_id' => $billing->id]);
             $coa->mfg_date = $billing->created_at;
-            $coa->product_code = $billing->POItem->art_code;
+            $coa->product_code = $billing->POItem->art_work;
             $coa->product = $billing->POItem->carton_name;
             $coa->client = $billing->PO->client->company_name;
+            $coa->quantity = $billing->ready_quantity;
             $coa->save();
 
             // Define CoaItem data and save each CoaItem
@@ -189,27 +190,39 @@ class BillingController extends Controller
             $query->with('COAItem');
         }])->findOrFail($id);
 
+        $coa = Coa::where('billing_item_id', $id)->with(['coaItems'])->first();
         // Pass the data to the view
-        return view('admin.billing.coa', compact('billing'));
+        return view('admin.billing.coa', compact('billing', 'coa'));
     }
 
      public function caoUpdate(Request $request, $id){
-        return $request->all();
-        $coa = Coa::find($id);
-        $coa->expiry_date = Carbon::parse($request->expiry_date)->format('Y-m-d');
-        $coa->manufacturing_date = Carbon::parse($request->manufacturing_date)->format('Y-m-d');
+        //return $request->all();
+        $billing = BillingItem::with(['PO', 'POItem'=>function($query){
+            $query->with('paperType');
+        }])->findOrFail($id);
+        
+        Coa::where('billing_item_id', $id)->with(['coaItems'])->first();
+
+        $coa->mfg_date = Carbon::parse($request->mfg_date)->format('Y-m-d');
+        $coa->exp_date = Carbon::parse($request->exp_date)->format('Y-m-d');
+        $coa->product_code = $billing->POItem->art_code;
+        $coa->product = $billing->POItem->carton_name;
+        $coa->client = $billing->PO->client->company_name;
         $coa->save();
 
-        // Assuming coa_id exists in the Billing model and corresponds to the id of the Coa record
+        $inputs = $request->input('item');
+        foreach ($inputs as $key => $input) {
+            $coaItem = CoaItem::find($key);
+            $coaItem->parameter = $input['parameter'];
+            $coaItem->specification = $input['specification'];
+            $coaItem->result = $input['result'];
+            $coaItem->save();
+        }
+
         $coa = Coa::where('id', $id)->with(['coaItems'])->first();
+        $pdf = PDF::loadView('admin.pdf.coa', compact('coa', 'billing'));
 
-        $pdf = PDF::loadView('admin.pdf.coa', compact('coa'));
-
-        // Download the PDF
         return $pdf->download($coa->product.'.pdf');
-
-        // Redirect back to the admin.index route
-       // return "ok";
 
      }
 
