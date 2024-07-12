@@ -552,6 +552,7 @@
 <script src="{{asset('admin-assets/libs/select2/js/select2.min.js')}}" type="text/javascript"></script>
 <script type="text/javascript" src="{{asset('admin-assets/js/pages/form-repeater.js')}}"></script>
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 <script type="text/javascript">
 $(".dateSelector").each(function() {
@@ -564,6 +565,8 @@ $(".dateSelector").each(function() {
 
 </script>
 
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 <script type="text/javascript">
@@ -614,6 +617,7 @@ $(".dateSelector").each(function() {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     // $(".dateSelector").each(function() {
     //     var defaultDate = $(this).val() ? null : "today";
     //     $(this).flatpickr({
@@ -622,6 +626,8 @@ $(".dateSelector").each(function() {
     //     });
     // });
 =======
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
     $(".dateSelector").each(function() {
         var defaultDate = $(this).val() ? null : "today";
         $(this).flatpickr({
@@ -629,6 +635,9 @@ $(".dateSelector").each(function() {
             defaultDate: defaultDate
         });
     });
+<<<<<<< HEAD
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
+=======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 
     $('.select2').select2();

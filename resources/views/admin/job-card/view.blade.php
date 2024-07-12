@@ -240,7 +240,11 @@
                                 <td>
                                     @if($job_card->dye_details_id)
 <<<<<<< HEAD
+<<<<<<< HEAD
                                     <p class="m-0">{{$job_card->deyDetail->dye_no}} | {{$job_card->deyDetail->dye_lock}} | {!! $job_card->deyDetail->automatic?'Automatic':'Manual' !!}</p>
+=======
+                                    <p class="m-0">{{$job_card->deyDetail->dye_no}} | {{$job_card->deyDetail->dye_lock}} | {!! $job_card->dye_machine??'manual' !!}</p>
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
                                     <p class="m-0">{{$job_card->deyDetail->dye_no}} | {{$job_card->deyDetail->dye_lock}} | {!! $job_card->dye_machine??'manual' !!}</p>
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af

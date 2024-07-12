@@ -43,9 +43,14 @@
                             <tr>
                                 <th style="width:12px">Si</th>
 <<<<<<< HEAD
+<<<<<<< HEAD
                                 {{-- <th style="width:12px">Billing Selection</th> --}}
                                 <th>Reference No.</th>
                                 <th>Invoice No.</th>
+=======
+                                <th style="width:12px">Billing Selection</th>
+                                <th>Reference No.</th>
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
                                 <th style="width:12px">Billing Selection</th>
                                 <th>Reference No.</th>
@@ -68,6 +73,7 @@
 
 
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <div id="billNoModel" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog modal-dialog-centered">
@@ -95,6 +101,8 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 @endsection
@@ -129,6 +137,7 @@ $(document).ready(function(){
     "columns": [
         { "data": "sn" },
 <<<<<<< HEAD
+<<<<<<< HEAD
         // { "data": "checkbox",
         //     render: function(data, type, row) {
         //         if(row['status_id'] == 2){
@@ -144,6 +153,8 @@ $(document).ready(function(){
         { "data": "reference_no" },
         { "data": "invoice_no" },
 =======
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
         { "data": "checkbox",
             render: function(data, type, row) {
                 if(row['status_id'] == 2){
@@ -157,6 +168,9 @@ $(document).ready(function(){
             }
         },
         { "data": "reference_no" },
+<<<<<<< HEAD
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
+=======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
         { "data": "client_name" },
         { "data": "city" },
@@ -190,8 +204,11 @@ $(document).ready(function(){
                     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
                     btn+='<li><a data-id="'+row['id']+'" class="dropdown-item edit-item-btn open-model" href="javascript:voide(0);"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Add Invoice No</a></li>';
 
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
                     @endcan
@@ -307,6 +324,7 @@ $('body').on('click', '.make-billed', function(){
 
 });
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 $('body').on('click', '.open-model', function(){
     var id = $(this).attr('data-id');
@@ -355,6 +373,9 @@ $('body').on('click', '#billingCreate', function(){
 });
 
 </script>
+=======
+    </script>
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
     </script>
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af

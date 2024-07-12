@@ -7,9 +7,13 @@ use App\Models\Carton;
 use App\Models\CartonPrice;
 use App\Models\Category;
 <<<<<<< HEAD
+<<<<<<< HEAD
 use App\Models\City;
 use App\Models\Client;
 use App\Models\District;
+=======
+use App\Models\Client;
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
 use App\Models\Client;
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
@@ -52,6 +56,7 @@ class CommonController extends Controller{
     }
 
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     public function cityList(Request $request, $stateID){
         if ($request->ajax()) {
@@ -128,6 +133,8 @@ class CommonController extends Controller{
     }
 
 
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 

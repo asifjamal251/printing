@@ -5,12 +5,18 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\Client\ClientCollection;
 <<<<<<< HEAD
+<<<<<<< HEAD
 use App\Models\City;
 use App\Models\Client;
 use App\Models\ClientPlate;
 use App\Models\Media;
 use App\Rules\GSTNumber;
 use App\Rules\MobileNumber;
+=======
+use App\Models\Client;
+use App\Models\ClientPlate;
+use App\Models\Media;
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
 use App\Models\Client;
 use App\Models\ClientPlate;
@@ -64,6 +70,7 @@ class ClientController extends Controller
 
         $this->validate($request,[
 <<<<<<< HEAD
+<<<<<<< HEAD
             'first_name'=>'required|string|max:255',  
             'address' => 'required|max:500',
             'company_name' => 'required|max:255',
@@ -76,6 +83,8 @@ class ClientController extends Controller
             'gst' => ['required', new GSTNumber()],
             'mobile_number' => ['required', new MobileNumber()],
 =======
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
             'first_name'=>'required|string|max:255',
             'email'=>'required|string|email|max:255',
             'mobile_no'=>'required',   
@@ -83,6 +92,9 @@ class ClientController extends Controller
             'city'=>'required',   
             'pincode'=>'required',   
             'company_name'=>'required',  
+<<<<<<< HEAD
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
+=======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
         ]);
 
@@ -92,6 +104,7 @@ class ClientController extends Controller
         $client->full_name = $request->first_name . " " .$request->last_name;
         $client->name_init = Str::upper(Str::limit($request->first_name, 1,'').Str::limit($request->last_name, 1,''));
         $client->email = $request->email;
+<<<<<<< HEAD
 <<<<<<< HEAD
         $client->mobile = $request->mobile_number;
         $client->address = $request->address;
@@ -113,6 +126,8 @@ class ClientController extends Controller
             } 
         }
 =======
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
         $client->mobile = $request->mobile_no;
         $client->address = $request->address;
         $client->state = $request->state;
@@ -124,6 +139,9 @@ class ClientController extends Controller
 
         $client->color = $random;
         $client->media_id = $request->file;
+<<<<<<< HEAD
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
+=======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 
         if($client->save()){ 
@@ -142,6 +160,7 @@ class ClientController extends Controller
 
     public function update(Request $request, $id) {
 <<<<<<< HEAD
+<<<<<<< HEAD
         $this->validate($request,[
             'first_name'=>'required|string|max:255',  
             'address' => 'required|max:500',
@@ -154,6 +173,8 @@ class ClientController extends Controller
             'gst' => ['required', new GSTNumber()],
             'mobile_number' => ['required', new MobileNumber()],
 =======
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
          $this->validate($request,[
             'first_name'=>'required|string|max:255',
             'email'=>'required|string|email|max:255',
@@ -162,6 +183,9 @@ class ClientController extends Controller
             'city'=>'required',   
             'pincode'=>'required',   
             'company_name'=>'required',    
+<<<<<<< HEAD
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
+=======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
         ]);
 
@@ -171,6 +195,7 @@ class ClientController extends Controller
         $client->full_name = $request->first_name . " " .$request->last_name;
         $client->name_init = Str::upper(Str::limit($request->first_name, 1,'').Str::limit($request->last_name, 1,''));
         $client->email = $request->email;
+<<<<<<< HEAD
 <<<<<<< HEAD
         $client->mobile = $request->mobile_number;
         $client->address = $request->address;
@@ -190,6 +215,8 @@ class ClientController extends Controller
              $client->media_id = Null;
         }
 =======
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
         $client->mobile = $request->mobile_no;
         $client->address = $request->address;
         $client->state = $request->state;
@@ -197,6 +224,9 @@ class ClientController extends Controller
         $client->pincode = $request->pincode;
         $client->gst = $request->gst;
         $client->company_name = $request->company_name;
+<<<<<<< HEAD
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
+=======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 
         if($client->save()){ 

@@ -25,7 +25,11 @@
                         <div class="w-100 form-group{{ $errors->has('paper_length_cm') ? ' has-error' : '' }}">
                             {!! Form::label('paper_length_cm', 'Length CM') !!}
 <<<<<<< HEAD
+<<<<<<< HEAD
                             {!! Form::text('paper_length_cm', null, ['class' => 'form-control length-cm', 'placeholder' => 'Length CM']) !!}
+=======
+                            {!! Form::text('paper_length_cm', null, ['class' => 'form-control length', 'placeholder' => 'Length CM']) !!}
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
                             {!! Form::text('paper_length_cm', null, ['class' => 'form-control length', 'placeholder' => 'Length CM']) !!}
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
@@ -37,7 +41,11 @@
                         <div class="w-100 form-group{{ $errors->has('paper_width_cm') ? ' has-error' : '' }}">
                             {!! Form::label('paper_width_cm', 'Width CM') !!}
 <<<<<<< HEAD
+<<<<<<< HEAD
                             {!! Form::text('paper_width_cm', null, ['class' => 'form-control width-cm', 'placeholder' => 'Width CM']) !!}
+=======
+                            {!! Form::text('paper_width_cm', null, ['class' => 'form-control width', 'placeholder' => 'Width CM']) !!}
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
                             {!! Form::text('paper_width_cm', null, ['class' => 'form-control width', 'placeholder' => 'Width CM']) !!}
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af

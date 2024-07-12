@@ -78,8 +78,11 @@ class MaterialOrderController extends Controller
             'vendor' => 'required',
             'mo_date' => 'required',
 <<<<<<< HEAD
+<<<<<<< HEAD
             'bill_to' => 'required',
             'ship_to' => 'required',
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
             'kt_docs_repeater_advanced' => 'required|array',
@@ -103,8 +106,11 @@ class MaterialOrderController extends Controller
 
         $material_order = new MaterialOrder;
 <<<<<<< HEAD
+<<<<<<< HEAD
         $material_order->bill_to = $request->bill_to;
         $material_order->ship_to = $request->ship_to;
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
         $material_order->admin_id = $user->id;
@@ -168,7 +174,11 @@ class MaterialOrderController extends Controller
 
     public function show($id){
 <<<<<<< HEAD
+<<<<<<< HEAD
         $material =  MaterialOrder::where('id', $id)->with(['madeBy', 'billTo', 'shipTo', 'vendor', 'materialItems'=>function($query){
+=======
+        $material =  MaterialOrder::where('id', $id)->with(['madeBy', 'vendor', 'materialItems'=>function($query){
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
         $material =  MaterialOrder::where('id', $id)->with(['madeBy', 'vendor', 'materialItems'=>function($query){
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
@@ -204,8 +214,11 @@ class MaterialOrderController extends Controller
             'vendor' => 'required',
             'mo_date' => 'required',
 <<<<<<< HEAD
+<<<<<<< HEAD
             'bill_to' => 'required',
             'ship_to' => 'required',
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
             'kt_docs_repeater_advanced' => 'required|array',
@@ -229,8 +242,11 @@ class MaterialOrderController extends Controller
 
         $material_order = MaterialOrder::find($id);
 <<<<<<< HEAD
+<<<<<<< HEAD
         $material_order->bill_to = $request->bill_to;
         $material_order->ship_to = $request->ship_to;
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
         $material_order->admin_id = $user->id;
@@ -336,12 +352,15 @@ class MaterialOrderController extends Controller
             ->with([
                 'madeBy', 
 <<<<<<< HEAD
+<<<<<<< HEAD
                 'billTo' => function($query){
                     $query->with(['city', 'state', 'district']);
                 },
                 'shipTo' => function($query){
                     $query->with(['city', 'state', 'district']);
                 },
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
                 'vendor'=>function($query){
@@ -384,6 +403,7 @@ class MaterialOrderController extends Controller
             $material = $materialData->toArray();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             $billToData = $materialData->billTo;
             $billTo = $billToData->toArray();
 
@@ -392,6 +412,10 @@ class MaterialOrderController extends Controller
 
             // Generate the PDF
             $pdf = PDF::loadView('pdf.order-confirmation', compact('material', 'items', 'billTo', 'shipTo'))
+=======
+            // Generate the PDF
+            $pdf = PDF::loadView('pdf.order-confirmation', compact('material', 'items'))
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
             // Generate the PDF
             $pdf = PDF::loadView('pdf.order-confirmation', compact('material', 'items'))

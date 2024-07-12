@@ -1,6 +1,10 @@
 <!doctype html>
 <<<<<<< HEAD
+<<<<<<< HEAD
 <html lang="en" data-layout="horizontal" data-topbar="dark" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="enable">
+=======
+<html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="enable">
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
 <html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="enable">
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af

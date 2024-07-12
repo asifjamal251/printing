@@ -14,6 +14,7 @@ class Vendor extends Model
         return $this->hasOne(Media::class,'id','media_id');
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 
@@ -28,6 +29,8 @@ class Vendor extends Model
     public function city(){
         return $this->hasOne(City::class,'id','city_id');
     }
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 }

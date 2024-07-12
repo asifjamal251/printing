@@ -5,6 +5,7 @@
                 <!-- LOGO -->
                 <div class="navbar-brand-box horizontal-logo">
 <<<<<<< HEAD
+<<<<<<< HEAD
                     <a href="{{ route('admin.dashboard.index') }}" class="logo logo-dark">
                         <span class="logo-sm">
                             <img src="{{asset(get_app_setting('favicon')??'assets/images/logo-sm.png')}}" alt="" height="22">
@@ -12,12 +13,17 @@
                         <span class="logo-lg">
                             <img src="{{asset(get_app_setting('logo')??'assets/images/logo-dark.png')}}" alt="" height="17">
 =======
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
                     <a href="index.html" class="logo logo-dark">
                         <span class="logo-sm">
                             <img src="{{asset('admin-assets/images/logo-sm.png')}}" alt="" height="22">
                         </span>
                         <span class="logo-lg">
                             <img src="{{asset('admin-assets/images/logo-dark.png')}}" alt="" height="17">
+<<<<<<< HEAD
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
+=======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
                         </span>
                     </a>
@@ -25,15 +31,21 @@
                     <a href="index.html" class="logo logo-light">
                         <span class="logo-sm">
 <<<<<<< HEAD
+<<<<<<< HEAD
                             <img src="{{asset(get_app_setting('favicon')??'assets/images/logo-sm.png')}}" alt="" height="22">
                         </span>
                         <span class="logo-lg">
                             <img src="{{asset(get_app_setting('logo')??'assets/images/logo-dark.png')}}" alt="" height="17">
 =======
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
                             <img src="{{asset('admin-assets/images/logo-sm.png')}}" alt="" height="22">
                         </span>
                         <span class="logo-lg">
                             <img src="{{asset('admin-assets/images/logo-light.png')}}" alt="" height="17">
+<<<<<<< HEAD
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
+=======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
                         </span>
                     </a>

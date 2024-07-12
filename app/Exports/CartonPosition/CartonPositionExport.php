@@ -13,6 +13,7 @@ class CartonPositionExport implements FromView
 
     private $stocks;
 <<<<<<< HEAD
+<<<<<<< HEAD
     private $client;
 
     public function __construct($stocks, $client)
@@ -20,10 +21,15 @@ class CartonPositionExport implements FromView
         $this->stocks = $stocks;
         $this->client = $client;
 =======
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 
     public function __construct($stocks)
     {
         $this->stocks = $stocks;
+<<<<<<< HEAD
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
+=======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
     }
 
@@ -31,8 +37,12 @@ class CartonPositionExport implements FromView
     {
         return view('admin.excell.carton-position', [
 <<<<<<< HEAD
+<<<<<<< HEAD
             'stocks' => $this->stocks,
             'client' => $this->client,
+=======
+            'stocks' =>$this->stocks,
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
             'stocks' =>$this->stocks,
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af

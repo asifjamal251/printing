@@ -211,7 +211,10 @@
         <div class="card-content">
             <div class="card-body">
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
                 <div class="d-flex gap-3">
@@ -669,6 +672,7 @@
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             <div class="d-inline-block" style="max-width:20%;float:right;">
                 @if($job_card->status_id != 3)
                     <div class="w-100 mb-2">
@@ -685,10 +689,15 @@
             
 
 =======
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
             <div class="btn-group" style="max-width:20%;float:right;">
                 {!! Form::submit("Save ".Str::title(str_replace('-', ' ', request()->segment(2))), ['class' => 'btn btn-success btn-border waves-effect waves-light']) !!}
             </div>
 
+<<<<<<< HEAD
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
+=======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
         </div>
     </div>
@@ -876,12 +885,15 @@ $('body').on('change', '.getProduct', function(){
 
 });
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 
 
 
 
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 </script>

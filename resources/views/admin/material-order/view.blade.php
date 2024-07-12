@@ -62,7 +62,11 @@ th {
                     <tr>
                         <td colspan="4">
 <<<<<<< HEAD
+<<<<<<< HEAD
                             <b>Bill To</b>
+=======
+                            <b>From</b>
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
                             <b>From</b>
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
@@ -74,7 +78,11 @@ th {
 
                         <td colspan="4">
 <<<<<<< HEAD
+<<<<<<< HEAD
                             <b>Vendor</b>
+=======
+                            <b>To</b>
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
                             <b>To</b>
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
@@ -99,6 +107,7 @@ th {
                         </td>
                     </tr>
 <<<<<<< HEAD
+<<<<<<< HEAD
                     <tr style="vertical-align:top;">
                         <td colspan="4">
                             <p><b>{{$material->billto->name}}</b></p>
@@ -115,6 +124,8 @@ th {
                             <p style="margin-bottom: 0;"><b>GST: </b> {{$material->shipTo->gst}}</p>
                             <p style="margin-bottom:0"><b>Address: </b>{{$material->shipTo->address}}, <br>{{$material->shipTo->locality}} {{$material->shipTo->city->name}}, <br>{{$material->shipTo->state->name}} - {{$material->shipTo->pincode}}</p>
 =======
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
                     <tr>
                         <td colspan="4">
                             <p><b>{{get_app_setting('title')}}</b></p>
@@ -130,6 +141,9 @@ th {
                             <p style="margin-bottom: 0;"><b>Mobile No.: </b> {{ get_app_setting('contact_no') }}</p>
                             <p style="margin-bottom: 0;"><b>GST: </b> {{ get_app_setting('gst') }}</p>
                             <p style="margin-bottom:0"><b>Address: </b>{!! get_app_setting('address')??'' !!}</p>
+<<<<<<< HEAD
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
+=======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
                         </td>
 
@@ -168,9 +182,15 @@ th {
                         <tr>
                             <td>
 <<<<<<< HEAD
+<<<<<<< HEAD
                                 <label for="material{{$item->id}}">
                                     {!! Form::checkbox('item['.$item->id.'][material]',  $item->id, $item->receive_status, ['id' => 'material'.$item->id]) !!} {{$loop->index+1}} 
                                 </label>
+=======
+                                    <label for="material{{$item->id}}">
+                                        {!! Form::checkbox('item['.$item->id.'][material]',  $item->id, $item->receive_status, ['id' => 'material'.$item->id]) !!} {{$loop->index+1}} 
+                                    </label>
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
                                     <label for="material{{$item->id}}">
                                         {!! Form::checkbox('item['.$item->id.'][material]',  $item->id, $item->receive_status, ['id' => 'material'.$item->id]) !!} {{$loop->index+1}} 

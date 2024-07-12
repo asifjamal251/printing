@@ -94,8 +94,13 @@
 
                         <tr>
 <<<<<<< HEAD
+<<<<<<< HEAD
                             <th style="width: 25%;">PO NO</th>
                             <td style="width: 25%;">{{$billing->PO->po_no}}</td>
+=======
+                            <th style="width: 25%;">COA NO</th>
+                            <td style="width: 25%;">{{$coa->coa_no}}</td>
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
                             <th style="width: 25%;">COA NO</th>
                             <td style="width: 25%;">{{$coa->coa_no}}</td>
@@ -105,6 +110,7 @@
                         </tr>
 
                         <tr>
+<<<<<<< HEAD
 <<<<<<< HEAD
                             <th style="width: 25%;">PO DATE</th>
                             <td style="width: 25%;">
@@ -161,6 +167,8 @@
                                 </div>
                             </td>
 =======
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
                             <th style="width: 25%;">INVOICE NO.</th>
                             <td style="width: 25%;">
                                 <div class="m-0 form-group{{ $errors->has('invoice_no') ? ' has-error' : '' }}">
@@ -184,6 +192,9 @@
                             <td style="width: 25%;">1</td>
                             <th style="width: 25%;">BATCH NO.</th>
                             <td style="width: 25%;">200</td>
+<<<<<<< HEAD
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
+=======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
                         </tr>
 

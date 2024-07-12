@@ -8,7 +8,10 @@ use App\Exports\ProductStock\OtherProductStockExport;
 use App\Exports\ProductStock\ProductStockExport;
 use App\Http\Controllers\Controller;
 <<<<<<< HEAD
+<<<<<<< HEAD
 use App\Models\Client;
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 use App\Models\Product;
@@ -66,6 +69,7 @@ class ExcelController extends Controller
     public function cartonPosition(Request $request)
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
         $this->validate($request, [
             'client' => 'required',
         ]);
@@ -84,10 +88,14 @@ class ExcelController extends Controller
 =======
         $stocks = PurchaseOrder::where(['client_id'=>$request->client])->with(['purchaseOrderItems'=>function($query){
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
+=======
+        $stocks = PurchaseOrder::where(['client_id'=>$request->client])->with(['purchaseOrderItems'=>function($query){
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
            $query->with(['jobCardItems'=>function($query){
                 $query->with('jobCard');
             }]);
         }])->get();
+<<<<<<< HEAD
 <<<<<<< HEAD
 
     
@@ -95,6 +103,10 @@ class ExcelController extends Controller
         $client = Client::where(['id'=>$request->client])->first();
         $export = new CartonPositionExport($stocks, $client);
         Excel::store(new CartonPositionExport($stocks, $client), 'excell-download/carton-position.xlsx');
+=======
+        $export = new CartonPositionExport($stocks);
+        Excel::store(new CartonPositionExport($stocks), 'excell-download/carton-position.xlsx');
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
         $export = new CartonPositionExport($stocks);
         Excel::store(new CartonPositionExport($stocks), 'excell-download/carton-position.xlsx');

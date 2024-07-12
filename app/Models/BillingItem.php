@@ -14,11 +14,14 @@ class BillingItem extends Model
     	return $this->hasMany(JobCard::class, 'id', 'job_card_id');
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     public function billing(){
         return $this->hasOne(Billing::class, 'id', 'billing_id');
     }
 
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
     public function jobCardItem(){

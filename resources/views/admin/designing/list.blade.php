@@ -240,7 +240,11 @@ $(document).ready(function(){
                             btn+='<li><a class="dropdown-item edit-item-btn" href="javascript:void(0);" onclick="updateData(\'{{ route('admin.designing.changeStatus') }}\',{job_card_id:'+row['job_card_id']+',status:5})"><i class="ri-check-double-fill me-2 text-muted"></i>Make it Completed</a></li>';
                         }else{
 <<<<<<< HEAD
+<<<<<<< HEAD
                             // btn+='<li><a class="dropdown-item edit-item-btn" href="javascript:void(0);" onclick="updateData(\'{{ route('admin.designing.changeStatus') }}\',{job_card_id:'+row['job_card_id']+',status:2})"><i class="ri-edit-2-line me-2 text-muted"></i>Make it Editable</a></li>';
+=======
+                            btn+='<li><a class="dropdown-item edit-item-btn" href="javascript:void(0);" onclick="updateData(\'{{ route('admin.designing.changeStatus') }}\',{job_card_id:'+row['job_card_id']+',status:2})"><i class="ri-edit-2-line me-2 text-muted"></i>Make it Editable</a></li>';
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
                             btn+='<li><a class="dropdown-item edit-item-btn" href="javascript:void(0);" onclick="updateData(\'{{ route('admin.designing.changeStatus') }}\',{job_card_id:'+row['job_card_id']+',status:2})"><i class="ri-edit-2-line me-2 text-muted"></i>Make it Editable</a></li>';
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af

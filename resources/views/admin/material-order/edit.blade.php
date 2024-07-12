@@ -100,7 +100,11 @@
                 <div class="row">
 
 <<<<<<< HEAD
+<<<<<<< HEAD
                     <div class="form-group col-md-3 col-sm-12">
+=======
+                    <div class="form-group col-md-4 col-sm-12">
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
                     <div class="form-group col-md-4 col-sm-12">
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
@@ -114,7 +118,11 @@
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
                     <div class="form-group col-md-3 col-sm-12">
+=======
+                    <div class="form-group col-md-4 col-sm-12">
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
                     <div class="form-group col-md-4 col-sm-12">
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
@@ -124,6 +132,7 @@
                             <small class="text-danger">{{ $errors->first('mo_date') }}</small>
                         </div>
                     </div>
+<<<<<<< HEAD
 <<<<<<< HEAD
 
                     <div class="form-group col-md-3 col-sm-12">
@@ -143,6 +152,8 @@
                         </div>
                     </div>
 
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
                 </div>

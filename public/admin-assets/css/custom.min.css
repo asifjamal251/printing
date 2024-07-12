@@ -27,7 +27,11 @@ span.select2-selection.select2-selection--single, span.selection {
     pointer-events:none 
 }*/
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*[data-layout=horizontal] .navbar-menu .navbar-nav{
+=======
+[data-layout=horizontal] .navbar-menu .navbar-nav{
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
 [data-layout=horizontal] .navbar-menu .navbar-nav{
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
@@ -85,7 +89,11 @@ span.select2-selection.select2-selection--single, span.selection {
     position: relative;
     left: 5px;
 <<<<<<< HEAD
+<<<<<<< HEAD
 }*/
+=======
+}
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
 }
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
@@ -94,7 +102,11 @@ span.select2-selection.select2-selection--single, span.selection {
         font-size: .800rem;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*.toastify.error{
+=======
+.toastify.error{
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
 .toastify.error{
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
@@ -111,7 +123,11 @@ span.select2-selection.select2-selection--single, span.selection {
     background-color:#f7b84b!important;
     background:#f7b84b!important;
 <<<<<<< HEAD
+<<<<<<< HEAD
 }*/
+=======
+}
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
 }
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af

@@ -1242,6 +1242,7 @@ $('body').on('change', '.get-weight-per-sheet', function(){
 });
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 $('body').on('change', '.length', function(){
     var length = $(this).val();
     $('.length-cm').val((length * 2.54).toFixed(2));
@@ -1252,6 +1253,8 @@ $('body').on('change', '.width', function(){
     $('.width-cm').val((width * 2.54).toFixed(2));
 });
 
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 

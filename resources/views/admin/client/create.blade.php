@@ -1,6 +1,7 @@
 @extends('admin.layouts.master')
 @push('links')
 <<<<<<< HEAD
+<<<<<<< HEAD
 <link rel="stylesheet" href="{{asset('admin-assets/libs/select2/css/select2.min.css')}}">  
 <style type="text/css">
     span.select2-selection.select2-selection--single, span.selection {
@@ -32,6 +33,9 @@
 =======
 <link rel="stylesheet" href="{{asset('admin-assets/libs/dropify/css/dropify.min.css')}}"> 
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
+=======
+<link rel="stylesheet" href="{{asset('admin-assets/libs/dropify/css/dropify.min.css')}}"> 
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 @endpush
 
 
@@ -58,10 +62,13 @@
     </div>
 </div>
 <<<<<<< HEAD
+<<<<<<< HEAD
 @php
     $countries = App\Models\Country::where('id', 101)->pluck('name', 'id');
     $states = App\Models\State::where('status_id', 11)->pluck('name', 'id');
 @endphp
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 <div class="row">
@@ -94,8 +101,11 @@
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
                         <div class="form-group col-md-3 col-sm-12">
 =======
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
                     <div class="form-group col-md-6 col-sm-12">
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                            {!! Form::label('email', 'Email') !!}
@@ -123,12 +133,16 @@
 
 
                      <div class="form-group col-md-6 col-sm-12">
+<<<<<<< HEAD
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
+=======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
                         <div class="form-group{{ $errors->has('company_name') ? ' has-error' : '' }}">
                             {!! Form::label('company_name', 'Company Name') !!}
                             {!! Form::text('company_name', null, ['class' => 'form-control', 'placeholder' => 'Company Name']) !!}
                             <small class="text-danger">{{ $errors->first('company_name') }}</small>
                         </div>
+<<<<<<< HEAD
 <<<<<<< HEAD
                     </div>
 
@@ -209,6 +223,8 @@
                     <div class="form-group col-md-3 col-sm-12">
                         <div class="form-group{{ $errors->has('pincode') ? ' has-error' : '' }}">
 =======
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
                      </div>
 
                     
@@ -227,6 +243,9 @@
                         </div>
 
                          <div class="form-group{{ $errors->has('pincode') ? ' has-error' : '' }}">
+<<<<<<< HEAD
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
+=======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
                             {!! Form::label('pincode', 'Pincode') !!}
                             {!! Form::text('pincode', null, ['class' => 'form-control', 'placeholder' => 'Pincode']) !!}
@@ -234,6 +253,7 @@
                         </div>
                     </div>
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 
                     <div class="form-group col-md-3 col-sm-12">
@@ -259,6 +279,8 @@
                         </div>
                     </div>
 =======
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
                     <div class="form-group col-md-6 col-sm-12">
                        <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
                            {!! Form::label('address', 'Address') !!}
@@ -268,6 +290,9 @@
                     </div>
 
                      
+<<<<<<< HEAD
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
+=======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 
                       <div class="form-group col-md-6 col-sm-12">
@@ -299,6 +324,7 @@
 
 
 @push('scripts')
+<<<<<<< HEAD
 <<<<<<< HEAD
 <script src="{{asset('admin-assets/libs/select2/js/select2.min.js')}}" type="text/javascript"></script>
 
@@ -446,6 +472,8 @@
 
 </script>
 =======
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 {{-- <script>
 $('body').on('change', '.getGST', function(){
     var gst_number = $(this).val();
@@ -475,5 +503,8 @@ $('body').on('change', '.getGST', function(){
     });
 });
 </script> --}}
+<<<<<<< HEAD
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
+=======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 @endpush

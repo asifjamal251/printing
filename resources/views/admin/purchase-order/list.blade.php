@@ -3,7 +3,10 @@
 @push('links')
 <link rel="stylesheet" href="{{asset('admin-assets/libs/select2/css/select2.min.css')}}"> 
 <<<<<<< HEAD
+<<<<<<< HEAD
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 <style type="text/css">
@@ -132,7 +135,11 @@
 
 @section('filter')
 <<<<<<< HEAD
+<<<<<<< HEAD
 {!! Form::open(['method' => 'POST', 'route' => 'admin.excell-download.carton-position', 'class' => 'form-horizontal', 'id'=>'downlodForm']) !!}
+=======
+<form id="filterForm" action="" autocomplete="off">
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
 <form id="filterForm" action="" autocomplete="off">
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
@@ -148,6 +155,7 @@
     <div class="offcanvas-body bg-light">
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
         <div class="card">
             <div class="card-body">
@@ -160,6 +168,8 @@
             </div>
         </div>
 =======
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 {{-- 
         <div class="card">
             <div class="card-header pt-2 pb-2">
@@ -175,6 +185,9 @@
             </div>
 
         </div> --}}
+<<<<<<< HEAD
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
+=======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 
 
@@ -209,7 +222,11 @@
                 </div>
                 <div class="d-inline-block" style="width:50%;">
 <<<<<<< HEAD
+<<<<<<< HEAD
                     <button onclick="downloadStock(this)" type="button" class="p-0 btn btn-soft-success w-100 border-success"><i class="fs-24 ri-download-2-fill"></i></button>
+=======
+                    <button onclick="downloadCarton(this)" type="submit" class="btn btn-soft-success w-100 border-success"> Dowload</button>
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
                     <button onclick="downloadCarton(this)" type="submit" class="btn btn-soft-success w-100 border-success"> Dowload</button>
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
@@ -220,7 +237,11 @@
 
 </div>
 <<<<<<< HEAD
+<<<<<<< HEAD
 {!! Form::close() !!}
+=======
+</form>
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
 </form>
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
@@ -239,6 +260,7 @@
 
 @push('scripts')
 <script src="{{asset('admin-assets/libs/select2/js/select2.min.js')}}" type="text/javascript"></script>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
@@ -267,6 +289,8 @@
         cb(null, null);
     });
 </script>
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 <script type="text/javascript">
@@ -385,6 +409,7 @@ $('.select2').select2({
 });
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 function downloadStock(element){
@@ -437,6 +462,8 @@ function downloadStock(element){
 
 
 =======
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 function downloadCarton(element){
     client = $('#filter_client').val();
     if(client.length > 0){
@@ -481,6 +508,9 @@ function downloadCarton(element){
         });
     }
 } 
+<<<<<<< HEAD
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
+=======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
     </script>
 

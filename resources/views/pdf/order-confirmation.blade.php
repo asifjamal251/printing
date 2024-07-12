@@ -6,6 +6,7 @@
     <title>Order Confirmation</title>
     <style>
 <<<<<<< HEAD
+<<<<<<< HEAD
         *{
             margin: 0;
             padding: 0;
@@ -19,10 +20,16 @@
             font-family: Arial, sans-serif;
             font-size: 12px;
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
+=======
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
         }
         table, th, td {
             border: 1px solid #595959;
             border-collapse: collapse;
+<<<<<<< HEAD
 <<<<<<< HEAD
             font-size: 10px;
         }
@@ -43,6 +50,8 @@
             margin-bottom: 10px;
             font-size: 10px;
 =======
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
         }
         th, td {
             padding: 5px;
@@ -56,11 +65,15 @@
         }
         .odd {
             background-color: #fefcf9;
+<<<<<<< HEAD
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
+=======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
         }
     </style>
 </head>
 <body>
+<<<<<<< HEAD
 <<<<<<< HEAD
     @if($material['status_id'] == 7)
     <div class=""></div>
@@ -76,6 +89,8 @@
         <td colspan="4">
             <b>Vendor</b>
 =======
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 @if($material['status_id'] == 7)
 <div class=""></div>
 @endif
@@ -86,11 +101,15 @@
         </td>
         <td colspan="5">
             <b>To</b>
+<<<<<<< HEAD
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
+=======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
         </td>
     </tr>
 
     <tr>
+<<<<<<< HEAD
 <<<<<<< HEAD
         <td colspan="4">
             <img src="{{asset(get_app_setting('logo'))}}" alt="" style="max-width:160px;max-height: 60px;">
@@ -102,18 +121,24 @@
             @if($material['vendor']['media'])
                 <img class="d-block img-thumbnail" style="max-width:160px;max-height: 60px;" src="{{asset($material['vendor']['media']['file'])}}" alt="{{ $material['vendor']['name'] ?? 'N/A' }}">
 =======
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
         <td colspan="6">
             <img src="{{asset(get_app_setting('logo'))}}" alt="" style="max-width:160px;max-height: 60px;">
         </td>
         <td colspan="5">
             @if($material['vendor']['media'])
             <img class="d-block img-thumbnail" style="max-width:160px;max-height: 60px;" src="{{asset($material['vendor']['media']['file'])}}" alt="{{ $material['vendor']['name'] ?? 'N/A' }}">
+<<<<<<< HEAD
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
+=======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
             @else
                 <b>{{ $material['vendor']['name'] ?? 'N/A' }}</b>
             @endif
         </td>
     </tr>
+<<<<<<< HEAD
 <<<<<<< HEAD
 
     <tr style="vertical-align:top;">
@@ -187,6 +212,8 @@
     <tr>
         <th colspan="10" style="background-color: #fff;"></th>
 =======
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
     <tr>
         <td colspan="6" style="width: 50%;">
             <p><b>{{get_app_setting('title')}}</b></p>
@@ -245,13 +272,20 @@
     @endif
     <tr>
         <th colspan="9" style="background-color: #fff;"></th>
+<<<<<<< HEAD
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
+=======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
         <th style="background-color: #fff;">Subtotal</th>
         <td>{{ $material['subtotal'] ?? 0 }}</td>
     </tr>
     <tr>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <th colspan="10" style="background-color: #fff;"></th>
+=======
+        <th colspan="9" style="background-color: #fff;"></th>
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
         <th colspan="9" style="background-color: #fff;"></th>
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
@@ -260,7 +294,11 @@
     </tr>
     <tr>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <th colspan="10" style="background-color: #fff;">{{numberToWords($material['total'])}}</th>
+=======
+        <th colspan="9" style="background-color: #fff;">{{numberToWords($material['total'])}}</th>
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
         <th colspan="9" style="background-color: #fff;">{{numberToWords($material['total'])}}</th>
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
@@ -269,6 +307,7 @@
     </tr>
     <tr>
         <td colspan="6" style="vertical-align: top; height: 80px;">Comment or Special Instructions</td>
+<<<<<<< HEAD
 <<<<<<< HEAD
         <td colspan="6" style="vertical-align: top; height: 80px;"></td>
     </tr>
@@ -288,6 +327,8 @@
             <p style="margin-bottom:0;">11. In case Material is rejected, Inward Transportation and Testing charges will be debited.</p>
             <p style="margin-bottom:0;">12. Kindly make the E-Way bill according to the Billing & Shipping Details.</p>
 =======
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
         <td colspan="5" style="vertical-align: top; height: 80px;"></td>
     </tr>
     <tr>
@@ -308,13 +349,19 @@
             <p style="margin-bottom:0;">11.  In Case Material is rejected. Inward Transportation and Testing charges will be debited.</p>                     
             <p style="margin-bottom:0;">12.  Kindly make the  E-Way bill according to the  Billing & Shipping Details.</p>
         </small>
+<<<<<<< HEAD
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
+=======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
         </td>
     </tr>
 </table>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 </body>

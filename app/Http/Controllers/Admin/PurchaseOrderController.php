@@ -11,7 +11,10 @@ use App\Models\Planning;
 use App\Models\PurchaseOrder;
 use App\Models\PurchaseOrderItem;
 <<<<<<< HEAD
+<<<<<<< HEAD
 use App\Rules\UniquePoNumber;
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 use Auth;
@@ -69,7 +72,11 @@ class PurchaseOrderController extends Controller
         $this->validate($request, [
             'client' => 'required',
 <<<<<<< HEAD
+<<<<<<< HEAD
             'po_no' => ['required', new UniquePoNumber($request->client)],
+=======
+            'po_no' => 'required',
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
             'po_no' => 'required',
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
@@ -81,10 +88,15 @@ class PurchaseOrderController extends Controller
             'kt_docs_repeater_advanced.*.quantity' => 'required|integer', 
             'kt_docs_repeater_advanced.*.rate' => 'required|numeric', 
 <<<<<<< HEAD
+<<<<<<< HEAD
             'kt_docs_repeater_advanced.*.gsm' => 'required|numeric', 
             'kt_docs_repeater_advanced.*.art_work' => 'required', 
             'kt_docs_repeater_advanced.*.paper_type' => 'required', 
             'kt_docs_repeater_advanced.*.coating_type' => 'required', 
+=======
+            'kt_docs_repeater_advanced.*.gsm' => 'required', 
+            'kt_docs_repeater_advanced.*.art_work' => 'required', 
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
             'kt_docs_repeater_advanced.*.gsm' => 'required', 
             'kt_docs_repeater_advanced.*.art_work' => 'required', 
@@ -101,10 +113,14 @@ class PurchaseOrderController extends Controller
             'kt_docs_repeater_advanced.*.rate.numeric' => 'rate is must be numeric.',
             'kt_docs_repeater_advanced.*.gsm.required' => 'gsm is required.',
 <<<<<<< HEAD
+<<<<<<< HEAD
             'kt_docs_repeater_advanced.*.gsm.numeric' => 'gsm is numeric.',
             'kt_docs_repeater_advanced.*.art_work.required' => 'Art Work is required.',
             'kt_docs_repeater_advanced.*.paper_type.required' => 'Paper Type is required.',
             'kt_docs_repeater_advanced.*.coating_type.required' => 'Coating_ Type is required.',
+=======
+            'kt_docs_repeater_advanced.*.art_work.required' => 'Art Work is required.',
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
             'kt_docs_repeater_advanced.*.art_work.required' => 'Art Work is required.',
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
@@ -221,6 +237,10 @@ class PurchaseOrderController extends Controller
         $this->validate($request, [
             'client' => 'required',
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+            'po_no' => 'required',
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
             'po_no' => 'required',
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
@@ -231,10 +251,15 @@ class PurchaseOrderController extends Controller
             'kt_docs_repeater_advanced.*.quantity' => 'required|integer', 
             'kt_docs_repeater_advanced.*.rate' => 'required|numeric', 
 <<<<<<< HEAD
+<<<<<<< HEAD
             'kt_docs_repeater_advanced.*.gsm' => 'required|numeric', 
             'kt_docs_repeater_advanced.*.art_work' => 'required', 
             'kt_docs_repeater_advanced.*.paper_type' => 'required', 
             'kt_docs_repeater_advanced.*.coating_type' => 'required', 
+=======
+            'kt_docs_repeater_advanced.*.gsm' => 'required',
+            'kt_docs_repeater_advanced.*.art_work' => 'required',
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
             'kt_docs_repeater_advanced.*.gsm' => 'required',
             'kt_docs_repeater_advanced.*.art_work' => 'required',
@@ -247,6 +272,7 @@ class PurchaseOrderController extends Controller
             'kt_docs_repeater_advanced.*.quantity.required' => 'quantity is required.',
             'kt_docs_repeater_advanced.*.quantity.integer' => 'quantity is must be integer.',
 <<<<<<< HEAD
+<<<<<<< HEAD
             'kt_docs_repeater_advanced.*.rate.required' => 'rate is required.',
             'kt_docs_repeater_advanced.*.rate.numeric' => 'rate is must be numeric.',
             'kt_docs_repeater_advanced.*.gsm.required' => 'gsm is required.',
@@ -255,10 +281,15 @@ class PurchaseOrderController extends Controller
             'kt_docs_repeater_advanced.*.paper_type.required' => 'Paper Type is required.',
             'kt_docs_repeater_advanced.*.coating_type.required' => 'Coating Type is required.',
 =======
+=======
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
             'kt_docs_repeater_advanced.*.gsm.required' => 'GSM is required.',
             'kt_docs_repeater_advanced.*.art_work.required' => 'Art Work is required.',
             'kt_docs_repeater_advanced.*.rate.required' => 'rate is required.',
             'kt_docs_repeater_advanced.*.rate.numeric' => 'rate is must be numeric.',
+<<<<<<< HEAD
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
+=======
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
         ]);
 
@@ -332,7 +363,11 @@ class PurchaseOrderController extends Controller
         $purchage_order = PurchaseOrder::where(['status_id' => 2, 'id' => $id])->first();
         if($purchage_order->delete()){
 <<<<<<< HEAD
+<<<<<<< HEAD
             PurchaseOrderItem::where('purchase_order_id', $id)->delete();
+=======
+            PurchaseOrderItem::whereIn('purchase_order_id', $purchage_order)->delete();
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
             PurchaseOrderItem::whereIn('purchase_order_id', $purchage_order)->delete();
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af

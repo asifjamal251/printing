@@ -87,7 +87,11 @@ class MaterialInwardController extends Controller
         $material_inward->material_order_no = $request->material_order_no;
         $material_inward->bill_no = $request->bill_no;
 <<<<<<< HEAD
+<<<<<<< HEAD
         $material_inward->bill_date = Carbon::parse($request->bill_date)->format('Y-m-d');
+=======
+        $material_inward->bill_date = Carbon::parse($request->job_card_date)->format('Y-m-d');
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
         $material_inward->bill_date = Carbon::parse($request->job_card_date)->format('Y-m-d');
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
@@ -194,7 +198,11 @@ class MaterialInwardController extends Controller
         $material_inward->vendor_id = $request->vendor;
         $material_inward->bill_no = $request->bill_no;
 <<<<<<< HEAD
+<<<<<<< HEAD
         $material_inward->bill_date = Carbon::parse($request->bill_date)->format('Y-m-d');
+=======
+        $material_inward->bill_date = Carbon::parse($request->job_card_date)->format('Y-m-d');
+>>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 =======
         $material_inward->bill_date = Carbon::parse($request->job_card_date)->format('Y-m-d');
 >>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
