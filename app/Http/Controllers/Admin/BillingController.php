@@ -133,15 +133,7 @@ class BillingController extends Controller
     }
 
     public function cao(Request $request, $id){
-<<<<<<< HEAD
-<<<<<<< HEAD
         $billing = BillingItem::with(['billing', 'PO', 'POItem'=>function($query){
-=======
-        $billing = BillingItem::with(['PO', 'POItem'=>function($query){
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
-        $billing = BillingItem::with(['PO', 'POItem'=>function($query){
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
             $query->with('paperType');
         }])->findOrFail($id);
 
@@ -158,15 +150,7 @@ class BillingController extends Controller
         }
         else{
             $coa = Coa::firstOrNew(['billing_item_id' => $billing->id]);
-<<<<<<< HEAD
-<<<<<<< HEAD
             $coa->invoice_date = $billing->created_at;
-=======
-            $coa->mfg_date = $billing->created_at;
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
-            $coa->mfg_date = $billing->created_at;
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
             $coa->product_code = $billing->POItem->art_work;
             $coa->product = $billing->POItem->carton_name;
             $coa->client = $billing->PO->client->company_name;
@@ -213,8 +197,6 @@ class BillingController extends Controller
 
      public function caoUpdate(Request $request, $id){
         //return $request->all();
-<<<<<<< HEAD
-<<<<<<< HEAD
         
         $coa = Coa::where('id', $id)->with(['coaItems'])->first();
 
@@ -230,23 +212,6 @@ class BillingController extends Controller
         $coa->invoice_no = $request->invoice_no;
         $coa->quantity = $request->quantity;
         $coa->remarks = $request->remarks;
-=======
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-        $billing = BillingItem::with(['PO', 'POItem'=>function($query){
-            $query->with('paperType');
-        }])->findOrFail($id);
-        
-        Coa::where('billing_item_id', $id)->with(['coaItems'])->first();
-
-        $coa->mfg_date = Carbon::parse($request->mfg_date)->format('Y-m-d');
-        $coa->exp_date = Carbon::parse($request->exp_date)->format('Y-m-d');
-        $coa->product_code = $billing->POItem->art_code;
-        $coa->product = $billing->POItem->carton_name;
-<<<<<<< HEAD
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
         $coa->client = $billing->PO->client->company_name;
         $coa->save();
 
@@ -266,8 +231,6 @@ class BillingController extends Controller
 
      }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
      public function invoiceUpdate(Request $request){
         //return $request->all();
         $billing = Billing::find($request->id);
@@ -291,10 +254,6 @@ class BillingController extends Controller
         return response()->json(['message'=>'Please Select Job Card No.', 'class'=>'error', 'error'=>true]); 
      }
 
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 
    
 }

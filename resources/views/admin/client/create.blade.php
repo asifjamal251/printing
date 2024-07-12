@@ -1,7 +1,5 @@
 @extends('admin.layouts.master')
 @push('links')
-<<<<<<< HEAD
-<<<<<<< HEAD
 <link rel="stylesheet" href="{{asset('admin-assets/libs/select2/css/select2.min.css')}}">  
 <style type="text/css">
     span.select2-selection.select2-selection--single, span.selection {
@@ -30,12 +28,6 @@
         min-height: 100px; /* Minimum height */
     }
 </style>
-=======
-<link rel="stylesheet" href="{{asset('admin-assets/libs/dropify/css/dropify.min.css')}}"> 
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
-<link rel="stylesheet" href="{{asset('admin-assets/libs/dropify/css/dropify.min.css')}}"> 
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 @endpush
 
 
@@ -61,16 +53,10 @@
         </div>
     </div>
 </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
 @php
     $countries = App\Models\Country::where('id', 101)->pluck('name', 'id');
     $states = App\Models\State::where('status_id', 11)->pluck('name', 'id');
 @endphp
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 <div class="row">
     <div class="col-lg-12">
         <div class="card">
@@ -100,50 +86,12 @@
                     </div>
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
                         <div class="form-group col-md-3 col-sm-12">
-=======
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-                    <div class="form-group col-md-6 col-sm-12">
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                           {!! Form::label('email', 'Email') !!}
-                           {!! Form::email('email', null, ['class' => 'form-control',  'placeholder' => 'eg: foo@bar.com', 'autocomplete'=>'nope']) !!}
-                           <small class="text-danger">{{ $errors->first('email') }}</small>
-                       </div>
-                    </div>
-
-                    <div class="form-group col-md-6 col-sm-12">
-                        <div class="form-group{{ $errors->has('mobile_no') ? ' has-error' : '' }}">
-                           {!! Form::label('mobile_no', 'Mobile Number') !!}
-                           {!! Form::text('mobile_no', null, ['class' => 'form-control', 'placeholder' => 'Mobile Number']) !!}
-                           <small class="text-danger">{{ $errors->first('mobile_no') }}</small>
-                       </div>
-                    </div>
-
-
-                    <div class="form-group col-md-6 col-sm-12">
-                        <div class="form-group{{ $errors->has('gst') ? ' has-error' : '' }}">
-                            {!! Form::label('gst', 'GST') !!}
-                            {!! Form::text('gst', null, ['class' => 'form-control getGST', 'placeholder' => 'GST']) !!}
-                            <small class="text-danger gstError">{{ $errors->first('gst') }}</small>
-                        </div>
-                     </div>
-
-
-                     <div class="form-group col-md-6 col-sm-12">
-<<<<<<< HEAD
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
                         <div class="form-group{{ $errors->has('company_name') ? ' has-error' : '' }}">
                             {!! Form::label('company_name', 'Company Name') !!}
                             {!! Form::text('company_name', null, ['class' => 'form-control', 'placeholder' => 'Company Name']) !!}
                             <small class="text-danger">{{ $errors->first('company_name') }}</small>
                         </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
                     </div>
 
                     <div class="form-group col-md-3 col-sm-12">
@@ -222,39 +170,12 @@
 
                     <div class="form-group col-md-3 col-sm-12">
                         <div class="form-group{{ $errors->has('pincode') ? ' has-error' : '' }}">
-=======
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-                     </div>
-
-                    
-
-                    <div class="form-group col-md-6 col-sm-12">
-                        <div class="form-group{{ $errors->has('state') ? ' has-error' : '' }}">
-                            {!! Form::label('state', 'State') !!}
-                            {!! Form::text('state', null, ['class' => 'form-control', 'placeholder' => 'State']) !!}
-                            <small class="text-danger">{{ $errors->first('state') }}</small>
-                        </div>
-
-                         <div class="form-group{{ $errors->has('city') ? ' has-error' : '' }}">
-                            {!! Form::label('city', 'City') !!}
-                            {!! Form::text('city', null, ['class' => 'form-control city', 'placeholder' => 'City']) !!}
-                            <small class="text-danger">{{ $errors->first('city') }}</small>
-                        </div>
-
-                         <div class="form-group{{ $errors->has('pincode') ? ' has-error' : '' }}">
-<<<<<<< HEAD
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
                             {!! Form::label('pincode', 'Pincode') !!}
                             {!! Form::text('pincode', null, ['class' => 'form-control', 'placeholder' => 'Pincode']) !!}
                             <small class="text-danger">{{ $errors->first('pincode') }}</small>
                         </div>
                     </div>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 
                     <div class="form-group col-md-3 col-sm-12">
                         <div class="form-group{{ $errors->has('landmark') ? ' has-error' : '' }}">
@@ -278,22 +199,6 @@
 
                         </div>
                     </div>
-=======
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-                    <div class="form-group col-md-6 col-sm-12">
-                       <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
-                           {!! Form::label('address', 'Address') !!}
-                           {!! Form::textarea('address', null, ['class' => 'form-control', 'placeholder' => 'Address']) !!}
-                           <small class="text-danger">{{ $errors->first('address') }}</small>
-                       </div>
-                    </div>
-
-                     
-<<<<<<< HEAD
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 
                       <div class="form-group col-md-6 col-sm-12">
                           {!! Form::submit('Save Client Data', ['class' => 'btn btn-info pull-right']) !!}
@@ -324,8 +229,6 @@
 
 
 @push('scripts')
-<<<<<<< HEAD
-<<<<<<< HEAD
 <script src="{{asset('admin-assets/libs/select2/js/select2.min.js')}}" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -471,40 +374,4 @@
     });
 
 </script>
-=======
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-{{-- <script>
-$('body').on('change', '.getGST', function(){
-    var gst_number = $(this).val();
-    $('.gstError').html('');
-    $.ajax({
-        type: "GET",
-        enctype: 'multipart/form-data',
-        url:'{{ route('admin.common.check.gst', '') }}/'+gst_number,
-        success:function(response){
-            if(response != ''){
-                var data = response;
-                 console.log(data);
-                if(data.flag == true){
-                    console.log(response.data.lgnm);
-                    console.log(response.data.pradr.addr.loc);
-                    $('.form-control[name="company_name"]').val(response.data.lgnm)
-                    $('.form-control[name="city"]').val(response.data.pradr.addr.loc)
-                    $('.form-control[name="state"]').val(response.data.pradr.addr.stcd)
-                    $('.form-control[name="pincode"]').val(response.data.pradr.addr.pncd)
-                    $('.form-control[name="address"]').html(response.data.pradr.adr)
-                }
-                else{
-                    $('.gstError').html(data.message);
-                }
-            }
-        }
-    });
-});
-</script> --}}
-<<<<<<< HEAD
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 @endpush

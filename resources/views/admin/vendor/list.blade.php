@@ -45,13 +45,7 @@
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Phone No.</th>
-<<<<<<< HEAD
-<<<<<<< HEAD
                                 <th>City</th>
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
                                 <th>Address</th>
                                 @can(['edit_vendor','delete_vendor', 'read_vendor'])
                                   <th>Action</th>
@@ -91,13 +85,7 @@ $(document).ready(function(){
         { "data": "name" },
         { "data": "email" },
         { "data": "phone_no" },
-<<<<<<< HEAD
-<<<<<<< HEAD
         { "data": "city" },
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
         { "data": "address" },
         {
             "data": "action",

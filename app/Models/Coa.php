@@ -11,18 +11,8 @@ class Coa extends Model
 	    'id', 'billing_item_id',
 	];
 	protected $casts = [
-<<<<<<< HEAD
-<<<<<<< HEAD
         'exp_date' => 'date',
         'mfg_date' => 'date',
-=======
-        'expiry_date' => 'datetime',
-        'manufacturing_date' => 'datetime',
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
-        'expiry_date' => 'datetime',
-        'manufacturing_date' => 'datetime',
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
     ];
 
 	public function COAItem(){

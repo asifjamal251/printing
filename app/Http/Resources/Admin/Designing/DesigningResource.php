@@ -78,17 +78,7 @@ class DesigningResource extends JsonResource
             'dye_details'=>$this->job_card_id?$this->jobCard->dye_details??'NEW':'',
             'total_sheet'=>$this->job_card_id?$this->jobCard->required_sheet??'':'',
             'sheets_size'=>$this->job_card_id?$this->jobCard->sheet_size??'':'',
-<<<<<<< HEAD
-<<<<<<< HEAD
             'gsm'=>@$this->job_card_id?@$this->jobCard->jobCardItems[0]->POItem->gsm:'N/A',
-=======
-            'paper_type'=>$this->job_card_id?$this->jobCard->jobCardItems[0]->POItem->paperType->type:'',
-            'gsm'=>$this->job_card_id?$this->jobCard->jobCardItems[0]->POItem->gsm:'N/A',
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
-            'paper_type'=>$this->job_card_id?$this->jobCard->jobCardItems[0]->POItem->paperType->type:'',
-            'gsm'=>$this->job_card_id?$this->jobCard->jobCardItems[0]->POItem->gsm:'N/A',
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
             'paper_type'=>@$this->job_card_id?@$this->jobCard->jobCardItems[0]->POItem->paperType->type:'',
             'color'=>$this->job_card_id?$this->jobCard->color??'':'',
             'set_no'=>$this->set_no??'',

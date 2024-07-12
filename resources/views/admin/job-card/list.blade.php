@@ -41,21 +41,9 @@
                     <div class="card-body">
                         <div class="table-responsive">
 
-<<<<<<< HEAD
-<<<<<<< HEAD
                             {{--  <button id="scrollLeft" class="btn btn-primary" style="position: fix; left: 5%; top: 200px; transform: translateY(-50%); z-index: 10;width: 16px !important;height: 30px;line-height: 0px; font-size: 13px;min-width: 1px;padding: 0px;">&lt;</button>
                             <button id="scrollRight" class="btn btn-primary" style="position: fix; right: 5%; top: 200px; transform: translateY(-50%); z-index: 10;width: 16px !important;height: 30px;line-height: 0px;font-size: 13px;min-width: 1px; padding: 0px;">&gt;</button>
  --}}
-=======
-                             <button id="scrollLeft" class="btn btn-primary" style="position: absolute; left: 0; top: 50%; transform: translateY(-50%); z-index: 10;width: 16px !important;height: 30px;line-height: 0px; font-size: 13px;min-width: 1px;padding: 0px;">&lt;</button>
-                            <button id="scrollRight" class="btn btn-primary" style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); z-index: 10;width: 16px !important;height: 30px;line-height: 0px;font-size: 13px;min-width: 1px; padding: 0px;">&gt;</button>
-
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
-                             <button id="scrollLeft" class="btn btn-primary" style="position: absolute; left: 0; top: 50%; transform: translateY(-50%); z-index: 10;width: 16px !important;height: 30px;line-height: 0px; font-size: 13px;min-width: 1px;padding: 0px;">&lt;</button>
-                            <button id="scrollRight" class="btn btn-primary" style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); z-index: 10;width: 16px !important;height: 30px;line-height: 0px;font-size: 13px;min-width: 1px; padding: 0px;">&gt;</button>
-
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 
                         <table id="datatable" class="datatable table table-bordered border-secondary table-sm nowrap table-hover align-middle" style="width:100%">
                             <thead class="gridjs-thead">
@@ -277,51 +265,25 @@ $(document).ready(function(){
                     @endcan
 
                     @can('edit_job_card')
-<<<<<<< HEAD
-<<<<<<< HEAD
                     if(row['status_id'] != 3){
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 
                         btn += '<li><a target="_blank" class="dropdown-item" href="{{ request()->url() }}/track/' + row['id'] + '"><i class="ri-pulse-line  align-bottom me-2 text-muted"></i> Track</a></li>';
 
                         btn += '<li><a class="dropdown-item" href="{{ request()->url() }}/user/assign/' + row['id'] + '"><i class="ri-pulse-line  align-bottom me-2 text-muted"></i> Machine Assign</a></li>';
 
-<<<<<<< HEAD
-<<<<<<< HEAD
                         if(row['status_id'] == 1 || row['status_id'] == 2){
                             btn+='<li><a class="dropdown-item edit-item-btn" href="'+window.location.href+'/'+row['id']+'/edit"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>';
                         }
                     }
-=======
-                        btn+='<li><a class="dropdown-item edit-item-btn" href="'+window.location.href+'/'+row['id']+'/edit"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>';
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
-                        btn+='<li><a class="dropdown-item edit-item-btn" href="'+window.location.href+'/'+row['id']+'/edit"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>';
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
                     @endcan
 
                    
 
-<<<<<<< HEAD
-<<<<<<< HEAD
                     @can('delete_job_card')
                         if(row['status_id'] == 1 || row['status_id'] == 2){
                             btn += '<li><button type="button" onclick="cancelJobCard(\''+window.location.href+'/cancel/'+row['id']+'\')" class="dropdown-item remove-item-btn"><i class="ri-close-fill align-bottom me-2 text-muted"></i> Cancel</button></li>';
                         }
                     @endcan
-=======
-                    // @can('delete_job_card')
-                    //     btn += '<li><button type="button" onclick="deleteAjax(\''+window.location.href+'/'+row['id']+'/delete\')" class="dropdown-item remove-item-btn"><i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete</button></li>';
-                    // @endcan
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
-                    // @can('delete_job_card')
-                    //     btn += '<li><button type="button" onclick="deleteAjax(\''+window.location.href+'/'+row['id']+'/delete\')" class="dropdown-item remove-item-btn"><i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete</button></li>';
-                    // @endcan
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 
                     @endcan
                      btn += '</ul></div>';
@@ -394,8 +356,6 @@ $(document).ready(function(){
     });
 
 });
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 
 function cancelJobCard(url){ 
@@ -433,10 +393,6 @@ function cancelJobCard(url){
     }
     return false;
 }
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
     </script>
 
 @endpush

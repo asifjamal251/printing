@@ -22,15 +22,7 @@ class ClientResource extends JsonResource
             'mobile_no'=>$this->mobile, 
             'email'=>$this->email,
             'company_name'=>$this->company_name??'NA',
-<<<<<<< HEAD
-<<<<<<< HEAD
             'avatar'=>$this->media_id?'<img class="avatar-img img-fluid d-block avatar-sm img-thumbnail rounded img-fluid d-block" src="'.asset($this->media->file).'">':'<div class="avatar-sm"><span class="avatar-title rounded bg-'.$this->color.'-subtle  text-'.$this->color.' fs-14">'.Str::upper(Str::limit($this->first_name, 1,'').Str::limit($this->last_name, 1,'')).'</span></div>'
-=======
-            'avatar'=>$this->media_id?'<img class="avatar-img img-fluid d-block avatar-sm img-thumbnail rounded img-fluid d-block" src="'.asset($this->media->file).'">':'<div class="avatar-sm"><span class="avatar-title rounded bg-soft-'.$this->color.' text-'.$this->color.' fs-14">'.Str::upper(Str::limit($this->first_name, 1,'').Str::limit($this->last_name, 1,'')).'</span></div>'
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
-            'avatar'=>$this->media_id?'<img class="avatar-img img-fluid d-block avatar-sm img-thumbnail rounded img-fluid d-block" src="'.asset($this->media->file).'">':'<div class="avatar-sm"><span class="avatar-title rounded bg-soft-'.$this->color.' text-'.$this->color.' fs-14">'.Str::upper(Str::limit($this->first_name, 1,'').Str::limit($this->last_name, 1,'')).'</span></div>'
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
         ];
     }
 }

@@ -7,13 +7,7 @@ use App\Http\Resources\Admin\JobCard\JobCardCollection;
 use App\Models\Admin;
 use App\Models\ChemicalCoating;
 use App\Models\Cutting;
-<<<<<<< HEAD
-<<<<<<< HEAD
 use App\Models\Designing;
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 use App\Models\DyeBreaking;
 use App\Models\DyeCutting;
 use App\Models\Embossing;
@@ -29,13 +23,7 @@ use App\Models\Leafing;
 use App\Models\Media;
 use App\Models\PaperWarehouse;
 use App\Models\Pasting;
-<<<<<<< HEAD
-<<<<<<< HEAD
 use App\Models\Planning;
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 use App\Models\Printing;
 use App\Models\Product;
 use App\Models\PurchaseOrderItem;
@@ -56,20 +44,12 @@ class JobCardController extends Controller
 
         if ($request->ajax()) {
 
-<<<<<<< HEAD
-<<<<<<< HEAD
             $datas = JobCard::orderByRaw("CASE
                 WHEN status_id = 2 THEN 1
                 WHEN status_id = 1 THEN 2
                 WHEN status_id = 3 THEN 25
                 ELSE 4
             END")->whereNotIn('status_id', [99])->with(['planningBy', 'deyDetail', 'jobCardHistory', 'jobCardPapers', 'jobCardItems'=>function($query){
-=======
-            $datas = JobCard::orderBy('created_at', 'desc')->whereNotIn('status_id', [99])->with(['planningBy', 'deyDetail', 'jobCardHistory', 'jobCardPapers', 'jobCardItems'=>function($query){
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
-            $datas = JobCard::orderBy('created_at', 'desc')->whereNotIn('status_id', [99])->with(['planningBy', 'deyDetail', 'jobCardHistory', 'jobCardPapers', 'jobCardItems'=>function($query){
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
                         $query->with(['PO', 'POItem']);
                     },
                     'jobCardUser' => function ($query2) {
@@ -167,15 +147,7 @@ class JobCardController extends Controller
         if($job_card->save()){
             $job_card->mediaFiles()->sync($request->file); 
             
-<<<<<<< HEAD
-<<<<<<< HEAD
             //JobCardPaper::where(['job_card_id' => $job_card->id])->delete();
-=======
-            JobCardPaper::where(['job_card_id' => $job_card->id])->delete();
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
-            JobCardPaper::where(['job_card_id' => $job_card->id])->delete();
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
             $inputs = $request->input('kt_docs_repeater_advanced');
             foreach ($inputs as $input) {
                 $product = Product::find($input['product']);
@@ -226,8 +198,6 @@ class JobCardController extends Controller
                 }
 
                 if($request->deleted){
-<<<<<<< HEAD
-<<<<<<< HEAD
                     $job_card_paper = JobCardPaper::whereIn('id', $request->deleted)->first();
                     $product = Product::find($job_card_paper->product_id);
 
@@ -247,12 +217,6 @@ class JobCardController extends Controller
                     $product->save();
                     $job_card_paper->delete();
                     
-=======
-                    JobCardPaper::whereIn('id', $request->deleted)->delete();
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
-                    JobCardPaper::whereIn('id', $request->deleted)->delete();
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
                 }
             }
 
@@ -456,8 +420,6 @@ class JobCardController extends Controller
     }
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
     public function cancel(Request $request, $id)
     {
         $user = Auth::guard('admin')->user();
@@ -500,9 +462,5 @@ class JobCardController extends Controller
     }
 
 
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
     
 }

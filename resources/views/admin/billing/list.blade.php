@@ -42,19 +42,9 @@
                             <thead class="gridjs-thead">
                             <tr>
                                 <th style="width:12px">Si</th>
-<<<<<<< HEAD
-<<<<<<< HEAD
                                 {{-- <th style="width:12px">Billing Selection</th> --}}
                                 <th>Reference No.</th>
                                 <th>Invoice No.</th>
-=======
-                                <th style="width:12px">Billing Selection</th>
-                                <th>Reference No.</th>
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
-                                <th style="width:12px">Billing Selection</th>
-                                <th>Reference No.</th>
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
                                 <th>Client Name</th>
                                 <th>City</th>
                                 <th>Status</th>
@@ -73,8 +63,6 @@
 
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 <div id="billNoModel" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -101,10 +89,6 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 @endsection
 
 
@@ -136,8 +120,6 @@ $(document).ready(function(){
     },
     "columns": [
         { "data": "sn" },
-<<<<<<< HEAD
-<<<<<<< HEAD
         // { "data": "checkbox",
         //     render: function(data, type, row) {
         //         if(row['status_id'] == 2){
@@ -152,26 +134,6 @@ $(document).ready(function(){
         // },
         { "data": "reference_no" },
         { "data": "invoice_no" },
-=======
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-        { "data": "checkbox",
-            render: function(data, type, row) {
-                if(row['status_id'] == 2){
-                    return '<input type="checkbox" class="row-checkbox" data-id="' + row['id'] + '" data-client="' + row['client_id'] + '">';
-                }
-                else if(row['status_id'] == 5){
-                    return '<div class="form-check form-check-right"><input class="form-check-input" type="checkbox" value="" id="' + row['client_id'] + '" checked="" disabled=""></div>';
-                }else{
-                    return 'N/A';
-                }
-            }
-        },
-        { "data": "reference_no" },
-<<<<<<< HEAD
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
         { "data": "client_name" },
         { "data": "city" },
         { "data": "status" },
@@ -203,14 +165,8 @@ $(document).ready(function(){
                         btn+='<li><a class="dropdown-item edit-item-btn" href="{{route('admin.pdf-download.billing','')}}/'+row['id']+'"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Download</a></li>';
                     }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
                     btn+='<li><a data-id="'+row['id']+'" class="dropdown-item edit-item-btn open-model" href="javascript:voide(0);"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Add Invoice No</a></li>';
 
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
                     @endcan
                      btn += '</ul></div>';
                     return btn;
@@ -323,8 +279,6 @@ $('body').on('click', '.make-billed', function(){
 
 
 });
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 $('body').on('click', '.open-model', function(){
     var id = $(this).attr('data-id');
@@ -373,11 +327,5 @@ $('body').on('click', '#billingCreate', function(){
 });
 
 </script>
-=======
-    </script>
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
-    </script>
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 
 @endpush

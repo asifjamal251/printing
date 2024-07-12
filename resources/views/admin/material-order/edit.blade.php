@@ -99,15 +99,7 @@
             <div class="card-body">
                 <div class="row">
 
-<<<<<<< HEAD
-<<<<<<< HEAD
                     <div class="form-group col-md-3 col-sm-12">
-=======
-                    <div class="form-group col-md-4 col-sm-12">
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
-                    <div class="form-group col-md-4 col-sm-12">
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
                         <div class="form-group{{ $errors->has('vendor') ? ' has-error' : '' }}">
                             {!! Form::label('vendor', 'Vendor') !!}
                             {!! Form::select('vendor', App\Models\Vendor::pluck('name', 'id'), $material->vendor_id, ['id' => 'vendor', 'class' => 'form-control select2', 'placeholder' => 'Choose Vendor']) !!}
@@ -117,23 +109,13 @@
 
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
                     <div class="form-group col-md-3 col-sm-12">
-=======
-                    <div class="form-group col-md-4 col-sm-12">
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
-                    <div class="form-group col-md-4 col-sm-12">
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
                         <div class="form-group{{ $errors->has('mo_date') ? ' has-error' : '' }}">
                             {!! Form::label('mo_date', 'MO Date') !!}
                             {!! Form::text('mo_date', $material->mo_date->format('d F, Y'), ['class' => 'form-control form-control-sm dateSelector', 'placeholder' => 'Enter MO Date']) !!}
                             <small class="text-danger">{{ $errors->first('mo_date') }}</small>
                         </div>
                     </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
 
                     <div class="form-group col-md-3 col-sm-12">
                         <div class="form-group{{ $errors->has('bill_to') ? ' has-error' : '' }}">
@@ -152,10 +134,6 @@
                         </div>
                     </div>
 
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
                 </div>
             </div>
         </div>

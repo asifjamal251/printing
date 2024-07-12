@@ -77,14 +77,8 @@ class MaterialOrderController extends Controller
         $this->validate($request, [
             'vendor' => 'required',
             'mo_date' => 'required',
-<<<<<<< HEAD
-<<<<<<< HEAD
             'bill_to' => 'required',
             'ship_to' => 'required',
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
             'kt_docs_repeater_advanced' => 'required|array',
             'kt_docs_repeater_advanced.*.product' => 'required',
             'kt_docs_repeater_advanced.*.unit' => 'required',
@@ -105,14 +99,8 @@ class MaterialOrderController extends Controller
         ]);
 
         $material_order = new MaterialOrder;
-<<<<<<< HEAD
-<<<<<<< HEAD
         $material_order->bill_to = $request->bill_to;
         $material_order->ship_to = $request->ship_to;
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
         $material_order->admin_id = $user->id;
         $material_order->vendor_id = $request->vendor;
         $material_order->mo_date = Carbon::parse($request->mo_date)->format('Y-m-d');
@@ -173,15 +161,7 @@ class MaterialOrderController extends Controller
 
 
     public function show($id){
-<<<<<<< HEAD
-<<<<<<< HEAD
         $material =  MaterialOrder::where('id', $id)->with(['madeBy', 'billTo', 'shipTo', 'vendor', 'materialItems'=>function($query){
-=======
-        $material =  MaterialOrder::where('id', $id)->with(['madeBy', 'vendor', 'materialItems'=>function($query){
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
-        $material =  MaterialOrder::where('id', $id)->with(['madeBy', 'vendor', 'materialItems'=>function($query){
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
             $query->with(['product', 'unit']);
         }])->first();
 
@@ -213,14 +193,8 @@ class MaterialOrderController extends Controller
         $this->validate($request, [
             'vendor' => 'required',
             'mo_date' => 'required',
-<<<<<<< HEAD
-<<<<<<< HEAD
             'bill_to' => 'required',
             'ship_to' => 'required',
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
             'kt_docs_repeater_advanced' => 'required|array',
             'kt_docs_repeater_advanced.*.product' => 'required',
             'kt_docs_repeater_advanced.*.unit' => 'required',
@@ -241,14 +215,8 @@ class MaterialOrderController extends Controller
         ]);
 
         $material_order = MaterialOrder::find($id);
-<<<<<<< HEAD
-<<<<<<< HEAD
         $material_order->bill_to = $request->bill_to;
         $material_order->ship_to = $request->ship_to;
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
         $material_order->admin_id = $user->id;
         $material_order->vendor_id = $request->vendor;
         $material_order->mo_date = Carbon::parse($request->mo_date)->format('Y-m-d');
@@ -351,18 +319,12 @@ class MaterialOrderController extends Controller
         $materialData = MaterialOrder::where('id', $id)
             ->with([
                 'madeBy', 
-<<<<<<< HEAD
-<<<<<<< HEAD
                 'billTo' => function($query){
                     $query->with(['city', 'state', 'district']);
                 },
                 'shipTo' => function($query){
                     $query->with(['city', 'state', 'district']);
                 },
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
                 'vendor'=>function($query){
                     $query->with(['media']);
                 }, 
@@ -402,8 +364,6 @@ class MaterialOrderController extends Controller
             $items = $itemsData->toArray();
             $material = $materialData->toArray();
 
-<<<<<<< HEAD
-<<<<<<< HEAD
             $billToData = $materialData->billTo;
             $billTo = $billToData->toArray();
 
@@ -412,14 +372,6 @@ class MaterialOrderController extends Controller
 
             // Generate the PDF
             $pdf = PDF::loadView('pdf.order-confirmation', compact('material', 'items', 'billTo', 'shipTo'))
-=======
-            // Generate the PDF
-            $pdf = PDF::loadView('pdf.order-confirmation', compact('material', 'items'))
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
-            // Generate the PDF
-            $pdf = PDF::loadView('pdf.order-confirmation', compact('material', 'items'))
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
                 ->setPaper('A4', 'portrait') // Ensure A4 paper size in portrait mode
                 ->setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true]) // Enable HTML5 and remote options
                 ->output();

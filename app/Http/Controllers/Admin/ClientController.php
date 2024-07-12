@@ -4,24 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\Client\ClientCollection;
-<<<<<<< HEAD
-<<<<<<< HEAD
 use App\Models\City;
 use App\Models\Client;
 use App\Models\ClientPlate;
 use App\Models\Media;
 use App\Rules\GSTNumber;
 use App\Rules\MobileNumber;
-=======
-use App\Models\Client;
-use App\Models\ClientPlate;
-use App\Models\Media;
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
-use App\Models\Client;
-use App\Models\ClientPlate;
-use App\Models\Media;
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
@@ -69,8 +57,6 @@ class ClientController extends Controller
         $random = Arr::random($array);
 
         $this->validate($request,[
-<<<<<<< HEAD
-<<<<<<< HEAD
             'first_name'=>'required|string|max:255',  
             'address' => 'required|max:500',
             'company_name' => 'required|max:255',
@@ -82,20 +68,6 @@ class ClientController extends Controller
             'pincode' => 'required|integer|digits:6',
             'gst' => ['required', new GSTNumber()],
             'mobile_number' => ['required', new MobileNumber()],
-=======
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-            'first_name'=>'required|string|max:255',
-            'email'=>'required|string|email|max:255',
-            'mobile_no'=>'required',   
-            'gst'=>'required',   
-            'city'=>'required',   
-            'pincode'=>'required',   
-            'company_name'=>'required',  
-<<<<<<< HEAD
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
         ]);
 
         $client = new Client;
@@ -104,8 +76,6 @@ class ClientController extends Controller
         $client->full_name = $request->first_name . " " .$request->last_name;
         $client->name_init = Str::upper(Str::limit($request->first_name, 1,'').Str::limit($request->last_name, 1,''));
         $client->email = $request->email;
-<<<<<<< HEAD
-<<<<<<< HEAD
         $client->mobile = $request->mobile_number;
         $client->address = $request->address;
         $client->state_id = $request->state;
@@ -125,24 +95,6 @@ class ClientController extends Controller
                 $client->media_id = $file;
             } 
         }
-=======
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-        $client->mobile = $request->mobile_no;
-        $client->address = $request->address;
-        $client->state = $request->state;
-        $client->city = $request->city;
-        $client->pincode = $request->pincode;
-        $client->gst = $request->gst;
-        $client->company_name = $request->company_name;
-
-
-        $client->color = $random;
-        $client->media_id = $request->file;
-<<<<<<< HEAD
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 
         if($client->save()){ 
             return redirect()->route('admin.client.index')->with(['class'=>'success','message'=>'Client Created successfully.']);
@@ -159,8 +111,6 @@ class ClientController extends Controller
 
 
     public function update(Request $request, $id) {
-<<<<<<< HEAD
-<<<<<<< HEAD
         $this->validate($request,[
             'first_name'=>'required|string|max:255',  
             'address' => 'required|max:500',
@@ -172,21 +122,6 @@ class ClientController extends Controller
             'pincode' => 'required|integer|digits:6',
             'gst' => ['required', new GSTNumber()],
             'mobile_number' => ['required', new MobileNumber()],
-=======
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-         $this->validate($request,[
-            'first_name'=>'required|string|max:255',
-            'email'=>'required|string|email|max:255',
-            'mobile_no'=>'required',   
-            'gst'=>'required',   
-            'city'=>'required',   
-            'pincode'=>'required',   
-            'company_name'=>'required',    
-<<<<<<< HEAD
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
         ]);
 
         $client = Client::find($id);
@@ -195,8 +130,6 @@ class ClientController extends Controller
         $client->full_name = $request->first_name . " " .$request->last_name;
         $client->name_init = Str::upper(Str::limit($request->first_name, 1,'').Str::limit($request->last_name, 1,''));
         $client->email = $request->email;
-<<<<<<< HEAD
-<<<<<<< HEAD
         $client->mobile = $request->mobile_number;
         $client->address = $request->address;
         $client->state_id = $request->state;
@@ -214,20 +147,6 @@ class ClientController extends Controller
         }else{
              $client->media_id = Null;
         }
-=======
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-        $client->mobile = $request->mobile_no;
-        $client->address = $request->address;
-        $client->state = $request->state;
-        $client->city = $request->city;
-        $client->pincode = $request->pincode;
-        $client->gst = $request->gst;
-        $client->company_name = $request->company_name;
-<<<<<<< HEAD
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 
         if($client->save()){ 
             return redirect()->route('admin.client.index')->with(['class'=>'success','message'=>'Client Created successfully.']);

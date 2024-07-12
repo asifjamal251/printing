@@ -20,8 +20,6 @@ class MaterialOrder extends Model
     public function vendor(){
         return $this->hasOne(Vendor::class,'id','vendor_id');
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
 
     public function billTo(){
         return $this->hasOne(Vendor::class,'id','bill_to');
@@ -31,10 +29,6 @@ class MaterialOrder extends Model
         return $this->hasOne(Vendor::class,'id','ship_to');
     }
 
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
     public function madeBy(){
         return $this->hasOne(Admin::class,'id','admin_id');
     }

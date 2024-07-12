@@ -1,7 +1,5 @@
 @extends('admin.layouts.master')
 @push('links')
-<<<<<<< HEAD
-<<<<<<< HEAD
 <link rel="stylesheet" href="{{asset('admin-assets/libs/select2/css/select2.min.css')}}">  
 <style type="text/css">
     span.select2-selection.select2-selection--single, span.selection {
@@ -30,12 +28,6 @@
         min-height: 100px; /* Minimum height */
     }
 </style>
-=======
-<link rel="stylesheet" href="{{asset('admin-assets/libs/dropify/css/dropify.min.css')}}"> 
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
-<link rel="stylesheet" href="{{asset('admin-assets/libs/dropify/css/dropify.min.css')}}"> 
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 @endpush
 
 
@@ -62,18 +54,10 @@
     </div>
 </div>
 <!-- end page title -->
-<<<<<<< HEAD
-<<<<<<< HEAD
 @php
     $countries = App\Models\Country::where('id', 101)->pluck('name', 'id');
     $states = App\Models\State::where('status_id', 11)->pluck('name', 'id');
 @endphp
-=======
-
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
-
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 <div class="row">
     <div class="col-lg-12">
         <div class="card">
@@ -83,15 +67,7 @@
 
                  <div class="row">
 
-<<<<<<< HEAD
-<<<<<<< HEAD
                     <div class="form-group col-md-3 col-sm-12">
-=======
-                    <div class="form-group col-md-6 col-sm-12">
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
-                    <div class="form-group col-md-6 col-sm-12">
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
                         <div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
                              {!! Form::label('first_name', 'First Name') !!}
                              {!! Form::text('first_name', $client->first_name, ['class' => 'form-control',  'placeholder'=>'First Name']) !!}
@@ -101,15 +77,7 @@
 
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
                     <div class="form-group col-md-3 col-sm-12">
-=======
-                    <div class="form-group col-md-6 col-sm-12">
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
-                    <div class="form-group col-md-6 col-sm-12">
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
                         <div class="form-group{{ $errors->has('last_name') ? ' has-error' : '' }}">
                            {!! Form::label('last_name', 'Last Name') !!}
                            {!! Form::text('last_name', $client->last_name, ['class' => 'form-control',  'placeholder'=>'Last Name']) !!}
@@ -117,8 +85,6 @@
                        </div>
                     </div>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 
                         <div class="form-group col-md-3 col-sm-12">
                         <div class="form-group{{ $errors->has('company_name') ? ' has-error' : '' }}">
@@ -145,12 +111,6 @@
                      </div>
 
                      <div class="form-group col-md-3 col-sm-12">
-=======
-                    <div class="form-group col-md-6 col-sm-12">
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
-                    <div class="form-group col-md-6 col-sm-12">
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
                         <div class="form-group{{ $errors->has('gst') ? ' has-error' : '' }}">
                             {!! Form::label('gst', 'GST') !!}
                             {!! Form::text('gst', $client->gst, ['class' => 'form-control', 'placeholder' => 'GST']) !!}
@@ -158,8 +118,6 @@
                         </div>
                      </div>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
                      <div class="form-group col-md-3 col-sm-12">
                          <div class="form-group{{ $errors->has('country') ? ' has-error' : '' }}">
                              {!! Form::label('country', 'Country') !!}
@@ -213,59 +171,12 @@
 
                     <div class="form-group col-md-3 col-sm-12">
                         <div class="form-group{{ $errors->has('pincode') ? ' has-error' : '' }}">
-=======
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-                     <div class="form-group col-md-6 col-sm-12">
-                        <div class="form-group{{ $errors->has('company_name') ? ' has-error' : '' }}">
-                            {!! Form::label('company_name', 'Company Name') !!}
-                            {!! Form::text('company_name', $client->company_name, ['class' => 'form-control', 'placeholder' => 'Company Name']) !!}
-                            <small class="text-danger">{{ $errors->first('company_name') }}</small>
-                        </div>
-                     </div>
-
-                    <div class="form-group col-md-6 col-sm-12">
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                           {!! Form::label('email', 'Email') !!}
-                           {!! Form::email('email', $client->email, ['class' => 'form-control',  'placeholder' => 'eg: foo@bar.com', 'autocomplete'=>'nope']) !!}
-                           <small class="text-danger">{{ $errors->first('email') }}</small>
-                       </div>
-                    </div>
-
-                    <div class="form-group col-md-6 col-sm-12">
-                        <div class="form-group{{ $errors->has('mobile_no') ? ' has-error' : '' }}">
-                           {!! Form::label('mobile_no', 'Mobile Number') !!}
-                           {!! Form::text('mobile_no', $client->mobile, ['class' => 'form-control', 'placeholder' => 'Mobile Number']) !!}
-                           <small class="text-danger">{{ $errors->first('mobile_no') }}</small>
-                       </div>
-                    </div>
-
-                    <div class="form-group col-md-6 col-sm-12">
-                        <div class="form-group{{ $errors->has('state') ? ' has-error' : '' }}">
-                            {!! Form::label('state', 'State') !!}
-                            {!! Form::text('state', $client->state, ['class' => 'form-control', 'placeholder' => 'State']) !!}
-                            <small class="text-danger">{{ $errors->first('state') }}</small>
-                        </div>
-
-                         <div class="form-group{{ $errors->has('city') ? ' has-error' : '' }}">
-                            {!! Form::label('city', 'City') !!}
-                            {!! Form::text('city', $client->city, ['class' => 'form-control', 'placeholder' => 'City']) !!}
-                            <small class="text-danger">{{ $errors->first('city') }}</small>
-                        </div>
-
-                         <div class="form-group{{ $errors->has('pincode') ? ' has-error' : '' }}">
-<<<<<<< HEAD
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
                             {!! Form::label('pincode', 'Pincode') !!}
                             {!! Form::text('pincode', $client->pincode, ['class' => 'form-control', 'placeholder' => 'Pincode']) !!}
                             <small class="text-danger">{{ $errors->first('pincode') }}</small>
                         </div>
                     </div>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 
                     <div class="form-group col-md-3 col-sm-12">
                         <div class="form-group{{ $errors->has('landmark') ? ' has-error' : '' }}">
@@ -299,19 +210,6 @@
                             </div>
 
                         </div>
-=======
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-                    <div class="form-group col-md-6 col-sm-12">
-                       <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
-                           {!! Form::label('address', 'Address') !!}
-                           {!! Form::textarea('address', $client->address, ['class' => 'form-control', 'placeholder' => 'Address']) !!}
-                           <small class="text-danger">{{ $errors->first('address') }}</small>
-                       </div>
-<<<<<<< HEAD
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
                     </div>
 
                     <div class="form-group col-md-6 col-sm-12">
@@ -334,8 +232,6 @@
 
 
 @push('scripts')
-<<<<<<< HEAD
-<<<<<<< HEAD
 <script src="{{asset('admin-assets/libs/select2/js/select2.min.js')}}" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -481,14 +377,4 @@
     });
 
 </script>
-=======
-<script src="{{asset('admin-assets/libs/dropify/js/dropify.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('admin-assets/libs/dropify/dropify.js')}}"></script>
-
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
-<script src="{{asset('admin-assets/libs/dropify/js/dropify.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('admin-assets/libs/dropify/dropify.js')}}"></script>
-
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 @endpush

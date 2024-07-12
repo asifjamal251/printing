@@ -26,13 +26,7 @@ class BillingResource extends JsonResource
             'client_name' => $this->client->company_name,
             'city' => $this->client->city,
             'reference_no' => $this->bill_no,
-<<<<<<< HEAD
-<<<<<<< HEAD
             'invoice_no' => $this->invoice_no??'N/A',
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 
             'status'=> status($this->status_id),
             'status_id'=>$this->status_id,

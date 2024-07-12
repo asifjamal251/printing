@@ -19,13 +19,7 @@ class VendorResource extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'phone_no' => $this->phone_no,
-<<<<<<< HEAD
-<<<<<<< HEAD
             'city' => $this->city_id?$this->city->name:'N/A',
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
             'address' => $this->address,
             'created_at' => $this->created_at->format('d M Y'),
         ];

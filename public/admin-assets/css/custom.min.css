@@ -26,15 +26,7 @@ span.select2-selection.select2-selection--single, span.selection {
 /*.offcanvas-backdrop.fade.show {
     pointer-events:none 
 }*/
-<<<<<<< HEAD
-<<<<<<< HEAD
-/*[data-layout=horizontal] .navbar-menu .navbar-nav{
-=======
 [data-layout=horizontal] .navbar-menu .navbar-nav{
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
-[data-layout=horizontal] .navbar-menu .navbar-nav{
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
         justify-content: center;
         align-items: center;
 }
@@ -88,28 +80,12 @@ span.select2-selection.select2-selection--single, span.selection {
     color: #fff;
     position: relative;
     left: 5px;
-<<<<<<< HEAD
-<<<<<<< HEAD
-}*/
-=======
 }
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
-}
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 
 .navbar-menu .navbar-nav .nav-link{
         font-size: .800rem;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-/*.toastify.error{
-=======
 .toastify.error{
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
-.toastify.error{
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
     background-color:#f06548!important;
     background:#f06548!important;
 }
@@ -122,15 +98,7 @@ span.select2-selection.select2-selection--single, span.selection {
 .toastify.warning{
     background-color:#f7b84b!important;
     background:#f7b84b!important;
-<<<<<<< HEAD
-<<<<<<< HEAD
-}*/
-=======
 }
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
-}
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 
 .form-group {
     margin-bottom: 1rem;

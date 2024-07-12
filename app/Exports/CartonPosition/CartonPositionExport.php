@@ -12,40 +12,19 @@ class CartonPositionExport implements FromView
     use Exportable;
 
     private $stocks;
-<<<<<<< HEAD
-<<<<<<< HEAD
     private $client;
 
     public function __construct($stocks, $client)
     {
         $this->stocks = $stocks;
         $this->client = $client;
-=======
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-
-    public function __construct($stocks)
-    {
-        $this->stocks = $stocks;
-<<<<<<< HEAD
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
     }
 
     public function view(): View
     {
         return view('admin.excell.carton-position', [
-<<<<<<< HEAD
-<<<<<<< HEAD
             'stocks' => $this->stocks,
             'client' => $this->client,
-=======
-            'stocks' =>$this->stocks,
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
-            'stocks' =>$this->stocks,
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
         ]);
     }
 }

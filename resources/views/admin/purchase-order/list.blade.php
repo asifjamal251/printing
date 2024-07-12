@@ -2,13 +2,7 @@
 
 @push('links')
 <link rel="stylesheet" href="{{asset('admin-assets/libs/select2/css/select2.min.css')}}"> 
-<<<<<<< HEAD
-<<<<<<< HEAD
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 <style type="text/css">
     .checkItems{
         display:inline-block;
@@ -134,15 +128,7 @@
 
 
 @section('filter')
-<<<<<<< HEAD
-<<<<<<< HEAD
 {!! Form::open(['method' => 'POST', 'route' => 'admin.excell-download.carton-position', 'class' => 'form-horizontal', 'id'=>'downlodForm']) !!}
-=======
-<form id="filterForm" action="" autocomplete="off">
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
-<form id="filterForm" action="" autocomplete="off">
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 <div class="offcanvas offcanvas-end border-0" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
     
     <div class="d-flex align-items-center bg-success bg-gradient p-3 offcanvas-header">
@@ -154,8 +140,6 @@
 
     <div class="offcanvas-body bg-light">
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 
         <div class="card">
             <div class="card-body">
@@ -167,28 +151,6 @@
                 </div>
             </div>
         </div>
-=======
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-{{-- 
-        <div class="card">
-            <div class="card-header pt-2 pb-2">
-                <h6 class="card-title mb-0">Filter By Date</h6>
-            </div>
-
-            <div class="card-body">
-                {!! Form::open(['method' => 'POST', 'route' => 'admin.dashboard.filter', 'class' => 'form-horizontal', 'id'=>'filterForm']) !!}
-                    <div id="reportrange" class="form-icon w-100" style="width: 280px;text-align:center;cursor:pointer;">
-                        <span><input id="datefilter" style="cursor:pointer;" type="text" class="form-control form-control-sm form-control-icon" name="datefilter" value="All" /></span> <i class="fa fa-calendar"></i>
-                    </div>
-                {!! Form::close() !!}
-            </div>
-
-        </div> --}}
-<<<<<<< HEAD
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 
 
 
@@ -221,30 +183,14 @@
                     <button type="button" class="btn btn-soft-success w-100 filters border-success">Apply Filter</button>
                 </div>
                 <div class="d-inline-block" style="width:50%;">
-<<<<<<< HEAD
-<<<<<<< HEAD
                     <button onclick="downloadStock(this)" type="button" class="p-0 btn btn-soft-success w-100 border-success"><i class="fs-24 ri-download-2-fill"></i></button>
-=======
-                    <button onclick="downloadCarton(this)" type="submit" class="btn btn-soft-success w-100 border-success"> Dowload</button>
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
-                    <button onclick="downloadCarton(this)" type="submit" class="btn btn-soft-success w-100 border-success"> Dowload</button>
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
                 </div>
             </div>
         </div>
 
 
 </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
 {!! Form::close() !!}
-=======
-</form>
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
-</form>
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 @endsection
 
 
@@ -260,8 +206,6 @@
 
 @push('scripts')
 <script src="{{asset('admin-assets/libs/select2/js/select2.min.js')}}" type="text/javascript"></script>
-<<<<<<< HEAD
-<<<<<<< HEAD
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script>
@@ -289,10 +233,6 @@
         cb(null, null);
     });
 </script>
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 <script type="text/javascript">
 $(document).ready(function(){
     var table2 = $('#datatable').DataTable({
@@ -408,8 +348,6 @@ $('.select2').select2({
 });
 });
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 
 function downloadStock(element){
@@ -461,57 +399,6 @@ function downloadStock(element){
 
 
 
-=======
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-function downloadCarton(element){
-    client = $('#filter_client').val();
-    if(client.length > 0){
-        var button = new Button(element);
-        button.process();
-        clearErrors();
-        var requestData,otpdata,data;
-
-        $.ajax({
-            type: "POST",
-            enctype: 'multipart/form-data',
-            url:'{{ route('admin.excell-download.carton-position') }}',
-            data: {'client':client, '_method': 'POST', '_token': '{{ csrf_token() }}' },
-            success:function(response){
-               // $('#offcanvasTop').offcanvas('hide')
-                Toastify({
-                    text: response.message,
-                    duration: 3000,
-                    close: true,
-                    gravity: "top",
-                    position: "right",
-                    stopOnFocus: true,
-                    className: response.class,
-
-                }).showToast();
-                button.normal();
-                window.location.href = response.filename;
-            },
-            error:function(error){
-                Toastify({
-                    text: error.responseJSON.message,
-                    duration: 3000,
-                    close: true,
-                    gravity: "top",
-                    position: "right",
-                    stopOnFocus: true,
-                    className: "error",
-
-                }).showToast();
-                button.normal();
-            }
-        });
-    }
-} 
-<<<<<<< HEAD
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
     </script>
 
 @endpush

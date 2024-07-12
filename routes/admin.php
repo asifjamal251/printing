@@ -1,13 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\ActivitylogController;
-<<<<<<< HEAD
-<<<<<<< HEAD
 use App\Http\Controllers\Admin\AddressController;
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\BillingController;
@@ -15,25 +9,13 @@ use App\Http\Controllers\Admin\BreadController;
 use App\Http\Controllers\Admin\CartonController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ChemicalCoatingController;
-<<<<<<< HEAD
-<<<<<<< HEAD
 use App\Http\Controllers\Admin\CityController;
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\CommonController;
 use App\Http\Controllers\Admin\CuttingController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DesigningController;
-<<<<<<< HEAD
-<<<<<<< HEAD
 use App\Http\Controllers\Admin\DistrictController;
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 use App\Http\Controllers\Admin\DominantController;
 use App\Http\Controllers\Admin\DyeBreakingController;
 use App\Http\Controllers\Admin\DyeCuttingController;
@@ -63,13 +45,7 @@ use App\Http\Controllers\Admin\RequisitionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SiteSettingController;
 use App\Http\Controllers\Admin\SpotUvController;
-<<<<<<< HEAD
-<<<<<<< HEAD
 use App\Http\Controllers\Admin\StateController;
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\UnitController;
 use App\Http\Controllers\Admin\VendorController;
@@ -146,15 +122,9 @@ Route::middleware(['admin', '2fa'])->name('admin.')->group(function() {
         Route::get('common/check/gst/{gst_number}', 'checkGST')->name('check.gst');
 
         Route::get('common/client/list', 'client')->name('client.list');
-<<<<<<< HEAD
-<<<<<<< HEAD
 
         Route::get('common/state/city/{state_id}', 'cityList')->name('city.list');
         Route::get('common/state/district/{state_id}', 'districtList')->name('district.list');
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
     });
 
     Route::controller(BreadController::class)->group(function(){
@@ -433,14 +403,8 @@ Route::middleware(['admin', '2fa'])->name('admin.')->group(function() {
         Route::post('job-card/user/assign/single/{job_cards}', 'userAssignSingle')->name('job-card.user.assign.single')->middleware('can:user_job_card');
         Route::post('job-card/paper/delete/{job_cards}', 'jobCardPaper')->name('job-card.paper.delete');
 
-<<<<<<< HEAD
-<<<<<<< HEAD
         Route::get('job-card/cancel/{id}', 'cancel')->name('job-card.cancel')->middleware('can:delete_job_card');
 
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
     });
 
 
@@ -628,14 +592,8 @@ Route::middleware(['admin', '2fa'])->name('admin.')->group(function() {
         Route::put('billing/change/status', 'changeStatus')->name('billing.changeStatus')->middleware('can:change_status_billing');
         Route::get('billing/coa/certificate/{id}/edit', 'cao')->name('billing.coa')->middleware('can:browse_billing');
         Route::put('billing/coa/certificate/{id}', 'caoUpdate')->name('billing.coa.update')->middleware('can:browse_billing');
-<<<<<<< HEAD
-<<<<<<< HEAD
 
         Route::post('billing/invoice/update', 'invoiceUpdate')->name('billing.invoice.update')->middleware('can:browse_billing');
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
     });
 
 
@@ -751,8 +709,6 @@ Route::middleware(['admin', '2fa'])->name('admin.')->group(function() {
 
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
      //Address
     Route::controller(AddressController::class)->group(function(){
         Route::match(['get','patch'],'address', 'index')->name('address.index')->middleware('can:browse_address');
@@ -803,16 +759,6 @@ Route::middleware(['admin', '2fa'])->name('admin.')->group(function() {
         Route::delete('state/{state}/delete', 'destroy')->name('state.destroy')->middleware('can:delete_state');
     });
 
-=======
-
-
-
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
-
-
-
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 
 
 });

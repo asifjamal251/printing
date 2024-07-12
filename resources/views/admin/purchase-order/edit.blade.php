@@ -493,29 +493,15 @@
                                     <div class="col-width paper-type-main">
                                         <div class="form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.dye_details') ? ' has-error' : '' }}">
                                             {!! Form::label('dye_details', 'Dye Details') !!}
-<<<<<<< HEAD
-<<<<<<< HEAD
                                             {!! Form::select('dye_details', App\Models\DyeDetails::selectRaw('id, CONCAT(dye_no, " | ", dye_lock, " | ", ups, " | ", sheet_size, " | ", carton_size) AS text')->pluck('text', 'id'), old('kt_docs_repeater_advanced.'.$loop->index.'.dye_details', $item['dye_details'] ?? ''), ['id' => 'dye_details', 'class' => 'form-control form-control-sm dyeDetails', 'placeholder' => 'Dye Details']) !!}
-=======
-                                            {!! Form::select('dye_details', App\Models\DyeDetails::where('id', old('kt_docs_repeater_advanced.'.$loop->index.'.dye_details', $item['dye_details'] ?? ''))->pluck('type', 'id'), old('kt_docs_repeater_advanced.'.$loop->index.'.dye_details', $item['dye_details'] ?? ''), ['id' => 'dye_details', 'class' => 'form-control form-control-sm dyeDetails', 'placeholder' => 'Dye Details']) !!}
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
-                                            {!! Form::select('dye_details', App\Models\DyeDetails::where('id', old('kt_docs_repeater_advanced.'.$loop->index.'.dye_details', $item['dye_details'] ?? ''))->pluck('type', 'id'), old('kt_docs_repeater_advanced.'.$loop->index.'.dye_details', $item['dye_details'] ?? ''), ['id' => 'dye_details', 'class' => 'form-control form-control-sm dyeDetails', 'placeholder' => 'Dye Details']) !!}
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
                                             <small class="text-muted">Dye No. | Dye Lock | UPS</small>
                                             <small class="text-danger">{{ $errors->first('kt_docs_repeater_advanced.'.$loop->index.'.dye_details') }}</small>
                                         </div>
                                     </div>
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
                                     <div class="col-width remarks-main">
                                         <div class="form-group{{$errors->has('kt_docs_repeater_advanced.'.$loop->index.'.remarks') ? ' has-error' : '' }}">
                                             {!! Form::label('remarks', 'Remarks') !!}

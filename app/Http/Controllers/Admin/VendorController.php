@@ -5,14 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\Vendor\VendorCollection;
 use App\Models\Vendor;
-<<<<<<< HEAD
-<<<<<<< HEAD
 use App\Rules\GSTNumber;
 use App\Rules\MobileNumber;
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -59,8 +53,6 @@ class VendorController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-<<<<<<< HEAD
-<<<<<<< HEAD
             'address' => 'required|max:500',
             'name' => 'required|max:255',
             'locality' => 'required|max:255',
@@ -71,17 +63,6 @@ class VendorController extends Controller
             'pincode' => 'required|integer|digits:6',
             'gst' => ['required', new GSTNumber()],
             'phone_no' => ['required', new MobileNumber()],
-=======
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-            'name' => 'required|string',
-            'gst' => 'required',
-            'email' => 'email',
-            'phone_no' => 'required|regex:/^[0-9]{10}$/'
-<<<<<<< HEAD
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
         ]);
         
         $vendor = new Vendor;
@@ -91,17 +72,11 @@ class VendorController extends Controller
         $vendor->phone_no = $request->phone_no;
         $vendor->address = $request->address;
         $vendor->mail_cc = $request->email_cc;
-<<<<<<< HEAD
-<<<<<<< HEAD
         $vendor->locality = $request->locality;
         $vendor->state_id = $request->state;
         $vendor->city_id = $request->city;
         $vendor->district_id = $request->district;
         $vendor->pincode = $request->pincode;
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 
         if($request->has('logo')){
             foreach($request->logo as $file){
@@ -137,8 +112,6 @@ class VendorController extends Controller
     public function update(Request $request, Vendor $vendor)
     {
         $this->validate($request, [
-<<<<<<< HEAD
-<<<<<<< HEAD
             'address' => 'required|max:500',
             'name' => 'required|max:255',
             'locality' => 'required|max:255',
@@ -149,17 +122,6 @@ class VendorController extends Controller
             'pincode' => 'required|integer|digits:6',
             'gst' => ['required', new GSTNumber()],
             'phone_no' => ['required', new MobileNumber()],
-=======
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-            'name' => 'required|string',
-            'gst' => 'required',
-            'email' => 'email',
-            'phone_no' => 'required|regex:/^[0-9]{10}$/'
-<<<<<<< HEAD
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
         ]);
         
         $vendor->gst = $request->gst;
@@ -168,17 +130,11 @@ class VendorController extends Controller
         $vendor->phone_no = $request->phone_no;
         $vendor->address = $request->address;
         $vendor->mail_cc = $request->email_cc;
-<<<<<<< HEAD
-<<<<<<< HEAD
         $vendor->locality = $request->locality;
         $vendor->state_id = $request->state;
         $vendor->city_id = $request->city;
         $vendor->district_id = $request->district;
         $vendor->pincode = $request->pincode;
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 
         if($request->has('logo')){
             foreach($request->logo as $file){

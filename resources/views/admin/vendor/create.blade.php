@@ -1,7 +1,5 @@
 @extends('admin.layouts.master')
 @push('links')
-<<<<<<< HEAD
-<<<<<<< HEAD
 <link rel="stylesheet" href="{{asset('admin-assets/libs/select2/css/select2.min.css')}}">  
 <style type="text/css">
     span.select2-selection.select2-selection--single, span.selection {
@@ -28,22 +26,6 @@
         resize: none; /* Disable the draggable resizer handle */
         overflow: hidden; /* Hide the scrollbar */
         min-height: 100px; /* Minimum height */
-=======
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-<link rel="stylesheet" href="{{asset('admin-assets/libs/dropify/css/dropify.min.css')}}"> 
-<style type="text/css">
-    textarea {
-        resize: none!important; 
-        overflow: hidden; 
-        border: none; 
-        outline: none; 
-        width: 100%;
-        height: auto;
-<<<<<<< HEAD
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
     }
 </style>
 @endpush
@@ -72,8 +54,6 @@
     </div>
 </div>
 <!-- end page title -->
-<<<<<<< HEAD
-<<<<<<< HEAD
 @php
 $countries = App\Models\Country::where('id', 101)->pluck('name', 'id');
 $states = App\Models\State::where('status_id', 11)->pluck('name', 'id');
@@ -81,17 +61,6 @@ $states = App\Models\State::where('status_id', 11)->pluck('name', 'id');
 <div class="row">
     <div class="col-lg-12">
 {{$errors}}
-=======
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-
-<div class="row">
-    <div class="col-lg-12">
-
-<<<<<<< HEAD
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 
         {!! Form::open(['route'=>'admin.'.request()->segment(2).'.store', 'files'=>true]) !!}
         <div class="row">
@@ -103,8 +72,6 @@ $states = App\Models\State::where('status_id', 11)->pluck('name', 'id');
                      <div class="card">
                         <div class="card-body">
 
-<<<<<<< HEAD
-<<<<<<< HEAD
                             <div class="row">
 
                                 <div class="col-md-6 col-sm-12">
@@ -231,79 +198,10 @@ $states = App\Models\State::where('status_id', 11)->pluck('name', 'id');
                     </div>
                 </div>
 
-=======
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-                            <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                                {!! Form::label('name', 'Name') !!}
-                                {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Enter Name']) !!}
-                                <small class="text-danger">{{ $errors->first('name') }}</small>
-                            </div>
-                            
-                            <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                                {!! Form::label('email', 'Email address') !!}
-                                {!! Form::email('email', null, ['class' => 'form-control', 'placeholder' => 'eg: foo@bar.com']) !!}
-                                <small class="text-danger">{{ $errors->first('email') }}</small>
-                            </div>
-                            
-                            <div class="form-group{{ $errors->has('phone_no') ? ' has-error' : '' }}">
-                                {!! Form::label('phone_no', 'Phone No.') !!}
-                                {!! Form::text('phone_no', null, ['class' => 'form-control', 'placeholder' => 'Phone No.']) !!}
-                                <small class="text-danger">{{ $errors->first('phone_no') }}</small>
-                            </div>
-
-                            <div class="form-group{{ $errors->has('gst') ? ' has-error' : '' }}">
-                                {!! Form::label('gst', 'GST') !!}
-                                {!! Form::text('gst', null, ['class' => 'form-control', 'placeholder' => 'GST']) !!}
-                                <small class="text-danger">{{ $errors->first('gst') }}</small>
-                            </div>
-
-                            <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
-                                {!! Form::label('address', 'Address') !!}
-                                {!! Form::textarea('address', null, ['class' => 'form-control', 'placeholder' => 'Address', 'rows'=>3]) !!}
-                                <small class="text-danger">{{ $errors->first('address') }}</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-sm-12">
-                    <div class="card">
-                        <div class="card-header">
-                            {!! Form::label('logo', 'Logo') !!}
-                        </div>
-                        <div class="card-body">
-                            <small class="text-danger">{{ $errors->first('logo') }}</small>
-                            <div class="media-area" file-name="logo">
-                                <div class="media-file-value"></div>
-                                <div class="media-file"></div>
-                                <a class="text-secondary select-mediatype" href="javascript:void(0);" mediatype='single' onclick="loadMediaFiles($(this))">Select Image</a>
-                            </div>
-
-                        </div>
-                    </div>
-
-                       <div class="card">
-                            <div class="card-body">
-                                <div class="form-group{{ $errors->has('email_cc') ? ' has-error' : '' }}">
-                                    {!! Form::label('email_cc', 'Email CC') !!} 
-                                    {!! Form::textarea('email_cc', null, ['class' => 'form-control', 'placeholder' => 'test@example.com, abcd@example.com']) !!}
-                                    <small class="help-block w-100 d-inline-block">Comma Seperate(test@example.com, abcd@example.com)</small>
-                                    <small class="text-danger">{{ $errors->first('email_cc') }}</small>
-                                </div>
-                            </div>
-                        </div>
-
-<<<<<<< HEAD
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 
                 <div class="form-group col-md-12 col-sm-12" style="margin-top:25px;">
                   {!! Form::submit('Create '.Str::title(str_replace('-', ' ', request()->segment(2))), ['class' => 'btn btn-info']) !!}
               </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
           </div>
 
 
@@ -318,27 +216,6 @@ $states = App\Models\State::where('status_id', 11)->pluck('name', 'id');
 
 
 {!! Form::close() !!} 
-=======
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-                </div>
-
-
-
-
-          </div>
-      </div>
-
-
-
-  </div>
-
-
-  {!! Form::close() !!} 
-<<<<<<< HEAD
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 </div>
 </div>
 
@@ -351,8 +228,6 @@ $states = App\Models\State::where('status_id', 11)->pluck('name', 'id');
 
 
 @push('scripts')
-<<<<<<< HEAD
-<<<<<<< HEAD
 <script src="{{asset('admin-assets/libs/select2/js/select2.min.js')}}" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -497,19 +372,5 @@ $states = App\Models\State::where('status_id', 11)->pluck('name', 'id');
         }
     });
 
-=======
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-<script>
-    function adjustHeight() {
-        var textarea = document.querySelector('textarea');
-        textarea.style.height = 'auto';
-        textarea.style.height = textarea.scrollHeight + 'px'; 
-        displayArea.innerText = textarea.value;
-    }
-<<<<<<< HEAD
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
 </script>
 @endpush

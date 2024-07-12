@@ -93,25 +93,13 @@
                         </tr>
 
                         <tr>
-<<<<<<< HEAD
-<<<<<<< HEAD
                             <th style="width: 25%;">PO NO</th>
                             <td style="width: 25%;">{{$billing->PO->po_no}}</td>
-=======
-                            <th style="width: 25%;">COA NO</th>
-                            <td style="width: 25%;">{{$coa->coa_no}}</td>
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
-                            <th style="width: 25%;">COA NO</th>
-                            <td style="width: 25%;">{{$coa->coa_no}}</td>
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
                             <th style="width: 25%;">PRODUCT NAME</th>
                             <td style="width: 25%;">{{$coa->product}}</td>
                         </tr>
 
                         <tr>
-<<<<<<< HEAD
-<<<<<<< HEAD
                             <th style="width: 25%;">PO DATE</th>
                             <td style="width: 25%;">
                                 <div class="m-0 form-group{{ $errors->has('po_date') ? ' has-error' : '' }}">
@@ -166,36 +154,6 @@
                                     <small class="text-danger">{{ $errors->first('batch_no') }}</small>
                                 </div>
                             </td>
-=======
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-                            <th style="width: 25%;">INVOICE NO.</th>
-                            <td style="width: 25%;">
-                                <div class="m-0 form-group{{ $errors->has('invoice_no') ? ' has-error' : '' }}">
-                                    {!! Form::text('invoice_no', null, ['class' => 'form-control form-control-sm', 'placeholder' => 'INVOICE NO.']) !!}
-                                    <small class="text-danger">{{ $errors->first('invoice_no') }}</small>
-                                </div>
-                            </td>
-                            <th style="width: 25%;">QUANTITY</th>
-                            <td style="width: 25%;">{{$coa->quantity}}</td>
-                        </tr>
-
-                        <tr>
-                            <th style="width: 25%;">MFG DATE</th>
-                            <td style="width: 25%;">1</td>
-                            <th style="width: 25%;">EXP DATE</th>
-                            <td style="width: 25%;">200</td>
-                        </tr>
-
-                        <tr>
-                            <th style="width: 25%;">PRODUCT CODE</th>
-                            <td style="width: 25%;">1</td>
-                            <th style="width: 25%;">BATCH NO.</th>
-                            <td style="width: 25%;">200</td>
-<<<<<<< HEAD
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
-=======
->>>>>>> 2b33c6348bab638e807612609fb3df492f5146af
                         </tr>
 
                         <tr style="visibility:collapse;">
