@@ -274,6 +274,10 @@ class JobCardController extends Controller
 
     public function changeStatus(Request $request)
     { 
+        $check_user = JobCardUser::where(['job_card_id' => $request->job_card_id, 'module_id' => 1])->get(); 
+        if ($check_user->count() === 0) {
+            return response()->json(['message' => 'Please Assign Cutting Machine', 'class' => 'error']);
+        }
         //return $request->all();
         $job_card = JobCard::where(['id'=>$request->job_card_id])->first();  
         if($request->status == 2){
