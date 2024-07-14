@@ -34,7 +34,11 @@ class LeafingController extends Controller
             // } else{
             //     $whereStatus = [2];
             // }
-            $datas = Leafing::orderBy('id','desc')
+            $datas = Leafing::orderByRaw("CASE
+                WHEN status_id = 2 THEN 1
+                WHEN status_id = 5 THEN 2
+                ELSE 3
+            END")
             ->with(['user', 'jobCard'=>function($query){
                 $query->with(['paper', 'jobCardHistory', 'jobCardItems'=>function($query){
                     $query->with(['PO', 'POItem']);

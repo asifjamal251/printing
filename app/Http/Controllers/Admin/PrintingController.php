@@ -27,7 +27,11 @@ class PrintingController extends Controller
     public function index(Request $request){
         
         if ($request->ajax()) {
-            $datas = Printing::orderBy('id', 'desc')->whereNotIn('status_id', [0])
+            $datas = Printing::orderByRaw("CASE
+                WHEN status_id = 2 THEN 1
+                WHEN status_id = 5 THEN 2
+                ELSE 3
+            END")->whereNotIn('status_id', [0])
                 ->with(['jobCard' => function ($query) {
                     $query->with(['paper', 'jobCardItems'=>function($query){
                     $query->with(['PO', 'POItem']);

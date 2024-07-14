@@ -473,3 +473,10 @@ div.dataTables_wrapper div.dataTables_length label {
     float: left;
 }
 }
+
+span.carton-border {
+    width: 102%;
+    display: block;
+    border-top: 1px solid #673AB7;
+    margin: 5px -5px;
+}
